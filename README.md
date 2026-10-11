@@ -16,6 +16,7 @@ Oder manuell: **Einstellungen → Add-ons → Add-on Store → ⋮ → Repositor
 | Stapeljagd | Baut gemeinsam Stapel von 1 bis 12 – 2 bis 6 Spieler. |
 | Tiefpunkt | Raster aus 12 Karten, möglichst wenige Punkte sammeln – 2 bis 8 Spieler. |
 | Kritzelpost | Stille Post mit Stift: schreiben, zeichnen, erraten – 3 bis 10 Spieler. |
+| Schnellmaler | Einer zeichnet, alle raten – mit Fernseher als Host-Bildschirm, 2 bis 12 Spieler. |
 | Farbrausch | Passende Farbe oder Zahl ablegen, +2, +4 und „Letzte Karte!“ – 2 bis 10 Spieler. |
 
 Alle Spiele laufen im Browser, auch am Handy, und können mit Computer-Gegnern gespielt werden.

@@ -8,6 +8,11 @@
  *   render(fromServer) – draws #table from Shell.game
  *   finished() – { title, sub, icon? } for the end-of-game overlay
  *   minPlayers – optional, players needed to start (default 2)
+ *   countPlayers(game) – optional, how many of the players count towards minPlayers
+ *   roomPlayer(p, me, game) – optional, extra HTML for a player row in the waiting room;
+ *                 buttons with data-room-act="X" send {t: "X"}
+ *   noBots     – optional, hide "+ Computer-Spieler"
+ *   onMessage(msg) – optional, other server messages (e.g. live drawing)
  */
 (function () {
   const $ = id => document.getElementById(id);
@@ -154,6 +159,7 @@
   function handle(msg) {
     if (msg.t === "hello") { Shell.token = msg.token; store.set(G.kind + "-token", msg.token); }
     else if (msg.t === "error") { Shell.toast(msg.msg); if (G.onError) G.onError(); }
+    else if (msg.t !== "game" && msg.t !== "lobby" && G.onMessage) G.onMessage(msg);
     else if (msg.t === "lobby") { Shell.game = Shell.prev = Shell.me = null; showLobby(msg.games); }
     else if (msg.t === "game") {
       const old = Shell.game;
@@ -218,17 +224,24 @@
     $("roomPlayers").innerHTML = game.players.map(p => `
       <li>${Shell.avatar(p)}<span class="name">${Shell.esc(p.name)}${p.id === me ? " (du)" : ""}</span>
         ${p.id === game.host ? '<span class="tag host">Gastgeber</span>' : p.bot ? '<span class="tag">Computer</span>' : ""}
+        ${G.roomPlayer ? G.roomPlayer(p, me, game) : ""}
         ${host && p.id !== me ? `<button class="x" data-kick="${p.id}" title="Entfernen">×</button>` : ""}</li>`).join("");
     $("hostControls").classList.toggle("hidden", !host);
     $("start").classList.toggle("hidden", !host);
     const min = G.minPlayers || 2;
-    $("start").disabled = game.players.length < min;
+    const count = G.countPlayers ? G.countPlayers(game) : game.players.length;
+    $("addBot").classList.toggle("hidden", !!G.noBots);
+    $("start").disabled = count < min;
     for (const s of G.settings) $(`room-${s.key}`).value = String(game.settings[s.key]);
     $("waitHost").textContent = host
-      ? (game.players.length < min ? `Mindestens ${min} Spieler – warte auf Mitspieler oder füge einen Computer-Spieler hinzu.` : "")
+      ? (count < min ? `Mindestens ${min} Spieler – warte auf Mitspieler${G.noBots ? "" : " oder füge einen Computer-Spieler hinzu"}.` : "")
       : "Warte, bis der Gastgeber das Spiel startet …";
   }
-  $("roomPlayers").onclick = e => { const b = e.target.closest("[data-kick]"); if (b) Shell.send({ t: "kick", id: b.dataset.kick }); };
+  $("roomPlayers").onclick = e => {
+    const b = e.target.closest("[data-kick]"), a = e.target.closest("[data-room-act]");
+    if (b) Shell.send({ t: "kick", id: b.dataset.kick });
+    if (a) Shell.send({ t: a.dataset.roomAct });
+  };
   $("invite").onclick = async () => {
     const code = Shell.game.code;
     const url = location.origin + location.pathname + "?code=" + code;

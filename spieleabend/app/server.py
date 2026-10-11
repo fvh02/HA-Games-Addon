@@ -17,6 +17,7 @@ from aiohttp import WSMsgType, web
 
 import farbrausch
 import kritzelpost
+import schnellmaler
 import stapeljagd
 import tiefpunkt
 from common import RuleError
@@ -28,7 +29,7 @@ BOT_DELAY = float(os.environ.get("SPIELE_BOT_DELAY", "0.9"))
 BOT_NAMES = ["Robo", "Karla", "Bitty", "Otto", "Zora", "Pixel", "Toni", "Mops"]
 GAME_TTL = 6 * 3600  # remove games nobody has touched for this long
 
-GAMES = {"stapeljagd": stapeljagd, "tiefpunkt": tiefpunkt, "kritzelpost": kritzelpost, "farbrausch": farbrausch}
+GAMES = {"stapeljagd": stapeljagd, "tiefpunkt": tiefpunkt, "kritzelpost": kritzelpost, "farbrausch": farbrausch, "schnellmaler": schnellmaler}
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger("spieleabend")
@@ -228,6 +229,8 @@ class Hub:
                 raise RuleError("Nur der Gastgeber kann Computer-Spieler hinzufügen")
             used = {p.name for p in game.players}
             bot_name = next((n for n in BOT_NAMES if n not in used), f"Bot {len(game.players) + 1}")
+            if getattr(game, "NO_BOTS", False):
+                raise RuleError("In diesem Spiel gibt es keine Computer-Spieler")
             game.add_player(game.new_player(bot_name, is_bot=True))
         elif kind == "kick":
             if not is_host or game.state != "lobby":
@@ -251,8 +254,19 @@ class Hub:
                 raise RuleError("Nur der Gastgeber kann eine neue Runde starten")
             game.start()
         else:
-            game.act(me, msg, is_host)
+            live = game.act(me, msg, is_host)
+            if live is not None:
+                # A small live update (e.g. drawing strokes): send just that, not every full view.
+                await self.broadcast_live(game.code, live)
+                return
         await self.broadcast(game.code)
+
+    async def broadcast_live(self, code: str, message: dict) -> None:
+        self.touched[code] = time.time()
+        for ws, token in list(self.sockets.items()):
+            seat = self.seats.get(token)
+            if seat and seat[0] == code:
+                await self.send(ws, message)
 
     async def cleanup(self) -> None:
         now = time.time()
@@ -299,7 +313,7 @@ def html_response(html: str, root: str = "") -> web.Response:
 
 MANIFEST = {
     "name": "Spieleabend", "short_name": "Spieleabend", "lang": "de",
-    "description": "Stapeljagd, Tiefpunkt, Kritzelpost und Farbrausch – zusammen spielen im Browser",
+    "description": "Stapeljagd, Tiefpunkt, Kritzelpost, Farbrausch und Schnellmaler – zusammen spielen im Browser",
     "start_url": "./", "scope": "./", "display": "standalone", "orientation": "any",
     "background_color": "#0b0a1f" if THEME == "dark" else "#eef2ff",
     "theme_color": "#0b0a1f" if THEME == "dark" else "#eef2ff",

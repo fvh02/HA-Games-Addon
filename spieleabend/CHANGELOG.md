@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.4.0
+
+- Neues Spiel **Schnellmaler** (2–12 Spieler): Einer zeichnet, alle anderen raten am Handy.
+  Ein Gerät kann sich im Warteraum per **📺 Host** zum großen Bildschirm machen (z. B. der
+  Fernseher): Es zeigt die Zeichnung live, die Wortlücken, Timer, Punkte und Tipps.
+  Wortwahl aus drei Begriffen, Buchstaben-Hinweise, „knapp daneben“, Punkte nach Tempo.
+
 ## 2.3.0
 
 - Neues Kartenspiel **Farbrausch** (2–10 Spieler): passende Farbe oder Zahl ablegen, mit

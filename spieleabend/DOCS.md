@@ -7,6 +7,8 @@ Spiele für mehrere Spieler im Browser. Auf der Startseite wählst du das Spiel:
 - **Tiefpunkt** (2–8 Spieler): Jeder hat ein Raster aus 12 Karten; tauschen, aufdecken und am
   Ende möglichst wenige Punkte haben.
 - **Kritzelpost** (3–10 Spieler): Stille Post mit Stift – Sätze schreiben, zeichnen, erraten.
+- **Schnellmaler** (2–12 Spieler): Einer zeichnet am Handy, alle anderen raten – mit dem
+  Fernseher als großem Bildschirm.
 - **Farbrausch** (2–10 Spieler): Passende Farbe oder Zahl ablegen, wer zuerst keine Karten mehr
   hat, gewinnt.
 
@@ -108,6 +110,22 @@ gegen Nachrichtenfluten und eine Sperre nach 8 falschen Code-Eingaben (15 Minute
 - Computer-Spieler schreiben Sätze, kritzeln einfache Bilder und raten mit. Wer das Spiel
   verlässt, wird von einem Computer-Spieler ersetzt.
 - Zeichnungen gehen beim Neuladen der Seite nicht verloren.
+
+## Schnellmaler – Regeln
+
+- Alle treten mit dem Spielcode bei. Neben deinem eigenen Namen steht der Knopf **📺 Host**:
+  Wer ihn tippt, macht sein Gerät zum **Bildschirm** – am besten einen Fernseher, ein Tablet oder
+  einen Laptop, den alle sehen. Pro Spiel gibt es nur einen Host, und jeder kann den Knopf nur
+  für sich selbst drücken. Nochmal tippen gibt die Rolle wieder ab.
+- Der Host zeichnet und rät nicht mit. Er zeigt groß die Live-Zeichnung, die Lücken des Wortes
+  (`_ _ _ _`), den Timer, die Punkte und alle Tipps.
+- Reihum ist einer dran: Er wählt eines von drei Wörtern und zeichnet es auf seinem Handy. Die
+  anderen tippen ihre Vermutung ins Handy. „Knapp daneben“ sieht nur, wer es getippt hat.
+- Nach der Hälfte und nach drei Vierteln der Zeit wird je ein Buchstabe verraten.
+- Punkte: Wer früher richtig rät, bekommt mehr (bis 130). Der Zeichner bekommt 25 Punkte für
+  jeden, der es errät.
+- Einstellbar: 1–3 Runden (jeder zeichnet so oft) und 60–120 Sekunden pro Bild.
+- Ohne Host-Bildschirm sehen die Ratenden die Zeichnung auf ihrem eigenen Handy.
 
 ## Farbrausch – Regeln
 
