@@ -55,6 +55,8 @@
     .card.wg { --c1: #34d399; --c2: #047857; } .card.wy { --c1: #fbbf24; --c2: #b45309; } .card.wx { --c1: #9ca3af; --c2: #374151; }
     .card.wg .front, .card.wy .front, .card.wx .front { background: linear-gradient(150deg, var(--c1), var(--c2)); }
     .card.wg .v, .card.wy .v, .card.wx .v { background: none; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,.25); }
+    .card.ga { --c1: #a78bfa; --c2: #5b21b6; } .card.gb { --c1: #f472b6; --c2: #9d174d; } .card.gc { --c1: #60a5fa; --c2: #1e40af; } .card.gd { --c1: #34d399; --c2: #065f46; }
+    .card.ia { --c1: #f87171; --c2: #991b1b; } .card.ib { --c1: #60a5fa; --c2: #1e40af; } .card.ic { --c1: #a78bfa; --c2: #5b21b6; } .card.id { --c1: #34d399; --c2: #065f46; }
   </style>
 </head>
 <body>
@@ -139,6 +141,30 @@
         <h2>Wortgitter</h2>
         <p>Errate das Wort mit fünf Buchstaben in sechs Versuchen – jeden Tag ein neues, oder endlos weiter.</p>
         <div class="meta"><span class="tag">1 Spieler</span><span class="tag">ca. 3–5 Min.</span></div>
+        <span class="btn play">Spielen</span>
+      </a>
+      <a class="tile glass" href="galgenraten/">
+        <div class="fan">
+          <div class="card ga"><div class="inner"><div class="face front"><span class="v">G</span></div><div class="face back"></div></div></div>
+          <div class="card gb"><div class="inner"><div class="face front"><span class="v">A</span></div><div class="face back"></div></div></div>
+          <div class="card gc"><div class="inner"><div class="face front"><span class="v">L</span></div><div class="face back"></div></div></div>
+          <div class="card gd"><div class="inner"><div class="face front"><span class="v">G</span></div><div class="face back"></div></div></div>
+        </div>
+        <h2>Galgenraten</h2>
+        <p>Einer denkt sich ein Wort aus, alle anderen raten Buchstabe für Buchstabe – bevor der Galgen fertig ist.</p>
+        <div class="meta"><span class="tag">1–8 Spieler</span><span class="tag">ca. 10–20 Min.</span><span class="live" id="live-galgenraten"></span></div>
+        <span class="btn play">Spielen</span>
+      </a>
+      <a class="tile glass" href="imposter/">
+        <div class="fan">
+          <div class="card ia"><div class="inner"><div class="face front"><span class="emo">🕵️</span></div><div class="face back"></div></div></div>
+          <div class="card ib"><div class="inner"><div class="face front"><span class="emo">🤫</span></div><div class="face back"></div></div></div>
+          <div class="card ic"><div class="inner"><div class="face front"><span class="emo">❓</span></div><div class="face back"></div></div></div>
+          <div class="card id"><div class="inner"><div class="face front"><span class="emo">🗳️</span></div><div class="face back"></div></div></div>
+        </div>
+        <h2>Imposter</h2>
+        <p>Alle kennen das geheime Wort – nur einer nicht. Reihum ein Hinweiswort, dann abstimmen: Wer ist der Imposter?</p>
+        <div class="meta"><span class="tag">3–16 Spieler</span><span class="tag">ca. 5 Min. pro Runde</span><span class="live" id="live-imposter"></span></div>
         <span class="btn play">Spielen</span>
       </a>
     </div>

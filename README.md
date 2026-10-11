@@ -17,6 +17,8 @@ Oder manuell: **Einstellungen → Add-ons → Add-on Store → ⋮ → Repositor
 | Tiefpunkt | Raster aus 12 Karten, möglichst wenige Punkte sammeln – 2 bis 8 Spieler. |
 | Kritzelpost | Stille Post mit Stift: schreiben, zeichnen, erraten – 3 bis 10 Spieler. |
 | Schnellmaler | Einer zeichnet, alle raten – mit Fernseher als Host-Bildschirm, 2 bis 12 Spieler. |
+| Galgenraten | Buchstaben raten, bevor der Galgen fertig ist – 1 bis 8 Spieler. |
+| Imposter | Einer kennt das geheime Wort nicht – findet ihn! 3 bis 16 Spieler. |
 | Wortgitter | Fünf Buchstaben, sechs Versuche – Wort des Tages oder endlos, 1 Spieler. |
 | Farbrausch | Passende Farbe oder Zahl ablegen, +2, +4 und „Letzte Karte!“ – 2 bis 10 Spieler. |
 

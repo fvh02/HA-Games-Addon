@@ -9,6 +9,8 @@ Spiele für mehrere Spieler im Browser. Auf der Startseite wählst du das Spiel:
 - **Kritzelpost** (3–10 Spieler): Stille Post mit Stift – Sätze schreiben, zeichnen, erraten.
 - **Schnellmaler** (2–12 Spieler): Einer zeichnet am Handy, alle anderen raten – mit dem
   Fernseher als großem Bildschirm.
+- **Galgenraten** (1–8 Spieler): Buchstaben raten, bevor der Galgen fertig ist.
+- **Imposter** (3–16 Spieler): Alle kennen das geheime Wort – nur der Imposter nicht.
 - **Wortgitter** (1 Spieler): Errate das Wort mit 5 Buchstaben in 6 Versuchen.
 - **Farbrausch** (2–10 Spieler): Passende Farbe oder Zahl ablegen, wer zuerst keine Karten mehr
   hat, gewinnt.
@@ -127,6 +129,27 @@ gegen Nachrichtenfluten und eine Sperre nach 8 falschen Code-Eingaben (15 Minute
   jeden, der es errät.
 - Einstellbar: 1–3 Runden (jeder zeichnet so oft) und 60–120 Sekunden pro Bild.
 - Ohne Host-Bildschirm sehen die Ratenden die Zeichnung auf ihrem eigenen Handy.
+
+## Galgenraten – Regeln
+
+- Reihum denkt sich einer ein Wort aus (mit optionalem Hinweis) – oder nimmt ein Zufallswort.
+  Alternativ kommen alle Wörter mit Kategorie vom Spiel; allein spielst du immer so.
+- Die anderen raten abwechselnd Buchstaben. Richtig: 10 Punkte pro Vorkommen und du bist
+  nochmal dran. Falsch: ein Teil des Galgens, der Nächste ist dran. 40 Sekunden pro Zug.
+- „Lösen“: das ganze Wort tippen. Richtig gibt 30 Bonuspunkte plus die fehlenden Buchstaben,
+  falsch kostet 2 Leben.
+- Nach 10 Fehlern ist der Galgen fertig – dann bekommt der Wortgeber 40 Punkte.
+
+## Imposter – Regeln
+
+- Jeder schaut heimlich auf seine Karte: Alle sehen das geheime Wort und die Kategorie – nur
+  der Imposter nicht (er sieht je nach Einstellung die Kategorie oder gar nichts).
+- Das Spiel lost aus, wer beginnt. Reihum sagt jeder **laut** ein Wort, das zum geheimen Wort
+  passt – nicht zu genau, sonst errät es der Imposter.
+- Dann wird am Handy abgestimmt. Wird der Imposter enttarnt, darf er das Wort aus acht
+  Möglichkeiten erraten – trifft er, gewinnt er trotzdem.
+- Punkte: Imposter gewinnt 3, die Crew je 1 (+1, wer für den Imposter gestimmt hat).
+  Optional 2 Imposter (ab 5 Spielern) und ein Zeitlimit für die Hinweisrunde.
 
 ## Wortgitter – Regeln
 

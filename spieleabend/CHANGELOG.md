@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.6.0
+
+- Neues Spiel **Galgenraten** (1–8 Spieler): eigenes Wort ausdenken oder Zufallswort mit
+  Kategorie, abwechselnd Buchstaben raten, Galgen wird Stück für Stück gezeichnet,
+  Computer-Spieler, Zeitlimit pro Zug.
+- Neues Spiel **Imposter** (3–16 Spieler): geheime Rollenkarte zum Umdrehen, ausgeloste
+  Reihenfolge für die Hinweisrunde, Abstimmung am Handy, letzte Chance für den Imposter,
+  Punkte über mehrere Runden. Rund 350 Wörter in 16 Kategorien.
+
 ## 2.5.0
 
 - Neues Spiel **Wortgitter** für eine Person: das Wort mit 5 Buchstaben in 6 Versuchen erraten,
