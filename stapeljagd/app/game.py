@@ -3,7 +3,7 @@
 import random
 import secrets
 
-JOKER = 0  # the joker card, wild for any value
+JOKER = 0  # the joker, wild for any value
 HAND_SIZE = 5
 BUILD_PILES = 4
 DISCARD_PILES = 4

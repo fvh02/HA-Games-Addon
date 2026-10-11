@@ -485,13 +485,13 @@
     function cardHtml(v, cls = "", attrs = "", badge = null) {
       if (v === null || v === undefined) return `<div class="slot ${cls}" ${attrs}></div>`;
       const front = v === JOKER
-        ? `<span class="v"><b>★</b>SKIP<br>BO</span>`
+        ? `<span class="v"><b>★</b>JOKER</span>`
         : `<span class="tl">${v}</span><span class="v">${v}</span><span class="br">${v}</span>`;
       return `<div class="card ${colorClass(v)} ${cls}" ${attrs}><div class="inner">
-        <div class="face front">${front}</div><div class="face back"><span>SKIP·BO</span></div>
+        <div class="face front">${front}</div><div class="face back"><span>★</span></div>
       </div>${badge ? `<span class="as">${badge}</span>` : ""}</div>`;
     }
-    const backHtml = (cls = "") => `<div class="card facedown ${cls}"><div class="inner"><div class="face front"></div><div class="face back"><span>SKIP·BO</span></div></div></div>`;
+    const backHtml = (cls = "") => `<div class="card facedown ${cls}"><div class="inner"><div class="face front"></div><div class="face back"><span>★</span></div></div></div>`;
     const topOf = arr => arr.length ? arr[arr.length - 1] : null;
     const fits = (card, pile) => pile.length < 12 && (card === JOKER || card === pile.length + 1);
     $("fan").innerHTML = [1, 5, 9, JOKER].map(v => cardHtml(v)).join("");

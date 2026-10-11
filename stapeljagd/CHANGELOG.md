@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.0
+
+- Neuer Name: Stapeljagd (vorher unter anderem Namen). Die Sonderkarte heißt jetzt Joker.
+  Das Add-on hat einen neuen Slug; das alte Add-on bitte deinstallieren.
+
 ## 1.1.0
 
 - Neues Design: Glassmorphism über einem bewegten Farbhintergrund, moderne Karten mit

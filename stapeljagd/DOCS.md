@@ -17,7 +17,7 @@ Platz zurück. Verlässt jemand ein laufendes Spiel, spielt ein Computer-Spieler
 
 ## Regeln
 
-- 162 Karten: je zwölfmal 1 bis 12 und 18 Stapeljagd-Joker.
+- 162 Karten: je zwölfmal 1 bis 12 und 18 Joker.
 - Jeder hat einen eigenen Stapel (30 Karten, ab 5 Spielern 20; einstellbar). Wer ihn zuerst
   leer spielt, gewinnt.
 - Zu Beginn des Zuges wird die Hand auf 5 Karten aufgefüllt.
