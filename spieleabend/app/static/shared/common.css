@@ -324,3 +324,4 @@
     .toast { bottom: calc(24px + env(safe-area-inset-bottom)); }
     .conn { top: calc(12px + env(safe-area-inset-top)); }
     .roomcode .invite { margin-top: 14px; }
+    .toast { pointer-events: none; }

@@ -52,6 +52,9 @@
     .card.cw .v { background: none; color: #fff; text-shadow: 0 2px 6px rgba(0,0,0,.55); }
     .card.s1 { --c1: #f472b6; --c2: #9d174d; } .card.s2 { --c1: #60a5fa; --c2: #1e40af; }
     .card.s3 { --c1: #34d399; --c2: #065f46; } .card.s4 { --c1: #fbbf24; --c2: #92400e; }
+    .card.wg { --c1: #34d399; --c2: #047857; } .card.wy { --c1: #fbbf24; --c2: #b45309; } .card.wx { --c1: #9ca3af; --c2: #374151; }
+    .card.wg .front, .card.wy .front, .card.wx .front { background: linear-gradient(150deg, var(--c1), var(--c2)); }
+    .card.wg .v, .card.wy .v, .card.wx .v { background: none; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,.25); }
   </style>
 </head>
 <body>
@@ -124,6 +127,18 @@
         <h2>Schnellmaler</h2>
         <p>Einer zeichnet am Handy, alle raten – ideal mit dem Fernseher als großem Bildschirm.</p>
         <div class="meta"><span class="tag">2–12 Spieler</span><span class="tag">ca. 15–25 Min.</span><span class="live" id="live-schnellmaler"></span></div>
+        <span class="btn play">Spielen</span>
+      </a>
+      <a class="tile glass" href="wortgitter/">
+        <div class="fan">
+          <div class="card wg"><div class="inner"><div class="face front"><span class="v">W</span></div><div class="face back"></div></div></div>
+          <div class="card wy"><div class="inner"><div class="face front"><span class="v">O</span></div><div class="face back"></div></div></div>
+          <div class="card wx"><div class="inner"><div class="face front"><span class="v">R</span></div><div class="face back"></div></div></div>
+          <div class="card wg"><div class="inner"><div class="face front"><span class="v">T</span></div><div class="face back"></div></div></div>
+        </div>
+        <h2>Wortgitter</h2>
+        <p>Errate das Wort mit fünf Buchstaben in sechs Versuchen – jeden Tag ein neues, oder endlos weiter.</p>
+        <div class="meta"><span class="tag">1 Spieler</span><span class="tag">ca. 3–5 Min.</span></div>
         <span class="btn play">Spielen</span>
       </a>
     </div>

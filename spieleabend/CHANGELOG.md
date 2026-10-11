@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.5.0
+
+- Neues Spiel **Wortgitter** für eine Person: das Wort mit 5 Buchstaben in 6 Versuchen erraten,
+  mit Wort des Tages und Endlos-Modus, Statistik, Serien, Teilen und Bildschirmtastatur.
+  Rund 900 Lösungswörter, knapp 7.000 erlaubte Wörter.
+- Behoben: Die unsichtbare Hinweis-Einblendung blockierte Klicks am unteren Bildschirmrand.
+
 ## 2.4.0
 
 - Neues Spiel **Schnellmaler** (2–12 Spieler): Einer zeichnet, alle anderen raten am Handy.

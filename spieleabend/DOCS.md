@@ -9,6 +9,7 @@ Spiele für mehrere Spieler im Browser. Auf der Startseite wählst du das Spiel:
 - **Kritzelpost** (3–10 Spieler): Stille Post mit Stift – Sätze schreiben, zeichnen, erraten.
 - **Schnellmaler** (2–12 Spieler): Einer zeichnet am Handy, alle anderen raten – mit dem
   Fernseher als großem Bildschirm.
+- **Wortgitter** (1 Spieler): Errate das Wort mit 5 Buchstaben in 6 Versuchen.
 - **Farbrausch** (2–10 Spieler): Passende Farbe oder Zahl ablegen, wer zuerst keine Karten mehr
   hat, gewinnt.
 
@@ -126,6 +127,16 @@ gegen Nachrichtenfluten und eine Sperre nach 8 falschen Code-Eingaben (15 Minute
   jeden, der es errät.
 - Einstellbar: 1–3 Runden (jeder zeichnet so oft) und 60–120 Sekunden pro Bild.
 - Ohne Host-Bildschirm sehen die Ratenden die Zeichnung auf ihrem eigenen Handy.
+
+## Wortgitter – Regeln
+
+- Ein Spiel für dich allein, direkt im Browser – ohne Spielcode.
+- Errate das Wort mit 5 Buchstaben in 6 Versuchen. Jeder Versuch muss ein echtes Wort sein;
+  Umlaute als ae, oe, ue.
+- 🟩 richtiger Buchstabe an der richtigen Stelle, 🟨 kommt vor, aber woanders, ⬜ kommt nicht vor.
+- **Wort des Tages:** jeden Tag ein neues, für alle dasselbe. **Endlos:** so viele Wörter, wie du
+  willst. Statistik, Serien und Spielstand speichert dein Browser; „Teilen“ verschickt dein
+  Ergebnis als Farbkästchen ohne das Wort.
 
 ## Farbrausch – Regeln
 

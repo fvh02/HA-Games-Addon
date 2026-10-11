@@ -313,7 +313,7 @@ def html_response(html: str, root: str = "") -> web.Response:
 
 MANIFEST = {
     "name": "Spieleabend", "short_name": "Spieleabend", "lang": "de",
-    "description": "Stapeljagd, Tiefpunkt, Kritzelpost, Farbrausch und Schnellmaler – zusammen spielen im Browser",
+    "description": "Stapeljagd, Tiefpunkt, Kritzelpost, Farbrausch, Schnellmaler und Wortgitter – zusammen spielen im Browser",
     "start_url": "./", "scope": "./", "display": "standalone", "orientation": "any",
     "background_color": "#0b0a1f" if THEME == "dark" else "#eef2ff",
     "theme_color": "#0b0a1f" if THEME == "dark" else "#eef2ff",
@@ -434,6 +434,33 @@ async def summary(_: web.Request) -> web.Response:
             "playing": sum(1 for g in games if g["state"] == "playing"),
         }
     return web.json_response(data)
+
+
+# Wortgitter is a single-player game that runs in the browser; the server only hands out the words.
+WORDS_DIR = Path(__file__).parent / "data"
+
+
+def word_list(name: str) -> list[str]:
+    return [w.strip() for w in (WORDS_DIR / name).read_text(encoding="utf-8").splitlines()
+            if w.strip() and not w.startswith("#")]
+
+
+WORTGITTER = {"answers": word_list("wortgitter_loesungen.txt"), "valid": word_list("wortgitter_erlaubt.txt")}
+
+
+@routes.get("/wortgitter")
+async def wortgitter_redirect(_: web.Request) -> web.Response:
+    raise web.HTTPFound("wortgitter/")
+
+
+@routes.get("/wortgitter/")
+async def wortgitter_page(_: web.Request) -> web.Response:
+    return page(STATIC_DIR / "wortgitter" / "index.html", "../")
+
+
+@routes.get("/wortgitter/woerter.json")
+async def wortgitter_words(_: web.Request) -> web.Response:
+    return web.json_response(WORTGITTER, headers={"Cache-Control": "max-age=86400"})
 
 
 @routes.get("/{kind}")

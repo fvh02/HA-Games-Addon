@@ -1,7 +1,7 @@
 name: Spieleabend
-version: "2.4.0"
+version: "2.5.0"
 slug: spieleabend
-description: Spiele für mehrere Spieler im Browser – Stapeljagd, Tiefpunkt, Kritzelpost, Farbrausch und Schnellmaler
+description: Spiele für mehrere Spieler im Browser – Stapeljagd, Tiefpunkt, Kritzelpost, Farbrausch, Schnellmaler und Wortgitter
 url: https://github.com/fvh02/HA-Games-Addon
 image: ghcr.io/fvh02/{arch}-ha-spieleabend
 arch:
