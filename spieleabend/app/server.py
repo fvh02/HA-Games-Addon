@@ -1,4 +1,4 @@
-"""Stapeljagd add-on: multiplayer game server with lobby, rooms and computer players."""
+"""Spieleabend add-on: multiplayer card games with a shared lobby, rooms and computer players."""
 
 import asyncio
 import json
@@ -12,17 +12,21 @@ from pathlib import Path
 
 from aiohttp import WSMsgType, web
 
-from game import MAX_PLAYERS, Game, Player, RuleError, bot_moves
+import stapeljagd
+import tiefpunkt
+from common import RuleError
 
 OPTIONS_FILE = Path("/data/options.json")
 STATIC_DIR = Path(__file__).parent / "static"
-PORT = int(os.environ.get("STAPELJAGD_PORT", "8098"))
-BOT_DELAY = float(os.environ.get("STAPELJAGD_BOT_DELAY", "0.9"))
+PORT = int(os.environ.get("SPIELE_PORT", "8098"))
+BOT_DELAY = float(os.environ.get("SPIELE_BOT_DELAY", "0.9"))
 BOT_NAMES = ["Robo", "Karla", "Bitty", "Otto", "Zora", "Pixel", "Toni", "Mops"]
 GAME_TTL = 6 * 3600  # remove games nobody has touched for this long
 
+GAMES = {"stapeljagd": stapeljagd, "tiefpunkt": tiefpunkt}
+
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
-log = logging.getLogger("stapeljagd")
+log = logging.getLogger("spieleabend")
 
 
 def load_options() -> dict:
@@ -32,23 +36,24 @@ def load_options() -> dict:
         return {}
 
 
-THEME = os.environ.get("STAPELJAGD_THEME") or load_options().get("theme") or "dark"
+THEME = os.environ.get("SPIELE_THEME") or load_options().get("theme") or "dark"
 if THEME not in ("dark", "light"):
     THEME = "dark"
 
 
 class Hub:
-    """All games, the browsers connected to them and the bots that play in them."""
+    """All rooms of one game kind, the browsers connected to them and their bots."""
 
-    def __init__(self) -> None:
-        self.games: dict[str, Game] = {}
+    def __init__(self, module) -> None:
+        self.module = module
+        self.games: dict = {}
         self.touched: dict[str, float] = {}
-        # Each browser keeps a token; it maps to (game code, player id) so a reload rejoins.
+        # Each browser keeps a token; it maps to (room code, player id) so a reload rejoins.
         self.seats: dict[str, tuple[str, str]] = {}
-        self.sockets: dict[web.WebSocketResponse, str] = {}  # socket -> token
+        self.sockets: dict[web.WebSocketResponse, str] = {}
         self.bot_tasks: dict[str, asyncio.Task] = {}
 
-    # -- sending -----------------------------------------------------------
+    # -- sending -------------------------------------------------------------
     @staticmethod
     async def send(ws: web.WebSocketResponse, message: dict) -> None:
         if not ws.closed:
@@ -57,16 +62,12 @@ class Hub:
             except (ConnectionError, RuntimeError):
                 pass
 
-    def lobby_view(self) -> dict:
-        games = [
-            {
-                "code": g.code, "state": g.state,
-                "players": [p.name for p in g.players],
-                "full": len(g.players) >= MAX_PLAYERS,
-            }
+    def open_games(self) -> list[dict]:
+        return [
+            {"code": g.code, "state": g.state, "players": [p.name for p in g.players],
+             "full": len(g.players) >= self.module.MAX_PLAYERS}
             for g in self.games.values() if g.players
         ]
-        return {"t": "lobby", "games": games}
 
     async def send_view(self, ws: web.WebSocketResponse) -> None:
         token = self.sockets.get(ws)
@@ -76,10 +77,10 @@ class Hub:
             await self.send(ws, {"t": "game", "me": seat[1], "game": game.view_for(seat[1])})
         else:
             self.seats.pop(token, None)
-            await self.send(ws, self.lobby_view())
+            await self.send(ws, {"t": "lobby", "games": self.open_games()})
 
     async def broadcast(self, code: str | None = None) -> None:
-        """Update every browser in game `code` and everyone in the lobby."""
+        """Update every browser in room `code` and everyone in the lobby."""
         if code:
             self.touched[code] = time.time()
         for ws, token in list(self.sockets.items()):
@@ -87,40 +88,34 @@ class Hub:
             if seat is None or seat[0] == code:
                 await self.send_view(ws)
         if code:
-            self.schedule_bot(code)
+            self.schedule_bots(code)
 
-    # -- bots --------------------------------------------------------------
-    def schedule_bot(self, code: str) -> None:
+    # -- bots ----------------------------------------------------------------
+    def schedule_bots(self, code: str) -> None:
         game = self.games.get(code)
-        player = game.current if game else None
         task = self.bot_tasks.get(code)
-        if player and player.is_bot and (task is None or task.done()):
-            self.bot_tasks[code] = asyncio.create_task(self.run_bot(code))
+        if game and game.pending_bots() and (task is None or task.done()):
+            self.bot_tasks[code] = asyncio.create_task(self.run_bots(code))
 
-    async def run_bot(self, code: str) -> None:
+    async def run_bots(self, code: str) -> None:
         while True:
             await asyncio.sleep(BOT_DELAY)
             game = self.games.get(code)
-            player = game.current if game else None
-            if not player or not player.is_bot:
+            bots = game.pending_bots() if game else []
+            if not bots:
                 return
-            move = bot_moves(game, player)[0]
             try:
-                if move[0] == "play":
-                    game.play(player.id, *move[1:])
-                elif move[0] == "discard":
-                    game.discard(player.id, *move[1:])
-                else:
-                    game.pass_turn(player.id)
-            except RuleError as err:  # should not happen; don't let a bot hang the game
-                log.warning("Bot %s: %s", player.name, err)
-                game.pass_turn(player.id) if not player.hand else game.discard(player.id, 0, 0)
+                game.bot_step(bots[0])
+            except RuleError as err:  # should not happen; never let a bot freeze a room
+                log.warning("Bot %s in %s: %s", bots[0].name, code, err)
+                return
             await self.broadcast(code)
 
-    # -- actions -----------------------------------------------------------
+    # -- actions -------------------------------------------------------------
     def new_code(self) -> str:
+        letters = string.ascii_uppercase.replace("O", "").replace("I", "")
         while True:
-            code = "".join(random.choices(string.ascii_uppercase.replace("O", "").replace("I", ""), k=4))
+            code = "".join(random.choices(letters, k=4))
             if code not in self.games:
                 return code
 
@@ -160,14 +155,14 @@ class Hub:
             if seat:
                 self.leave(token)
             if kind == "create":
-                stock = int(msg.get("stock") or 0)
-                game = Game(self.new_code(), stock if stock in (0, 5, 10, 15, 20, 25, 30) else 0)
+                game = self.module.Game(self.new_code())
+                game.configure(msg.get("settings") or {})
                 self.games[game.code] = game
             else:
                 game = self.games.get(str(msg.get("code", "")).strip().upper())
                 if not game:
                     raise RuleError("Dieses Spiel gibt es nicht")
-            player = Player(name)
+            player = game.new_player(name)
             game.add_player(player)
             self.seats[token] = (game.code, player.id)
             await self.broadcast(game.code)
@@ -175,7 +170,7 @@ class Hub:
 
         if not game:
             if kind == "lobby":
-                await self.send(ws, self.lobby_view())
+                await self.send(ws, {"t": "lobby", "games": self.open_games()})
                 return
             raise RuleError("Du bist in keinem Spiel")
 
@@ -183,14 +178,14 @@ class Hub:
         if kind == "leave":
             code = self.leave(token)
             await self.broadcast(code)
-            await self.send(ws, self.lobby_view())
+            await self.send(ws, {"t": "lobby", "games": self.open_games()})
             return
         if kind == "add_bot":
             if not is_host:
                 raise RuleError("Nur der Gastgeber kann Computer-Spieler hinzufügen")
             used = {p.name for p in game.players}
             bot_name = next((n for n in BOT_NAMES if n not in used), f"Bot {len(game.players) + 1}")
-            game.add_player(Player(bot_name, is_bot=True))
+            game.add_player(game.new_player(bot_name, is_bot=True))
         elif kind == "kick":
             if not is_host or game.state != "lobby":
                 raise RuleError("Nur der Gastgeber kann vor dem Start Spieler entfernen")
@@ -203,8 +198,7 @@ class Hub:
         elif kind == "settings":
             if not is_host or game.state != "lobby":
                 raise RuleError("Nur der Gastgeber kann das ändern")
-            stock = int(msg.get("stock") or 0)
-            game.stock_size = stock if stock in (0, 5, 10, 15, 20, 25, 30) else 0
+            game.configure(msg.get("settings") or {})
         elif kind == "start":
             if not is_host:
                 raise RuleError("Nur der Gastgeber kann das Spiel starten")
@@ -213,41 +207,67 @@ class Hub:
             if not is_host or game.state != "finished":
                 raise RuleError("Nur der Gastgeber kann eine neue Runde starten")
             game.start()
-        elif kind == "play":
-            game.play(me, str(msg.get("src")), int(msg.get("index", 0)), int(msg.get("pile", -1)))
-        elif kind == "discard":
-            game.discard(me, int(msg.get("index", -1)), int(msg.get("pile", -1)))
-        elif kind == "pass":
-            game.pass_turn(me)
         else:
-            raise RuleError("Unbekannte Aktion")
+            game.act(me, msg, is_host)
         await self.broadcast(game.code)
 
     async def cleanup(self) -> None:
-        while True:
-            await asyncio.sleep(600)
-            now = time.time()
-            for code in [c for c, t in self.touched.items() if now - t > GAME_TTL]:
-                self.games.pop(code, None)
-                self.touched.pop(code, None)
-                for token in [t for t, s in self.seats.items() if s[0] == code]:
-                    self.seats.pop(token)
-            await self.broadcast()
+        now = time.time()
+        for code in [c for c, t in self.touched.items() if now - t > GAME_TTL]:
+            self.games.pop(code, None)
+            self.touched.pop(code, None)
+            for token in [t for t, s in self.seats.items() if s[0] == code]:
+                self.seats.pop(token)
+        await self.broadcast()
 
 
-hub = Hub()
+hubs = {kind: Hub(module) for kind, module in GAMES.items()}
 routes = web.RouteTableDef()
+
+
+def page(path: Path) -> web.Response:
+    html = path.read_text(encoding="utf-8").replace("<html ", f'<html data-theme="{THEME}" ', 1)
+    return web.Response(text=html, content_type="text/html", headers={"Cache-Control": "no-cache"})
 
 
 @routes.get("/")
 async def index(_: web.Request) -> web.Response:
-    html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
-    html = html.replace("<html ", f'<html data-theme="{THEME}" ', 1)
-    return web.Response(text=html, content_type="text/html", headers={"Cache-Control": "no-cache"})
+    return page(STATIC_DIR / "index.html")
 
 
-@routes.get("/ws")
+@routes.get("/api/summary")
+async def summary(_: web.Request) -> web.Response:
+    data = {}
+    for kind, hub in hubs.items():
+        games = hub.open_games()
+        data[kind] = {
+            "open": sum(1 for g in games if g["state"] == "lobby" and not g["full"]),
+            "playing": sum(1 for g in games if g["state"] == "playing"),
+        }
+    return web.json_response(data)
+
+
+@routes.get("/{kind}")
+async def no_slash(request: web.Request) -> web.Response:
+    kind = request.match_info["kind"]
+    if kind not in hubs:
+        raise web.HTTPNotFound()
+    raise web.HTTPFound(f"{kind}/")  # relative, so it also works behind Ingress
+
+
+@routes.get("/{kind}/")
+async def game_page(request: web.Request) -> web.Response:
+    kind = request.match_info["kind"]
+    if kind not in hubs:
+        raise web.HTTPNotFound()
+    return page(STATIC_DIR / kind / "index.html")
+
+
+@routes.get("/{kind}/ws")
 async def websocket(request: web.Request) -> web.WebSocketResponse:
+    hub = hubs.get(request.match_info["kind"])
+    if not hub:
+        raise web.HTTPNotFound()
     ws = web.WebSocketResponse(heartbeat=25)
     await ws.prepare(request)
     token = None
@@ -279,13 +299,21 @@ async def websocket(request: web.Request) -> web.WebSocketResponse:
     return ws
 
 
+async def cleanup_loop() -> None:
+    while True:
+        await asyncio.sleep(600)
+        for hub in hubs.values():
+            await hub.cleanup()
+
+
 async def on_startup(app: web.Application) -> None:
-    app["cleanup"] = asyncio.create_task(hub.cleanup())
-    log.info("Stapeljagd läuft auf Port %s", PORT)
+    app["cleanup"] = asyncio.create_task(cleanup_loop())
+    log.info("Spieleabend läuft auf Port %s", PORT)
 
 
 def main() -> None:
     app = web.Application()
+    app.router.add_static("/static/", STATIC_DIR / "shared")
     app.add_routes(routes)
     app.on_startup.append(on_startup)
     web.run_app(app, host=None, port=PORT, print=None, access_log=None)

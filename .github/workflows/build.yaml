@@ -5,7 +5,7 @@ name: Build add-on images
 on:
   push:
     paths:
-      - "stapeljagd/**"
+      - "spieleabend/**"
       - ".github/workflows/build.yaml"
   workflow_dispatch:
 
@@ -35,12 +35,12 @@ jobs:
       - name: Read add-on version and base image
         id: meta
         run: |
-          version="$(sed -n 's/^version: *"\{0,1\}\([^"]*\)"\{0,1\}$/\1/p' stapeljagd/config.yaml)"
-          base="$(sed -n 's/^  ${{ matrix.arch }}: *//p' stapeljagd/build.yaml)"
+          version="$(sed -n 's/^version: *"\{0,1\}\([^"]*\)"\{0,1\}$/\1/p' spieleabend/config.yaml)"
+          base="$(sed -n 's/^  ${{ matrix.arch }}: *//p' spieleabend/build.yaml)"
           test -n "$version" && test -n "$base"
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "base=$base" >> "$GITHUB_OUTPUT"
-          echo "image=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/${{ matrix.arch }}-ha-stapeljagd" >> "$GITHUB_OUTPUT"
+          echo "image=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/${{ matrix.arch }}-ha-spieleabend" >> "$GITHUB_OUTPUT"
 
       # armv7 runs emulated on the arm64 runner
       - if: matrix.arch == 'armv7'
@@ -56,7 +56,7 @@ jobs:
 
       - uses: docker/build-push-action@v6
         with:
-          context: stapeljagd
+          context: spieleabend
           platforms: ${{ matrix.platform }}
           build-args: BUILD_FROM=${{ steps.meta.outputs.base }}
           push: true

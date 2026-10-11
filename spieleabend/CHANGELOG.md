@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.0.0
+
+- Aus „Stapeljagd“ wird „Spieleabend“: eine Startseite zur Auswahl des Spiels.
+- Neues Spiel **Tiefpunkt** (2–8 Spieler) im gleichen Design, mit Computer-Spielern,
+  Rundenwertung und Animationen beim Aufdecken, Tauschen und Abräumen von Spalten.
+- Neuer Slug: das alte Add-on „Stapeljagd“ bitte deinstallieren.
+
 ## 1.2.0
 
 - Neuer Name: Stapeljagd (vorher unter anderem Namen). Die Sonderkarte heißt jetzt Joker.

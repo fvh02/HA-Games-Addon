@@ -3,4 +3,4 @@ configuration:
     name: Color scheme
     description: Dark or light mode.
 network:
-  8098/tcp: Game on your home network (for players without Home Assistant access)
+  8098/tcp: Games on your home network (for players without Home Assistant access)

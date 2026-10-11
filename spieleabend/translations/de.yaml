@@ -3,4 +3,4 @@ configuration:
     name: Farbschema
     description: Dunkler (dark) oder heller (light) Modus.
 network:
-  8098/tcp: Spiel im Heimnetz (für Mitspieler ohne Home-Assistant-Zugang)
+  8098/tcp: Spiele im Heimnetz (für Mitspieler ohne Home-Assistant-Zugang)

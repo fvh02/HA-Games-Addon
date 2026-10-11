@@ -3,15 +3,14 @@
 import random
 import secrets
 
+from common import RuleError
+
 JOKER = 0  # the joker, wild for any value
 HAND_SIZE = 5
 BUILD_PILES = 4
 DISCARD_PILES = 4
-MAX_PLAYERS = 6
-
-
-class RuleError(Exception):
-    """An action that the rules don't allow; the message is shown to the player."""
+MIN_PLAYERS, MAX_PLAYERS = 2, 6
+STOCK_SIZES = (0, 5, 10, 15, 20, 25, 30)
 
 
 def new_deck() -> list[int]:
@@ -35,6 +34,8 @@ class Player:
 
 
 class Game:
+    KIND = "stapeljagd"
+
     def __init__(self, code: str, stock_size: int = 0):
         self.code = code
         self.players: list[Player] = []
@@ -48,6 +49,38 @@ class Game:
         self.winner: str | None = None
         self.log: list[str] = []
         self.passes = 0  # consecutive turns passed without any card played
+
+    # -- shared interface --------------------------------------------------
+    def new_player(self, name: str, is_bot: bool = False) -> Player:
+        return Player(name, is_bot)
+
+    def configure(self, settings: dict) -> None:
+        stock = int(settings.get("stock") or 0)
+        self.stock_size = stock if stock in STOCK_SIZES else 0
+
+    def act(self, player_id: str, msg: dict, is_host: bool) -> None:
+        kind = msg.get("t")
+        if kind == "play":
+            self.play(player_id, str(msg.get("src")), int(msg.get("index", 0)), int(msg.get("pile", -1)))
+        elif kind == "discard":
+            self.discard(player_id, int(msg.get("index", -1)), int(msg.get("pile", -1)))
+        elif kind == "pass":
+            self.pass_turn(player_id)
+        else:
+            raise RuleError("Unbekannte Aktion")
+
+    def pending_bots(self) -> list:
+        current = self.current
+        return [current] if current and current.is_bot else []
+
+    def bot_step(self, bot: Player) -> None:
+        move = bot_moves(self, bot)[0]
+        if move[0] == "play":
+            self.play(bot.id, *move[1:])
+        elif move[0] == "discard":
+            self.discard(bot.id, *move[1:])
+        else:
+            self.pass_turn(bot.id)
 
     # -- helpers -----------------------------------------------------------
     def player(self, player_id: str) -> Player | None:
@@ -226,8 +259,8 @@ class Game:
 
         current = self.current
         return {
-            "code": self.code, "state": self.state, "host": self.host_id,
-            "stock_size": self.stock_size,
+            "kind": self.KIND, "code": self.code, "state": self.state, "host": self.host_id,
+            "settings": {"stock": self.stock_size}, "stock_size": self.stock_size,
             "players": [public(p) for p in self.players],
             "turn": current.id if current else None,
             "building": self.building,
