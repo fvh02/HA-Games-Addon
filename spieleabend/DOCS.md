@@ -52,9 +52,10 @@ Home Assistant bleibt privat. Voraussetzung: Die Domain wird bei Cloudflare verw
    Cloudflared**, Namen eingeben (z. B. `homeassistant`). Den angezeigten **Token** (die lange
    Zeichenkette nach `--token`) kopieren.
 4. **Tunnel-Add-on installieren:** In Home Assistant das Repository
-   `https://github.com/brenner-tobias/addon-cloudflared` hinzufügen und **Cloudflared**
-   installieren. In dessen Konfiguration nur bei **Cloudflare Tunnel Token** den Token einfügen
-   (die übrigen Felder leer lassen), speichern und starten.
+   `https://github.com/brenner-tobias/ha-addons` hinzufügen und **Cloudflared** installieren.
+   In dessen Konfiguration **Optionale Konfigurationsoptionen anzeigen** einschalten, bei
+   **Cloudflare Tunnel Token** den Token einfügen (die übrigen Felder leer lassen), speichern
+   und starten.
 5. **Adresse festlegen:** Zurück bei Cloudflare im Tunnel unter **Public Hostname → Add a public
    hostname**: Subdomain `spiele`, deine Domain, Service **HTTP** und URL
    `<home-assistant-ip>:8098` (z. B. `192.168.178.103:8098`). Speichern.
