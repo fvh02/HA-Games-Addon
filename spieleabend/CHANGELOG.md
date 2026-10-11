@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.2.1
+
+- Sicherung: Ist kein Zugangscode gesetzt, werden Aufrufe über Cloudflare (Tunnel/Domain)
+  abgewiesen. Das Heimnetz und Home Assistant bleiben ohne Code nutzbar.
+
 ## 2.2.0
 
 - **Als App installierbar** (Home-Bildschirm auf iPhone und Android): Vollbild, App-Icon,

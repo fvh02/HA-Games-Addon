@@ -349,13 +349,34 @@ def login_page(target: str, error: str = "", status: int = 401) -> web.Response:
     return response
 
 
+def via_internet(request: web.Request) -> bool:
+    """Cloudflare (tunnel or proxy) adds these headers to every request it forwards."""
+    return "Cf-Ray" in request.headers or "Cf-Connecting-IP" in request.headers
+
+
 @web.middleware
 async def access_middleware(request: web.Request, handler):
+    if not ACCESS_CODE and via_internet(request) and not via_ingress(request):
+        # Safety net: reachable from the internet but nobody set a code – don't let everyone in.
+        if request.path.startswith("/static/"):
+            return await handler(request)
+        return no_code_page()
     if has_access(request) or request.path.startswith(OPEN_PATHS):
         return await handler(request)
-    if request.method == "GET" and (request.path == "/" or request.path.endswith("/")):
+    if request.method == "GET" and ("text/html" in request.headers.get("Accept", "") or request.path.endswith("/")):
         return login_page(request.path_qs)
     raise web.HTTPUnauthorized(text="Zugangscode fehlt")
+
+
+def no_code_page() -> web.Response:
+    html = (STATIC_DIR / "login.html").read_text(encoding="utf-8")
+    start, end = html.index('<form'), html.index('</form>') + len('</form>')
+    html = html[:start] + html[end:]
+    html = html.replace("Gib den Zugangscode ein, den du bekommen hast.",
+                        "Noch gesperrt: Im Spieleabend-Add-on muss zuerst ein Zugangscode gesetzt werden.")
+    response = html_response(html, "/")
+    response.set_status(403)
+    return response
 
 
 @routes.post("/__login")
@@ -481,6 +502,8 @@ async def cleanup_loop() -> None:
 async def on_startup(app: web.Application) -> None:
     app["cleanup"] = asyncio.create_task(cleanup_loop())
     log.info("Spieleabend läuft auf Port %s%s", PORT, " (mit Zugangscode)" if ACCESS_CODE else "")
+    if not ACCESS_CODE:
+        log.info("Kein Zugangscode gesetzt: Aufrufe über Cloudflare werden abgewiesen, das Heimnetz ist offen.")
 
 
 def main() -> None:
