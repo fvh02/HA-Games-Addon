@@ -1,11 +1,12 @@
 # Spieleabend
 
-Kartenspiele für mehrere Spieler im Browser. Auf der Startseite wählst du das Spiel:
+Spiele für mehrere Spieler im Browser. Auf der Startseite wählst du das Spiel:
 
 - **Stapeljagd** (2–6 Spieler): Baut gemeinsam Stapel von 1 bis 12; wer seinen eigenen Stapel
   zuerst los ist, gewinnt.
 - **Tiefpunkt** (2–8 Spieler): Jeder hat ein Raster aus 12 Karten; tauschen, aufdecken und am
   Ende möglichst wenige Punkte haben.
+- **Kritzelpost** (3–10 Spieler): Stille Post mit Stift – Sätze schreiben, zeichnen, erraten.
 
 ## Mitspielen
 
@@ -49,9 +50,23 @@ Laufende Spiele werden nicht gespeichert; ein Neustart des Add-ons beendet sie.
 - Erreicht jemand die Zielpunktzahl (100, einstellbar), endet das Spiel. Es gewinnt, wer
   insgesamt die wenigsten Punkte hat.
 
+## Kritzelpost – Regeln
+
+- Jeder schreibt einen lustigen Satz (oder nimmt einen der 💡-Vorschläge).
+- Jedes Album wandert weiter: Der Nächste zeichnet den Satz, der Übernächste beschreibt die
+  Zeichnung, der Nächste zeichnet die Beschreibung … bis jedes Album bei jedem Spieler war.
+- Wer „Fertig“ gedrückt hat, kann bis zum Ende des Schritts noch auf „Bearbeiten“ tippen.
+- **Tempo:** Schnell (35 s schreiben / 70 s zeichnen), Normal (50 s / 100 s), Gemütlich
+  (70 s / 160 s) oder ohne Zeitlimit. Läuft die Zeit ab, wird abgegeben, was da ist.
+- Zum Schluss blättert der Gastgeber alle Alben Schritt für Schritt auf, die Zeichnungen
+  werden dabei Strich für Strich nachgemalt.
+- Computer-Spieler schreiben Sätze, kritzeln einfache Bilder und raten mit. Wer das Spiel
+  verlässt, wird von einem Computer-Spieler ersetzt.
+- Zeichnungen gehen beim Neuladen der Seite nicht verloren.
+
 ## Bedienung
 
-Karte oder Stapel antippen, dann das Ziel antippen. Was gerade möglich ist, leuchtet grün.
+Kartenspiele: Karte oder Stapel antippen, dann das Ziel antippen. Was gerade möglich ist, leuchtet grün.
 
 ## Konfiguration
 

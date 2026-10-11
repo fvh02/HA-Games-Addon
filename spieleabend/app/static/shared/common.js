@@ -6,7 +6,8 @@
  *   fan       – HTML of a few cards for the lobby logo
  *   settings  – [{ key, options: [[value, label], ...] }] chosen when creating a room
  *   render(fromServer) – draws #table from Shell.game
- *   finished() – { title, sub } for the end-of-game overlay
+ *   finished() – { title, sub, icon? } for the end-of-game overlay
+ *   minPlayers – optional, players needed to start (default 2)
  */
 (function () {
   const $ = id => document.getElementById(id);
@@ -115,7 +116,7 @@
   document.body.insertAdjacentHTML("beforeend", `
     <div class="overlay hidden" id="finished">
       <div class="panel glass">
-        <div class="trophy">🏆</div>
+        <div class="trophy" id="trophy">🏆</div>
         <h3 id="winner"></h3>
         <div class="empty" id="winnerSub"></div>
         <div class="row" style="justify-content:center;margin-top:16px">
@@ -162,6 +163,7 @@
           const f = G.finished();
           $("winner").textContent = f.title;
           $("winnerSub").innerHTML = f.sub || "";
+          $("trophy").textContent = f.icon || "🏆";
           $("rematch").classList.toggle("hidden", msg.game.host !== msg.me);
           const round = msg.game.code + msg.game.log.join("|");
           if (celebrated !== round) { celebrated = round; Shell.confetti(); }
@@ -215,10 +217,11 @@
         ${host && p.id !== me ? `<button class="x" data-kick="${p.id}" title="Entfernen">×</button>` : ""}</li>`).join("");
     $("hostControls").classList.toggle("hidden", !host);
     $("start").classList.toggle("hidden", !host);
-    $("start").disabled = game.players.length < 2;
+    const min = G.minPlayers || 2;
+    $("start").disabled = game.players.length < min;
     for (const s of G.settings) $(`room-${s.key}`).value = String(game.settings[s.key]);
     $("waitHost").textContent = host
-      ? (game.players.length < 2 ? "Warte auf Mitspieler oder füge einen Computer-Spieler hinzu." : "")
+      ? (game.players.length < min ? `Mindestens ${min} Spieler – warte auf Mitspieler oder füge einen Computer-Spieler hinzu.` : "")
       : "Warte, bis der Gastgeber das Spiel startet …";
   }
   $("roomPlayers").onclick = e => { const b = e.target.closest("[data-kick]"); if (b) Shell.send({ t: "kick", id: b.dataset.kick }); };

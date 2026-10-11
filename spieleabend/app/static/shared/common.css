@@ -317,3 +317,5 @@
     .home:hover { color: var(--text); }
     .topbar .code { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
     .topbar .title, .topbar .btn { flex: none; }
+    /* emoji card faces (lobby fans) */
+    .card .emo { position: relative; z-index: 1; font-size: calc(var(--w) * .5); line-height: 1; filter: drop-shadow(0 2px 3px rgba(0,0,0,.18)); }

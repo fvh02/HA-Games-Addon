@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.1.0
+
+- Neues Spiel **Kritzelpost** (3–10 Spieler): Stille Post mit Stift. Sätze schreiben,
+  zeichnen, erraten und am Ende alle Alben gemeinsam aufdecken. Mit Zeichenfläche
+  (14 Farben, 4 Stärken, Radierer, Rückgängig), Timer in drei Tempi oder ohne Zeitlimit,
+  Computer-Spielern und nachgemalten Zeichnungen beim Aufdecken.
+
 ## 2.0.0
 
 - Aus „Stapeljagd“ wird „Spieleabend“: eine Startseite zur Auswahl des Spiels.
