@@ -38,6 +38,9 @@
     .card .v.neg { font-size: calc(var(--w) * .44); }
     .card.k1 { --c1: #f472b6; --c2: #9d174d; } .card.k2 { --c1: #60a5fa; --c2: #1e40af; }
     .card.k3 { --c1: #34d399; --c2: #065f46; } .card.k4 { --c1: #fbbf24; --c2: #92400e; }
+    .install { margin: -14px 0 22px; padding: 14px 44px 14px 18px; border-radius: 18px; position: relative; color: var(--muted); line-height: 1.45; }
+    .install b { color: var(--text); }
+    .install .x { position: absolute; top: 8px; right: 8px; }
   </style>
 </head>
 <body>
@@ -45,8 +48,12 @@
   <main class="hub">
     <header>
       <h1>Spieleabend</h1>
-      <p>Wähle ein Spiel – alle im WLAN können mitspielen.</p>
+      <p>Wähle ein Spiel und lade deine Freunde ein.</p>
     </header>
+    <div class="install glass hidden" id="install">
+      <b>Als App installieren:</b> <span id="installHow"></span>
+      <button class="x" id="installClose" aria-label="Schließen">×</button>
+    </div>
     <div class="tiles">
       <a class="tile glass" href="stapeljagd/">
         <div class="fan">
@@ -87,6 +94,21 @@
     </div>
   </main>
   <script>
+    // Tip to add the page to the home screen (only in a browser tab, not inside Home Assistant).
+    (() => {
+      const standalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone;
+      let dismissed = false; try { dismissed = localStorage.getItem("install-tip") === "no"; } catch {}
+      if (standalone || dismissed || window.top !== window || !/iPhone|iPad|Android/i.test(navigator.userAgent)) return;
+      const ios = /iPhone|iPad/i.test(navigator.userAgent);
+      document.getElementById("installHow").textContent = ios
+        ? "In Safari unten auf Teilen ⎋ tippen, dann „Zum Home-Bildschirm“."
+        : "Im Browsermenü ⋮ auf „App installieren“ oder „Zum Startbildschirm hinzufügen“ tippen.";
+      document.getElementById("install").classList.remove("hidden");
+      document.getElementById("installClose").onclick = () => {
+        document.getElementById("install").classList.add("hidden");
+        try { localStorage.setItem("install-tip", "no"); } catch {}
+      };
+    })();
     async function refresh() {
       try {
         const data = await (await fetch("api/summary")).json();

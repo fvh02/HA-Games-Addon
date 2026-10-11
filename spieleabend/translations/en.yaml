@@ -2,5 +2,8 @@ configuration:
   theme:
     name: Color scheme
     description: Dark or light mode.
+  access_code:
+    name: Access code
+    description: Anyone who opens the games outside Home Assistant has to enter this code once. Set it whenever the games are reachable from the internet. Empty = no code.
 network:
-  8098/tcp: Games on your home network (for players without Home Assistant access)
+  8098/tcp: Games for players without Home Assistant access (home network or tunnel)

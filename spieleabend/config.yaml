@@ -1,5 +1,5 @@
 name: Spieleabend
-version: "2.1.0"
+version: "2.2.0"
 slug: spieleabend
 description: Spiele für mehrere Spieler im Browser – Stapeljagd, Tiefpunkt und Kritzelpost
 url: https://github.com/fvh02/HA-Games-Addon
@@ -16,8 +16,10 @@ panel_title: Spieleabend
 ports:
   8098/tcp: 8098
 ports_description:
-  8098/tcp: Spiele im Heimnetz (für Mitspieler ohne Home-Assistant-Zugang)
+  8098/tcp: Spiele für Mitspieler ohne Home-Assistant-Zugang (Heimnetz oder Tunnel)
 options:
   theme: dark
+  access_code: ""
 schema:
   theme: list(dark|light)
+  access_code: password?

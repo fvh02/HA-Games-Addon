@@ -2,5 +2,8 @@ configuration:
   theme:
     name: Farbschema
     description: Dunkler (dark) oder heller (light) Modus.
+  access_code:
+    name: Zugangscode
+    description: Wer die Spiele nicht über Home Assistant öffnet, muss diesen Code einmal eingeben. Unbedingt setzen, wenn die Spiele aus dem Internet erreichbar sind. Leer = kein Code.
 network:
-  8098/tcp: Spiele im Heimnetz (für Mitspieler ohne Home-Assistant-Zugang)
+  8098/tcp: Spiele für Mitspieler ohne Home-Assistant-Zugang (Heimnetz oder Tunnel)

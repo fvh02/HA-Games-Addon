@@ -13,6 +13,10 @@ Spiele für mehrere Spieler im Browser. Auf der Startseite wählst du das Spiel:
 - **Über Home Assistant:** Spieleabend in der Seitenleiste öffnen.
 - **Ohne Home-Assistant-Zugang** (z. B. Familie und Freunde am Handy): im Heimnetz
   `http://<home-assistant-ip>:8098` öffnen. Den Port kannst du im Reiter **Netzwerk** ändern.
+- **Von überall über deine Domain**, z. B. `https://spiele.deine-domain.de` – siehe
+  [Über das Internet spielen](#über-das-internet-spielen).
+
+Im Warteraum schickt **📨 Einladen** einen Link mit dem Spielcode per WhatsApp, iMessage usw.
 
 Einer erstellt ein Spiel und bekommt einen vierstelligen Code. Die anderen geben ihren Namen ein
 und treten mit dem Code bei (offene Spiele stehen auch direkt in der Liste). Der Gastgeber kann
@@ -21,6 +25,44 @@ Computer-Spieler hinzufügen, Einstellungen wählen und das Spiel starten.
 Lädt jemand die Seite neu oder verliert kurz die Verbindung, kommt er automatisch an seinen
 Platz zurück. Verlässt jemand ein laufendes Spiel, spielt ein Computer-Spieler für ihn weiter.
 Laufende Spiele werden nicht gespeichert; ein Neustart des Add-ons beendet sie.
+
+## Als App installieren
+
+Spieleabend lässt sich wie eine App auf den Home-Bildschirm legen (Vollbild, eigenes Icon):
+
+- **iPhone/iPad:** Seite in Safari öffnen → Teilen → **Zum Home-Bildschirm**.
+- **Android:** Seite in Chrome öffnen → Menü ⋮ → **App installieren**.
+
+Das klappt am besten über die HTTPS-Adresse deiner Domain (siehe unten).
+
+## Über das Internet spielen
+
+Mit einem **Cloudflare Tunnel** erreichen deine Freunde die Spiele unter deiner eigenen Domain –
+ohne Portfreigabe im Router, ohne Tailscale, mit HTTPS. Nur die Spiele werden freigegeben, dein
+Home Assistant bleibt privat. Voraussetzung: Die Domain wird bei Cloudflare verwaltet
+(kostenloser Tarif reicht).
+
+1. **Zugangscode setzen:** Hier unter **Konfiguration** einen **Zugangscode** eintragen (z. B. ein
+   Wort, das du deinen Freunden sagst) und das Add-on neu starten. Wer die Spiele nicht über Home
+   Assistant öffnet, gibt ihn einmal ein; das Handy merkt ihn sich.
+2. **Domain zu Cloudflare:** Auf [dash.cloudflare.com](https://dash.cloudflare.com) **Domain
+   hinzufügen**, den Free-Tarif wählen und bei deinem Domain-Anbieter die beiden angezeigten
+   Cloudflare-Nameserver eintragen. Warten, bis Cloudflare „Aktiv“ meldet (Minuten bis Stunden).
+3. **Tunnel anlegen:** In Cloudflare **Zero Trust → Networks → Tunnels → Create a tunnel →
+   Cloudflared**, Namen eingeben (z. B. `homeassistant`). Den angezeigten **Token** (die lange
+   Zeichenkette nach `--token`) kopieren.
+4. **Tunnel-Add-on installieren:** In Home Assistant das Repository
+   `https://github.com/brenner-tobias/addon-cloudflared` hinzufügen und **Cloudflared**
+   installieren. In dessen Konfiguration nur bei **Cloudflare Tunnel Token** den Token einfügen
+   (die übrigen Felder leer lassen), speichern und starten.
+5. **Adresse festlegen:** Zurück bei Cloudflare im Tunnel unter **Public Hostname → Add a public
+   hostname**: Subdomain `spiele`, deine Domain, Service **HTTP** und URL
+   `<home-assistant-ip>:8098` (z. B. `192.168.178.103:8098`). Speichern.
+6. `https://spiele.deine-domain.de` öffnen, Zugangscode eingeben, spielen. Als App installieren
+   wie oben beschrieben.
+
+Zusätzlicher Schutz ist eingebaut: begrenzte Anzahl an Spielräumen und Verbindungen, Schutz
+gegen Nachrichtenfluten und eine Sperre nach 8 falschen Code-Eingaben (15 Minuten).
 
 ## Stapeljagd – Regeln
 
@@ -73,3 +115,4 @@ Kartenspiele: Karte oder Stapel antippen, dann das Ziel antippen. Was gerade mö
 | Option  | Beschreibung         |
 | ------- | -------------------- |
 | `theme` | `dark` oder `light`. |
+| `access_code` | Code für alle, die nicht über Home Assistant spielen. Leer = kein Code. |

@@ -101,6 +101,7 @@
         <div class="label">${G.title} · Spielcode</div>
         <div class="big" id="roomCode">----</div>
         <p>Mitspieler öffnen diese Seite und treten mit dem Code bei.</p>
+        <button class="btn ghost invite" id="invite">📨 Einladen</button>
       </div>
       <div class="panel glass">
         <h2>Spieler</h2>
@@ -129,6 +130,9 @@
     <div class="toast glass" id="toast"></div>`);
 
   $("name").value = store.get("spiele-name") || "";
+  // Invitation links carry the room code: ?code=ABCD
+  const invited = (new URLSearchParams(location.search).get("code") || "").toUpperCase().replace(/[^A-Z]/g, "").slice(0, 4);
+  if (invited) $("joinCode").value = invited;
   $("name").addEventListener("input", () => store.set("spiele-name", $("name").value.trim()));
   const settingsFrom = prefix => Object.fromEntries(G.settings.map(s => [s.key, +$(`${prefix}-${s.key}`).value]));
 
@@ -225,6 +229,14 @@
       : "Warte, bis der Gastgeber das Spiel startet …";
   }
   $("roomPlayers").onclick = e => { const b = e.target.closest("[data-kick]"); if (b) Shell.send({ t: "kick", id: b.dataset.kick }); };
+  $("invite").onclick = async () => {
+    const code = Shell.game.code;
+    const url = location.origin + location.pathname + "?code=" + code;
+    const text = `Spiel mit mir ${G.title}! Code: ${code}`;
+    if (navigator.share) { try { await navigator.share({ title: G.title, text, url }); return; } catch (e) { if (e.name === "AbortError") return; } }
+    try { await navigator.clipboard.writeText(`${text}\n${url}`); Shell.toast("Einladungslink kopiert"); }
+    catch { prompt("Diesen Link verschicken:", url); }
+  };
   $("addBot").onclick = () => Shell.send({ t: "add_bot" });
   for (const s of G.settings) $(`room-${s.key}`).onchange = () => Shell.send({ t: "settings", settings: settingsFrom("room") });
   $("start").onclick = () => Shell.send({ t: "start" });

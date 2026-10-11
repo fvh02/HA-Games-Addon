@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.2.0
+
+- **Als App installierbar** (Home-Bildschirm auf iPhone und Android): Vollbild, App-Icon,
+  Rücksicht auf Notch und Home-Leiste, Hinweis zum Installieren auf der Startseite.
+- **Zugangscode** (Option `access_code`) für Mitspieler außerhalb von Home Assistant – nötig,
+  wenn die Spiele aus dem Internet erreichbar sind. Anleitung für Cloudflare Tunnel in der Doku.
+- **Einladen**-Knopf im Warteraum: teilt einen Link, der den Spielcode schon ausfüllt.
+- Schutz für den Betrieb im Internet: Grenzen für Spielräume, Verbindungen und Nachrichten,
+  Sperre nach zu vielen falschen Codes.
+
 ## 2.1.0
 
 - Neues Spiel **Kritzelpost** (3–10 Spieler): Stille Post mit Stift. Sätze schreiben,
