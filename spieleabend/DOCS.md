@@ -7,6 +7,8 @@ Spiele für mehrere Spieler im Browser. Auf der Startseite wählst du das Spiel:
 - **Tiefpunkt** (2–8 Spieler): Jeder hat ein Raster aus 12 Karten; tauschen, aufdecken und am
   Ende möglichst wenige Punkte haben.
 - **Kritzelpost** (3–10 Spieler): Stille Post mit Stift – Sätze schreiben, zeichnen, erraten.
+- **Farbrausch** (2–10 Spieler): Passende Farbe oder Zahl ablegen, wer zuerst keine Karten mehr
+  hat, gewinnt.
 
 ## Mitspielen
 
@@ -106,6 +108,22 @@ gegen Nachrichtenfluten und eine Sperre nach 8 falschen Code-Eingaben (15 Minute
 - Computer-Spieler schreiben Sätze, kritzeln einfache Bilder und raten mit. Wer das Spiel
   verlässt, wird von einem Computer-Spieler ersetzt.
 - Zeichnungen gehen beim Neuladen der Seite nicht verloren.
+
+## Farbrausch – Regeln
+
+- 108 Karten: in Rot, Gelb, Grün und Blau je eine 0, je zwei 1–9, **Aussetzen**,
+  **Richtungswechsel** und **+2**; dazu 4 **Farbwahl** und 4 **+4**. Jeder bekommt 7 Karten.
+- Lege eine Karte mit gleicher Farbe oder gleicher Zahl/gleichem Symbol auf den Ablagestapel.
+  Farbwahl und +4 passen immer; danach wünschst du dir eine Farbe.
+- Kannst oder willst du nicht legen, ziehst du eine Karte. Passt sie, darfst du sie sofort legen
+  oder behalten.
+- **Aussetzen:** der Nächste ist übersprungen. **Richtungswechsel:** die Reihenfolge dreht sich
+  (zu zweit wie Aussetzen). **+2 / +4:** der Nächste zieht und setzt aus.
+- **Stapeln** (Einstellung): +2 auf +2 und +4 auf +2/+4 legen; wer nicht stapeln kann, zieht alles.
+- Bleibt dir eine Karte, tippe **„Letzte Karte!“**. Vergisst du es, kann dich jeder bis zum
+  nächsten Zug mit **„Erwischt!“** zwei Karten ziehen lassen.
+- **Spiellänge:** eine Runde, oder bis 200/500 Punkte. Der Rundensieger bekommt die Punkte der
+  Karten, die die anderen noch haben (Zahl = Wert, Aktionskarte 20, Farbwahl/+4 50).
 
 ## Bedienung
 

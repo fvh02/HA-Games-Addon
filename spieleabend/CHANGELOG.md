@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.3.0
+
+- Neues Kartenspiel **Farbrausch** (2–10 Spieler): passende Farbe oder Zahl ablegen, mit
+  Aussetzen, Richtungswechsel, +2, Farbwahl und +4, „Letzte Karte!“ rufen und andere erwischen.
+  Wahlweise eine Runde oder bis 200/500 Punkte, optional Plus-Karten stapeln, mit
+  Computer-Spielern und Animationen.
+
 ## 2.2.1
 
 - Sicherung: Ist kein Zugangscode gesetzt, werden Aufrufe über Cloudflare (Tunnel/Domain)

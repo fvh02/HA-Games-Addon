@@ -15,6 +15,7 @@ from pathlib import Path
 
 from aiohttp import WSMsgType, web
 
+import farbrausch
 import kritzelpost
 import stapeljagd
 import tiefpunkt
@@ -27,7 +28,7 @@ BOT_DELAY = float(os.environ.get("SPIELE_BOT_DELAY", "0.9"))
 BOT_NAMES = ["Robo", "Karla", "Bitty", "Otto", "Zora", "Pixel", "Toni", "Mops"]
 GAME_TTL = 6 * 3600  # remove games nobody has touched for this long
 
-GAMES = {"stapeljagd": stapeljagd, "tiefpunkt": tiefpunkt, "kritzelpost": kritzelpost}
+GAMES = {"stapeljagd": stapeljagd, "tiefpunkt": tiefpunkt, "kritzelpost": kritzelpost, "farbrausch": farbrausch}
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger("spieleabend")
@@ -298,7 +299,7 @@ def html_response(html: str, root: str = "") -> web.Response:
 
 MANIFEST = {
     "name": "Spieleabend", "short_name": "Spieleabend", "lang": "de",
-    "description": "Stapeljagd, Tiefpunkt und Kritzelpost – zusammen spielen im Browser",
+    "description": "Stapeljagd, Tiefpunkt, Kritzelpost und Farbrausch – zusammen spielen im Browser",
     "start_url": "./", "scope": "./", "display": "standalone", "orientation": "any",
     "background_color": "#0b0a1f" if THEME == "dark" else "#eef2ff",
     "theme_color": "#0b0a1f" if THEME == "dark" else "#eef2ff",

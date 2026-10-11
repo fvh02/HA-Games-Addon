@@ -6,14 +6,14 @@
   <title>Spieleabend</title>
   <link rel="stylesheet" href="static/common.css">
   <style>
-    .hub { max-width: 860px; margin: 0 auto; padding: 48px 16px 56px; animation: rise .5s ease both; }
+    .hub { max-width: 1140px; margin: 0 auto; padding: 48px 16px 56px; animation: rise .5s ease both; }
     .hub header { text-align: center; margin-bottom: 36px; }
     .hub h1 {
       margin: 0; font-size: clamp(2.4rem, 7vw, 3.4rem); font-weight: 850; letter-spacing: -.03em;
       background: linear-gradient(135deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent;
     }
     .hub header p { color: var(--muted); margin: 8px 0 0; }
-    .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+    .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
     .tile {
       display: flex; flex-direction: column; gap: 14px; padding: 26px 22px 22px; border-radius: 28px;
       color: var(--text); text-decoration: none; position: relative; overflow: hidden;
@@ -41,6 +41,15 @@
     .install { margin: -14px 0 22px; padding: 14px 44px 14px 18px; border-radius: 18px; position: relative; color: var(--muted); line-height: 1.45; }
     .install b { color: var(--text); }
     .install .x { position: absolute; top: 8px; right: 8px; }
+    .card.fr .front { background: linear-gradient(150deg, var(--c1), var(--c2)); border-color: rgba(255,255,255,.55); }
+    .card.fr .front::after { inset: 13% 9%; border-radius: 50%; transform: rotate(-28deg); background: rgba(255,255,255,.94); }
+    .card.fr .v { font-size: calc(var(--w) * .42); filter: none; }
+    .card.fr .v.sym { font-size: calc(var(--w) * .46); } .card.fr .v.small { font-size: calc(var(--w) * .34); letter-spacing: -.06em; }
+    .card.fr .tl, .card.fr .br { color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,.35); font-size: calc(var(--w) * .17); }
+    .card.cr { --c1: #fb7185; --c2: #be123c; } .card.cy { --c1: #fcd34d; --c2: #d97706; } .card.cg { --c1: #4ade80; --c2: #15803d; }
+    .card.cw .front { background: linear-gradient(150deg, #312e81, #0f0a1e); }
+    .card.cw .front::after { background: conic-gradient(from 0deg, #f43f5e 0 25%, #facc15 0 50%, #22c55e 0 75%, #3b82f6 0); }
+    .card.cw .v { background: none; color: #fff; text-shadow: 0 2px 6px rgba(0,0,0,.55); }
   </style>
 </head>
 <body>
@@ -89,6 +98,18 @@
         <h2>Kritzelpost</h2>
         <p>Stille Post mit Stift: Schreiben, zeichnen, erraten – und am Ende lachen, was aus jedem Satz geworden ist.</p>
         <div class="meta"><span class="tag">3–10 Spieler</span><span class="tag">ca. 10–20 Min.</span><span class="live" id="live-kritzelpost"></span></div>
+        <span class="btn play">Spielen</span>
+      </a>
+      <a class="tile glass" href="farbrausch/">
+        <div class="fan">
+          <div class="card fr cr"><div class="inner"><div class="face front"><span class="tl">7</span><span class="v">7</span><span class="br">7</span></div><div class="face back"></div></div></div>
+          <div class="card fr cy"><div class="inner"><div class="face front"><span class="tl">+2</span><span class="v small">+2</span><span class="br">+2</span></div><div class="face back"></div></div></div>
+          <div class="card fr cg"><div class="inner"><div class="face front"><span class="tl">5</span><span class="v">5</span><span class="br">5</span></div><div class="face back"></div></div></div>
+          <div class="card fr cw"><div class="inner"><div class="face front"><span class="tl">+4</span><span class="v small">+4</span><span class="br">+4</span></div><div class="face back"></div></div></div>
+        </div>
+        <h2>Farbrausch</h2>
+        <p>Lege passende Farben und Zahlen, ärgere die anderen mit +2 und +4 – und vergiss nicht „Letzte Karte!“ zu rufen.</p>
+        <div class="meta"><span class="tag">2–10 Spieler</span><span class="tag">ca. 15–30 Min.</span><span class="live" id="live-farbrausch"></span></div>
         <span class="btn play">Spielen</span>
       </a>
     </div>
