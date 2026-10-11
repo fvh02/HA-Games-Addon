@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Stapeljagd</title>
+  <style>
+    :root {
+      --bg: #eef3ef;
+      --table: #d9e8dd;
+      --table-edge: #c3d8c9;
+      --surface: #ffffff;
+      --surface-2: #f4f7f5;
+      --border: #d5e0d8;
+      --text: #17231b;
+      --muted: #5f7266;
+      --accent: #f97316;
+      --accent-hover: #ea580c;
+      --accent-soft: #ffedd5;
+      --ok: #16a34a;
+      --danger: #dc2626;
+      --c1: #2563eb;
+      --c2: #16a34a;
+      --c3: #dc2626;
+      --joker: #f97316;
+      --card: #ffffff;
+      --card-edge: #d4d9d6;
+      --shadow: 0 1px 2px rgba(10, 30, 15, .08), 0 6px 18px rgba(10, 30, 15, .10);
+    }
+    :root[data-theme="dark"] {
+      --bg: #0d1511;
+      --table: #12301f;
+      --table-edge: #1b4029;
+      --surface: #16201b;
+      --surface-2: #1c2822;
+      --border: #2a3a31;
+      --text: #e7efe9;
+      --muted: #8fa597;
+      --accent: #fb8c3c;
+      --accent-hover: #ff9f5a;
+      --accent-soft: #3b2616;
+      --ok: #3ccf8e;
+      --danger: #ff6b6b;
+      --c1: #2563eb;
+      --c2: #15803d;
+      --c3: #dc2626;
+      --joker: #f97316;
+      --card: #fbfbf8;
+      --card-edge: #c9cfcb;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 22px rgba(0, 0, 0, .35);
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    button { font: inherit; cursor: pointer; }
+    input, select {
+      font: inherit; color: var(--text); background: var(--surface-2);
+      border: 1px solid var(--border); border-radius: 12px; padding: 11px 14px; outline: none;
+    }
+    input:focus, select:focus { border-color: var(--accent); }
+    .btn {
+      border: 0; border-radius: 12px; padding: 11px 18px; font-weight: 600;
+      background: var(--accent); color: #fff; transition: background .15s, transform .1s;
+    }
+    .btn:hover { background: var(--accent-hover); }
+    .btn:active { transform: scale(.97); }
+    .btn:disabled { opacity: .5; cursor: default; }
+    .btn.ghost { background: var(--surface-2); color: var(--text); border: 1px solid var(--border); }
+    .btn.ghost:hover { background: var(--border); }
+    .hidden { display: none !important; }
+
+    /* ---------- lobby & room ---------- */
+    .page { max-width: 560px; margin: 0 auto; padding: 32px 16px 48px; }
+    .logo { display: flex; align-items: center; gap: 12px; justify-content: center; margin: 12px 0 28px; }
+    .logo h1 { margin: 0; font-size: 2.2rem; letter-spacing: -.02em; }
+    .logo .mini { display: flex; gap: 4px; }
+    .panel {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+      padding: 20px; box-shadow: var(--shadow); margin-bottom: 16px;
+    }
+    .panel h2 { margin: 0 0 14px; font-size: 1rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+    .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .row > input { flex: 1; min-width: 0; }
+    .label { font-size: .85rem; color: var(--muted); margin: 0 0 6px; }
+    .games { list-style: none; margin: 0; padding: 0; }
+    .games li { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid var(--border); }
+    .games li:first-child { border-top: 0; }
+    .games .code { font-weight: 700; font-family: ui-monospace, monospace; font-size: 1.05rem; }
+    .games .who { flex: 1; min-width: 0; color: var(--muted); font-size: .9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .empty { color: var(--muted); font-size: .9rem; }
+    .roomcode { text-align: center; }
+    .roomcode .big { font-size: 2.6rem; font-weight: 800; letter-spacing: .15em; font-family: ui-monospace, monospace; color: var(--accent); }
+    .roomcode p { margin: 4px 0 0; color: var(--muted); font-size: .9rem; }
+    .players { list-style: none; margin: 0 0 14px; padding: 0; }
+    .players li { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-top: 1px solid var(--border); }
+    .players li:first-child { border-top: 0; }
+    .players .name { flex: 1; font-weight: 600; }
+    .tag { font-size: .75rem; padding: 2px 8px; border-radius: 999px; background: var(--surface-2); color: var(--muted); border: 1px solid var(--border); }
+    .tag.host { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
+    .x { border: 0; background: none; color: var(--muted); font-size: 1.2rem; padding: 0 6px; }
+    .x:hover { color: var(--danger); }
+
+    /* ---------- cards ---------- */
+    .card {
+      --w: var(--cw, 58px);
+      width: var(--w); height: calc(var(--w) * 1.42); border-radius: calc(var(--w) * .12);
+      background: var(--card); border: 1px solid var(--card-edge);
+      box-shadow: 0 1px 2px rgba(0,0,0,.15), 0 3px 8px rgba(0,0,0,.12);
+      position: relative; display: grid; place-items: center; flex: none;
+      font-weight: 800; user-select: none; color: var(--c);
+    }
+    .card .v { font-size: calc(var(--w) * .5); line-height: 1; }
+    .card .tl, .card .br { position: absolute; font-size: calc(var(--w) * .2); line-height: 1; }
+    .card .tl { top: 5%; left: 9%; }
+    .card .br { bottom: 5%; right: 9%; transform: rotate(180deg); }
+    .card::after {
+      content: ""; position: absolute; inset: 9% 12%; border-radius: 40%;
+      border: 2px solid var(--c); opacity: .18;
+    }
+    .card.c1 { --c: var(--c1); } .card.c2 { --c: var(--c2); } .card.c3 { --c: var(--c3); }
+    .card.joker { --c: var(--joker); background: linear-gradient(160deg, #fff7ed, #ffffff 60%); }
+    .card.joker .v { font-size: calc(var(--w) * .26); letter-spacing: -.02em; text-align: center; }
+    .card .as {
+      position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
+      background: var(--joker); color: #fff; font-size: calc(var(--w) * .2); padding: 1px 7px; border-radius: 999px;
+    }
+    .card.back {
+      background: repeating-linear-gradient(45deg, #c2410c 0 6px, #ea580c 6px 12px);
+      border-color: #9a3412; color: #fff;
+    }
+    .card.back::after { border-color: #fff; opacity: .5; }
+    .card.back .v { font-size: calc(var(--w) * .26); }
+    .card.slot {
+      background: transparent; border: 2px dashed var(--table-edge); box-shadow: none; color: var(--muted);
+    }
+    .card.slot::after { display: none; }
+    .card.slot .v { font-size: calc(var(--w) * .22); font-weight: 600; opacity: .8; }
+    .card.mini { --w: 30px; }
+    .card.mini .tl, .card.mini .br { display: none; }
+    .card.mini::after { display: none; }
+    .count {
+      position: absolute; top: -8px; right: -8px; min-width: 22px; height: 22px; padding: 0 6px;
+      border-radius: 999px; background: var(--text); color: var(--bg); font-size: .72rem; font-weight: 700;
+      display: grid; place-items: center; z-index: 2;
+    }
+    .opp .count { top: -9px; right: -9px; min-width: 18px; height: 18px; font-size: .62rem; padding: 0 4px; }
+    .me .zone:first-child { padding-right: 10px; }
+    .pick { cursor: pointer; transition: transform .12s, box-shadow .12s; }
+    .pick:hover { transform: translateY(-3px); }
+    .selected { transform: translateY(-8px) !important; box-shadow: 0 0 0 3px var(--accent), 0 8px 18px rgba(0,0,0,.25) !important; }
+    .target { cursor: pointer; box-shadow: 0 0 0 3px var(--ok), 0 6px 16px rgba(0,0,0,.2) !important; animation: pulse 1.2s ease-in-out infinite; }
+    @keyframes pulse { 50% { box-shadow: 0 0 0 6px color-mix(in srgb, var(--ok) 35%, transparent), 0 6px 16px rgba(0,0,0,.2); } }
+
+    /* ---------- table ---------- */
+    #table { min-height: 100vh; display: flex; flex-direction: column; }
+    .topbar {
+      display: flex; align-items: center; gap: 10px; padding: 10px 16px;
+      background: var(--surface); border-bottom: 1px solid var(--border);
+    }
+    .topbar .title { font-weight: 800; }
+    .topbar .code { font-family: ui-monospace, monospace; color: var(--muted); }
+    .topbar .spacer { flex: 1; }
+    .opponents { display: flex; gap: 10px; padding: 12px 16px; overflow-x: auto; }
+    .opp {
+      flex: none; background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+      padding: 10px 12px; min-width: 190px; box-shadow: var(--shadow);
+    }
+    .opp.turn { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent), var(--shadow); }
+    .opp .head { display: flex; align-items: center; gap: 6px; font-weight: 700; margin-bottom: 8px; font-size: .92rem; }
+    .opp .head .n { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .opp .head .h { font-weight: 500; color: var(--muted); font-size: .8rem; }
+    .opp .piles { display: flex; gap: 6px; align-items: flex-end; }
+    .opp .stockwrap { position: relative; margin-right: 6px; }
+    .felt {
+      flex: 1; margin: 0 16px; border-radius: 28px; padding: 20px 12px;
+      background: radial-gradient(ellipse at center, color-mix(in srgb, var(--table) 85%, #fff 15%), var(--table));
+      border: 2px solid var(--table-edge);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+    }
+    .center { display: flex; gap: clamp(8px, 2.4vw, 22px); align-items: center; justify-content: center; flex-wrap: wrap; --cw: clamp(52px, 13vw, 84px); }
+    .deck { position: relative; margin-right: clamp(6px, 3vw, 28px); }
+    .status { text-align: center; font-weight: 600; min-height: 1.4em; padding: 0 8px; }
+    .status.mine { color: var(--accent); }
+    .log { font-size: .8rem; color: var(--muted); text-align: center; max-width: 520px; }
+    .me {
+      margin: 12px 16px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+      padding: 14px; box-shadow: var(--shadow); --cw: clamp(50px, 12.5vw, 78px);
+    }
+    .me.turn { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent), var(--shadow); }
+    .me .zones { display: flex; gap: clamp(10px, 3vw, 28px); align-items: flex-start; flex-wrap: wrap; justify-content: center; }
+    .zone .zlabel { font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; font-weight: 600; }
+    .zone .cards { display: flex; gap: clamp(5px, 1.4vw, 10px); }
+    .stack { position: relative; display: flex; flex-direction: column; }
+    .stack .under { height: 14px; margin-bottom: -14px; }
+    .hand .card { margin-left: 0; }
+    .toast {
+      position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px); opacity: 0;
+      background: var(--text); color: var(--bg); padding: 10px 18px; border-radius: 12px; font-weight: 600;
+      transition: opacity .2s, transform .2s; z-index: 50; max-width: calc(100% - 32px); text-align: center;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%); }
+    .overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,.45); display: grid; place-items: center; z-index: 40; padding: 16px;
+    }
+    .overlay .panel { text-align: center; max-width: 380px; width: 100%; }
+    .overlay h3 { font-size: 1.8rem; margin: 6px 0 4px; }
+    .conn {
+      position: fixed; top: 10px; left: 50%; transform: translateX(-50%); background: var(--danger); color: #fff;
+      padding: 6px 14px; border-radius: 999px; font-size: .85rem; z-index: 60;
+    }
+    @media (max-width: 560px) {
+      .opp { min-width: 160px; padding: 8px 10px; }
+      .card.mini { --w: 24px; }
+      .felt { margin: 0 8px; padding: 14px 6px; border-radius: 20px; }
+      .me { margin: 10px 8px 12px; padding: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="conn hidden" id="conn">Verbindung wird hergestellt …</div>
+
+  <!-- Lobby -->
+  <section id="lobby" class="page hidden">
+    <div class="logo">
+      <div class="mini">
+        <div class="card mini c1"><span class="v">1</span></div>
+        <div class="card mini c2"><span class="v">5</span></div>
+        <div class="card mini c3"><span class="v">9</span></div>
+      </div>
+      <h1>Stapeljagd</h1>
+    </div>
+    <div class="panel">
+      <p class="label">Dein Name</p>
+      <input id="name" maxlength="20" placeholder="z. B. Alex" autocomplete="nickname" style="width:100%">
+    </div>
+    <div class="panel">
+      <h2>Neues Spiel</h2>
+      <div class="row">
+        <select id="stockNew" aria-label="Karten pro Spielerstapel">
+          <option value="0">Stapel: automatisch (30, ab 5 Spielern 20)</option>
+          <option value="10">Stapel: 10 Karten (kurz)</option>
+          <option value="20">Stapel: 20 Karten</option>
+          <option value="30">Stapel: 30 Karten</option>
+        </select>
+        <button class="btn" id="create">Spiel erstellen</button>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>Spiel beitreten</h2>
+      <div class="row">
+        <input id="joinCode" maxlength="4" placeholder="Code, z. B. KXAB" style="text-transform:uppercase">
+        <button class="btn" id="join">Beitreten</button>
+      </div>
+      <ul class="games" id="games" style="margin-top:12px"></ul>
+    </div>
+  </section>
+
+  <!-- Room -->
+  <section id="room" class="page hidden">
+    <div class="panel roomcode">
+      <div class="label">Spielcode</div>
+      <div class="big" id="roomCode">----</div>
+      <p id="roomHint">Mitspieler öffnen diese Seite und treten mit dem Code bei.</p>
+    </div>
+    <div class="panel">
+      <h2>Spieler</h2>
+      <ul class="players" id="roomPlayers"></ul>
+      <div class="row" id="hostControls">
+        <button class="btn ghost" id="addBot">+ Computer-Spieler</button>
+        <select id="stockRoom" aria-label="Karten pro Spielerstapel">
+          <option value="0">Stapel: automatisch</option>
+          <option value="10">Stapel: 10</option>
+          <option value="20">Stapel: 20</option>
+          <option value="30">Stapel: 30</option>
+        </select>
+      </div>
+    </div>
+    <div class="row" style="justify-content:space-between">
+      <button class="btn ghost" id="leaveRoom">Verlassen</button>
+      <button class="btn" id="start">Spiel starten</button>
+    </div>
+    <p class="empty" id="waitHost" style="text-align:center"></p>
+  </section>
+
+  <!-- Table -->
+  <section id="table" class="hidden">
+    <div class="topbar">
+      <span class="title">Stapeljagd</span>
+      <span class="code" id="tableCode"></span>
+      <span class="spacer"></span>
+      <button class="btn ghost" id="leaveGame" style="padding:7px 12px">Verlassen</button>
+    </div>
+    <div class="opponents" id="opponents"></div>
+    <div class="felt">
+      <div class="center" id="center"></div>
+      <div class="status" id="status"></div>
+      <div class="log" id="log"></div>
+    </div>
+    <div class="me" id="me"></div>
+  </section>
+
+  <div class="overlay hidden" id="finished">
+    <div class="panel">
+      <div style="font-size:3rem">🏆</div>
+      <h3 id="winner"></h3>
+      <p class="empty" id="winnerSub"></p>
+      <div class="row" style="justify-content:center;margin-top:16px">
+        <button class="btn ghost" id="toLobby">Zur Lobby</button>
+        <button class="btn" id="rematch">Neue Runde</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const $ = id => document.getElementById(id);
+    const JOKER = 0;
+    let ws, token, me = null, game = null, selected = null, reconnectTimer;
+
+    const store = {
+      get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+      set(k, v) { try { localStorage.setItem(k, v); } catch {} },
+    };
+    token = store.get("stapeljagd-token");
+    $("name").value = store.get("stapeljagd-name") || "";
+    $("name").addEventListener("input", () => store.set("stapeljagd-name", $("name").value.trim()));
+
+    // ---------- connection ----------
+    function connect() {
+      const base = location.pathname.endsWith("/") ? location.pathname : location.pathname + "/";
+      ws = new WebSocket((location.protocol === "https:" ? "wss://" : "ws://") + location.host + base + "ws");
+      ws.onopen = () => { $("conn").classList.add("hidden"); ws.send(JSON.stringify({ token })); };
+      ws.onmessage = e => handle(JSON.parse(e.data));
+      ws.onclose = () => {
+        $("conn").classList.remove("hidden");
+        clearTimeout(reconnectTimer);
+        reconnectTimer = setTimeout(connect, 1500);
+      };
+    }
+    function send(msg) {
+      if (ws && ws.readyState === 1) ws.send(JSON.stringify(msg));
+    }
+    function toast(text) {
+      const t = $("toast");
+      t.textContent = text; t.classList.add("show");
+      clearTimeout(toast.timer); toast.timer = setTimeout(() => t.classList.remove("show"), 2600);
+    }
+
+    function handle(msg) {
+      if (msg.t === "hello") { token = msg.token; store.set("stapeljagd-token", token); }
+      else if (msg.t === "error") toast(msg.msg);
+      else if (msg.t === "lobby") { game = null; me = null; selected = null; showLobby(msg.games); }
+      else if (msg.t === "game") {
+        const before = game;
+        game = msg.game; me = msg.me;
+        if (!before || before.turn !== game.turn || game.state !== "playing") selected = null;
+        if (game.state === "lobby") showRoom(); else showTable();
+      }
+    }
+
+    function show(id) {
+      for (const s of ["lobby", "room", "table"]) $(s).classList.toggle("hidden", s !== id);
+      $("finished").classList.toggle("hidden", !(game && game.state === "finished"));
+    }
+    function esc(s) { return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+    function myName() {
+      const n = $("name").value.trim();
+      if (!n) { toast("Bitte gib zuerst deinen Namen ein"); $("name").focus(); }
+      return n;
+    }
+
+    // ---------- lobby ----------
+    function showLobby(games) {
+      show("lobby");
+      const list = $("games");
+      const open = games.filter(g => g.state === "lobby" && !g.full);
+      list.innerHTML = open.length ? open.map(g => `
+        <li><span class="code">${esc(g.code)}</span>
+          <span class="who">${esc(g.players.join(", "))}</span>
+          <button class="btn ghost" data-join="${esc(g.code)}" style="padding:7px 12px">Beitreten</button></li>`).join("")
+        : `<li class="empty">Gerade gibt es keine offenen Spiele.</li>`;
+    }
+    $("create").onclick = () => { const name = myName(); if (name) send({ t: "create", name, stock: +$("stockNew").value }); };
+    $("join").onclick = () => {
+      const name = myName(), code = $("joinCode").value.trim().toUpperCase();
+      if (name && code) send({ t: "join", name, code });
+    };
+    $("joinCode").addEventListener("keydown", e => { if (e.key === "Enter") $("join").click(); });
+    $("games").onclick = e => {
+      const b = e.target.closest("[data-join]");
+      if (b) { const name = myName(); if (name) send({ t: "join", name, code: b.dataset.join }); }
+    };
+
+    // ---------- room ----------
+    function showRoom() {
+      show("room");
+      const host = game.host === me;
+      $("roomCode").textContent = game.code;
+      $("roomPlayers").innerHTML = game.players.map(p => `
+        <li><span>${p.bot ? "🤖" : "🙂"}</span><span class="name">${esc(p.name)}${p.id === me ? " (du)" : ""}</span>
+          ${p.id === game.host ? '<span class="tag host">Gastgeber</span>' : ""}
+          ${host && p.id !== me ? `<button class="x" data-kick="${p.id}" title="Entfernen">×</button>` : ""}</li>`).join("");
+      $("hostControls").classList.toggle("hidden", !host);
+      $("start").classList.toggle("hidden", !host);
+      $("start").disabled = game.players.length < 2;
+      $("stockRoom").value = String(game.stock_size);
+      $("waitHost").textContent = host
+        ? (game.players.length < 2 ? "Warte auf Mitspieler oder füge einen Computer-Spieler hinzu." : "")
+        : "Warte, bis der Gastgeber das Spiel startet …";
+    }
+    $("roomPlayers").onclick = e => { const b = e.target.closest("[data-kick]"); if (b) send({ t: "kick", id: b.dataset.kick }); };
+    $("addBot").onclick = () => send({ t: "add_bot" });
+    $("stockRoom").onchange = () => send({ t: "settings", stock: +$("stockRoom").value });
+    $("start").onclick = () => send({ t: "start" });
+    $("leaveRoom").onclick = () => send({ t: "leave" });
+    $("leaveGame").onclick = () => {
+      if (game.state !== "playing" || confirm("Spiel verlassen? Ein Computer-Spieler übernimmt deinen Platz.")) send({ t: "leave" });
+    };
+    $("toLobby").onclick = () => send({ t: "leave" });
+    $("rematch").onclick = () => send({ t: "rematch" });
+
+    // ---------- table ----------
+    function colorClass(v) { return v === JOKER ? "joker" : v <= 4 ? "c1" : v <= 8 ? "c2" : "c3"; }
+    function cardHtml(v, extra = "", attrs = "", as = null) {
+      if (v === null || v === undefined) return `<div class="card slot ${extra}" ${attrs}><span class="v"></span></div>`;
+      if (v === JOKER) return `<div class="card joker ${extra}" ${attrs}><span class="v">SKIP<br>BO</span>${as ? `<span class="as">${as}</span>` : ""}</div>`;
+      return `<div class="card ${colorClass(v)} ${extra}" ${attrs}><span class="tl">${v}</span><span class="v">${v}</span><span class="br">${v}</span></div>`;
+    }
+    const topOf = arr => arr.length ? arr[arr.length - 1] : null;
+    const fits = (card, pile) => pile.length < 12 && (card === JOKER || card === pile.length + 1);
+
+    function selectedCard(p) {
+      if (!selected) return null;
+      if (selected.src === "hand") return p.hand[selected.index];
+      if (selected.src === "stock") return p.stock_top;
+      return topOf(p.discards[selected.index]);
+    }
+
+    function showTable() {
+      show("table");
+      $("tableCode").textContent = "Code " + game.code;
+      const mine = game.players.find(p => p.id === me);
+      const myTurn = game.state === "playing" && game.turn === me;
+      const card = mine && selected ? selectedCard(mine) : null;
+
+      // opponents
+      $("opponents").innerHTML = game.players.filter(p => p.id !== me).map(p => `
+        <div class="opp ${game.turn === p.id ? "turn" : ""}">
+          <div class="head"><span>${p.bot ? "🤖" : "🙂"}</span><span class="n">${esc(p.name)}</span><span class="h">✋ ${p.hand_count}</span></div>
+          <div class="piles">
+            <div class="stockwrap">${cardHtml(p.stock_top, "mini")}<span class="count">${p.stock_count}</span></div>
+            ${p.discards.map(d => cardHtml(topOf(d), "mini")).join("")}
+          </div>
+        </div>`).join("");
+
+      // building piles
+      const piles = game.building.map((pile, i) => {
+        const t = topOf(pile);
+        const isTarget = myTurn && card !== null && card !== undefined && fits(card, pile);
+        const attrs = `data-build="${i}"`;
+        if (t === null) return cardHtml(null, isTarget ? "target" : "", attrs).replace('<span class="v"></span>', '<span class="v">1 oder<br>Joker</span>');
+        return `<div style="position:relative">${cardHtml(t, isTarget ? "target" : "", attrs, t === JOKER ? "= " + pile.length : null)}</div>`;
+      }).join("");
+      $("center").innerHTML = `
+        <div class="deck"><div class="card back"><span class="v">Stapel</span></div><span class="count">${game.deck_count}</span></div>
+        ${piles}`;
+
+      // status
+      const current = game.players.find(p => p.id === game.turn);
+      const st = $("status");
+      st.classList.toggle("mine", myTurn);
+      if (myTurn) {
+        st.textContent = selected
+          ? (selected.src === "hand" ? "Leg die Karte auf eine Baufläche oder auf einen deiner Ablagestapel (beendet den Zug)." : "Wähle eine Baufläche.")
+          : "Du bist dran: Karte antippen, dann Ziel wählen.";
+      } else st.textContent = current ? `${current.name} ist dran …` : "";
+      $("log").textContent = game.log.slice(-2).join(" · ");
+
+      // my area
+      if (!mine) { $("me").innerHTML = ""; return; }
+      const sel = (src, i) => selected && selected.src === src && (src === "stock" || selected.index === i) ? "selected" : "";
+      const can = myTurn ? "pick" : "";
+      const discardTarget = myTurn && selected && selected.src === "hand";
+      $("me").classList.toggle("turn", myTurn);
+      $("me").innerHTML = `
+        <div class="zones">
+          <div class="zone">
+            <div class="zlabel">Dein Stapel</div>
+            <div style="position:relative">${cardHtml(mine.stock_top, mine.stock_top !== null ? `${can} ${sel("stock")}` : "", 'data-src="stock"')}<span class="count">${mine.stock_count}</span></div>
+          </div>
+          <div class="zone">
+            <div class="zlabel">Ablage</div>
+            <div class="cards">${mine.discards.map((d, i) => `
+              <div class="stack">
+                ${d.length > 1 ? `<div class="under">${cardHtml(d[d.length - 2], "")}</div>` : ""}
+                ${cardHtml(topOf(d), `${topOf(d) !== null && myTurn && !discardTarget ? can : ""} ${sel("discard", i)} ${discardTarget ? "target" : ""}`, `data-src="discard" data-i="${i}"`)}
+                ${d.length > 1 ? `<span class="count">${d.length}</span>` : ""}
+              </div>`).join("")}</div>
+          </div>
+          <div class="zone hand">
+            <div class="zlabel">Hand</div>
+            <div class="cards">${mine.hand.length ? mine.hand.map((c, i) => cardHtml(c, `${can} ${sel("hand", i)}`, `data-src="hand" data-i="${i}"`)).join("")
+              : myTurn ? `<button class="btn" id="passBtn">Passen</button>` : `<span class="empty">keine Karten</span>`}</div>
+          </div>
+        </div>`;
+      const passBtn = $("passBtn");
+      if (passBtn) passBtn.onclick = () => send({ t: "pass" });
+
+      // finished overlay
+      if (game.state === "finished") {
+        $("winner").textContent = game.winner ? (game.winner === mine.name ? "Du hast gewonnen!" : `${game.winner} gewinnt!`) : "Spiel beendet";
+        $("winnerSub").textContent = game.host === me ? "" : "Der Gastgeber kann eine neue Runde starten.";
+        $("rematch").classList.toggle("hidden", game.host !== me);
+      }
+    }
+
+    $("me").addEventListener("click", e => {
+      if (!game || game.state !== "playing" || game.turn !== me) return;
+      const el = e.target.closest("[data-src]");
+      if (!el) return;
+      const src = el.dataset.src, i = +el.dataset.i || 0;
+      if (src === "discard" && selected && selected.src === "hand") {
+        send({ t: "discard", index: selected.index, pile: i });
+        selected = null; return;
+      }
+      if (src === "stock" && game.players.find(p => p.id === me).stock_top === null) return;
+      if (src === "discard" && !game.players.find(p => p.id === me).discards[i].length) return;
+      selected = selected && selected.src === src && (src === "stock" || selected.index === i) ? null : { src, index: i };
+      showTable();
+    });
+    $("center").addEventListener("click", e => {
+      const el = e.target.closest("[data-build]");
+      if (!el || !selected || game.turn !== me) return;
+      send({ t: "play", src: selected.src, index: selected.index, pile: +el.dataset.build });
+      selected = null;
+    });
+
+    connect();
+  </script>
+</body>
+</html>
