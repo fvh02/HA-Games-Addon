@@ -14,6 +14,19 @@ Spiele für mehrere Spieler im Browser. Auf der Startseite wählst du das Spiel:
 - **Wortgitter** (1 Spieler): Errate das Wort mit 5 Buchstaben in 6 Versuchen.
 - **Farbrausch** (2–10 Spieler): Passende Farbe oder Zahl ablegen, wer zuerst keine Karten mehr
   hat, gewinnt.
+- **Schätzmeister** (2–16): Schätzfragen – wer am nächsten dran ist, holt die Punkte.
+- **Wer würde eher …?** (3–16): Geheim abstimmen, wer aus der Runde am besten passt.
+- **Lügenbaron** (3–12): Glaubwürdige Lügen erfinden und die Wahrheit finden.
+- **Punchline** (3–12): Sätze lustig ergänzen, die beste Pointe gewinnt.
+- **Trinkspiele** (ab 18, alles geht auch mit Softdrinks): **Ich hab noch nie …**,
+  **Wahrheit oder Trinken**, **Trinklotto**, **Pyramide**, **Pferderennen** und **Ring of Fire**.
+
+Auf der Startseite findest du Spiele über die **Suche** und die Filter **Spieler**, **Art**,
+**Dauer** und **Extras** (Fernseher-Modus, gerade offene Runden). Die Filter merkt sich der Browser.
+
+**📺 Fernseher-Modus** (Schnellmaler, die Quiz-, Party- und Trinkspiele): Im Warteraum tippt
+das Gerät, das alle sehen sollen, neben seinem Namen auf **📺 Host**. Es spielt dann nicht mit,
+sondern zeigt groß die Frage, wer schon geantwortet hat, die Auflösung und die Punkte.
 
 ## Mitspielen
 
@@ -176,6 +189,63 @@ gegen Nachrichtenfluten und eine Sperre nach 8 falschen Code-Eingaben (15 Minute
   nächsten Zug mit **„Erwischt!“** zwei Karten ziehen lassen.
 - **Spiellänge:** eine Runde, oder bis 200/500 Punkte. Der Rundensieger bekommt die Punkte der
   Karten, die die anderen noch haben (Zahl = Wert, Aktionskarte 20, Farbwahl/+4 50).
+
+## Schätzmeister – Regeln
+
+- Eine Schätzfrage (Höhen, Entfernungen, Jahreszahlen …), alle tippen geheim eine Zahl. Punkt
+  oder Komma gehen beide („384.400“, „8,1“).
+- Die drei Nächsten bekommen 3, 2 und 1 Punkt, gleich weit weg zählt gleich. Liegt jemand
+  höchstens 1 % daneben, gibt es 2 Bonuspunkte für den Volltreffer.
+- Einstellbar: 5–15 Fragen, 30–60 Sekunden oder ohne Zeitlimit.
+
+## Wer würde eher …? – Regeln
+
+- Eine Frage („Wer würde eher bei Ikea verloren gehen?“), alle stimmen am Handy für jemanden
+  aus der Runde – auch für sich selbst. Bis alle abgestimmt haben, kann man umentscheiden.
+- Auflösung mit Balken; wer die meisten Stimmen hat, bekommt den Titel. Am Ende gibt es eine
+  Liste aller Titel.
+- Einstellbar: geheime oder offene Abstimmung, und ob es einen Punkt gibt, wenn man mit der
+  Mehrheit gestimmt hat.
+
+## Lügenbaron – Regeln
+
+- Ein wahrer, aber seltsamer Fakt mit Lücke. Jeder erfindet eine falsche Antwort, die echt
+  klingt (die richtige Antwort wird abgelehnt).
+- Dann sehen alle die Lügen und die Wahrheit gemischt und tippen auf die Wahrheit – die eigene
+  Lüge kann man nicht wählen.
+- Wahrheit gefunden: +2. Jeder, der auf deine Lüge hereinfällt: +1 für dich.
+
+## Punchline – Regeln
+
+- Alle ergänzen denselben Satz („Der neue Werbeslogan der Deutschen Bahn: …“) so lustig wie
+  möglich.
+- Danach werden alle Antworten anonym gezeigt; jeder stimmt für die beste (nicht für die eigene).
+- 100 Punkte pro Stimme, +100 für die allein beste Pointe. Am Ende gibt es die Ruhmeshalle.
+
+## Trinkspiele
+
+Alle Trinkspiele sind ab 18 gedacht und funktionieren genauso mit Wasser, Saft oder Limo.
+Trinkt verantwortungsvoll – niemand muss. Gezählt werden Schlucke nur zum Spaß.
+
+- **Ich hab noch nie …:** Ein Satz, jeder tippt geheim „Hab ich schon“ oder „Nie“. Wer es schon
+  gemacht hat, trinkt. Wahlweise mit frecheren Sätzen.
+- **Wahrheit oder Trinken:** Reihum bekommt jemand eine Frage und antwortet laut und ehrlich –
+  oder trinkt. Passt die Frage nicht, gibt es auf Knopfdruck eine andere.
+- **Trinklotto:** Jeder bekommt geheim eine Farbe, eine Zahl (1–6) und ein Tier. Dann kommen
+  Ansagen wie „Alle mit Blau trinken 2“, „Wer die 5 hat, verteilt 3“ oder „Alle mit gerader Zahl
+  trinken“. Das Handy zeigt sofort, ob es dich trifft. Ab und zu wird neu gemischt. Der
+  Gastgeber tippt weiter oder es läuft automatisch.
+- **Pyramide:** Jeder hat vier Karten (nur für ihn sichtbar). 15 Karten liegen als Pyramide und
+  werden nacheinander aufgedeckt. Wer den gleichen Wert hat, trinkt pro Karte so viel wie die
+  Reihe (unten 1, oben 5). Wahlweise verteilen die Reihen 2 und 4, statt zu trinken. Bis 9 Spieler.
+- **Pferderennen:** Jeder setzt 1–5 Schlucke auf ein Ass. Danach werden Karten gezogen; das Ass
+  dieser Farbe läuft ein Feld vor. Sind alle Pferde an einer Seitenkarte vorbei, wird sie
+  aufgedeckt – das Pferd dieser Farbe fällt zurück. Wer auf den Sieger gesetzt hat, verteilt das
+  Doppelte, alle anderen trinken ihren Einsatz.
+- **Ring of Fire:** Reihum eine Karte ziehen, jede Karte hat eine Regel (Ass Wasserfall, 2 Du,
+  3 Ich, 4 Boden, 5 Daumenmeister, 6 Himmel, 7 Kategorie, 8 Trinkpartner, 9 Reim, 10 Regel,
+  Bube Ich hab noch nie, Dame Fragemeister, König King's Cup). Wer den vierten König zieht,
+  trinkt den Becher in der Mitte. Alle Regeln stehen auch im Spiel.
 
 ## Bedienung
 

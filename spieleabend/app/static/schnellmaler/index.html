@@ -6,6 +6,7 @@
   <title>Schnellmaler</title>
   <link rel="stylesheet" href="../static/common.css">
   <script src="../static/common.js"></script>
+  <script src="../static/art.js"></script>
   <style>
     .card.s1 { --c1: #f472b6; --c2: #9d174d; } .card.s2 { --c1: #60a5fa; --c2: #1e40af; }
     .card.s3 { --c1: #34d399; --c2: #065f46; } .card.s4 { --c1: #fbbf24; --c2: #92400e; }
@@ -126,6 +127,7 @@
         if (p.screen) return '<button class="btn tvbtn" data-room-act="screen" title="Dieses Gerät ist der Bildschirm">📺 Host ✓</button>';
         return g.players.some(q => q.screen) ? "" : '<button class="btn ghost tvbtn" data-room-act="screen" title="Dieses Gerät wird zum Bildschirm (z. B. Fernseher)">📺 Host</button>';
       },
+      art: "schnellmaler",
       fan: [["s1", "✏️"], ["s2", "📺"], ["s3", "🤔"], ["s4", "🏆"]].map(([c, e]) => Shell.card(c, `<span class="emo">${e}</span>`)).join(""),
       settings: [
         { key: "rounds", label: "Runden", options: [[2, "2 Runden"], [1, "1 Runde"], [3, "3 Runden"]] },

@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.0.0
+
+- **Vier neue Partyspiele:** Schätzmeister, Wer würde eher …?, Lügenbaron und Punchline – alle
+  mit 📺 Fernseher-Modus (ein Gerät wird zum großen Bildschirm).
+- **Sechs Trinkspiele:** Ich hab noch nie …, Wahrheit oder Trinken, Trinklotto (geheime Farbe,
+  Zahl und Tier – „Alle mit Blau trinken!“), Pyramide, Pferderennen und Ring of Fire.
+- **Suche und Filter** auf der Startseite: Spieler, Art, Dauer, Fernseher-Modus und offene Runden
+  als Auswahlmenüs; der Browser merkt sich die Filter.
+- Spiele, die keine Kartenspiele sind (Kritzelpost, Schnellmaler, Wortgitter, Galgenraten und die
+  neuen Spiele), haben eigene Illustrationen statt Spielkarten.
+- README mit Bildern aus simulierten Runden.
+
 ## 2.6.0
 
 - Neues Spiel **Galgenraten** (1–8 Spieler): eigenes Wort ausdenken oder Zufallswort mit

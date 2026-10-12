@@ -19,9 +19,19 @@ import farbrausch
 import galgenraten
 import imposter
 import kritzelpost
+import luegenbaron
+import nochnie
+import pferderennen
+import punchline
+import pyramide
+import ringoffire
+import schaetzmeister
 import schnellmaler
 import stapeljagd
 import tiefpunkt
+import trinklotto
+import wahrheit
+import werwuerde
 from common import RuleError
 
 OPTIONS_FILE = Path("/data/options.json")
@@ -32,7 +42,9 @@ BOT_NAMES = ["Robo", "Karla", "Bitty", "Otto", "Zora", "Pixel", "Toni", "Mops"]
 GAME_TTL = 6 * 3600  # remove games nobody has touched for this long
 
 GAMES = {"stapeljagd": stapeljagd, "tiefpunkt": tiefpunkt, "kritzelpost": kritzelpost, "farbrausch": farbrausch, "schnellmaler": schnellmaler,
-         "galgenraten": galgenraten, "imposter": imposter}
+         "galgenraten": galgenraten, "imposter": imposter, "schaetzmeister": schaetzmeister, "werwuerde": werwuerde,
+         "luegenbaron": luegenbaron, "punchline": punchline, "nochnie": nochnie, "wahrheit": wahrheit, "ringoffire": ringoffire,
+         "trinklotto": trinklotto, "pyramide": pyramide, "pferderennen": pferderennen}
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger("spieleabend")
@@ -316,7 +328,7 @@ def html_response(html: str, root: str = "") -> web.Response:
 
 MANIFEST = {
     "name": "Spieleabend", "short_name": "Spieleabend", "lang": "de",
-    "description": "Stapeljagd, Tiefpunkt, Kritzelpost, Farbrausch, Schnellmaler, Wortgitter, Galgenraten und Imposter – zusammen spielen im Browser",
+    "description": "Karten-, Zeichen-, Wort- und Partyspiele für den Spieleabend – zusammen spielen im Browser",
     "start_url": "./", "scope": "./", "display": "standalone", "orientation": "any",
     "background_color": "#0b0a1f" if THEME == "dark" else "#eef2ff",
     "theme_color": "#0b0a1f" if THEME == "dark" else "#eef2ff",

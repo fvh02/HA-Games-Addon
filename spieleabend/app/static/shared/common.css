@@ -325,3 +325,7 @@
     .conn { top: calc(12px + env(safe-area-inset-top)); }
     .roomcode .invite { margin-top: 14px; }
     .toast { pointer-events: none; }
+
+    /* ---------- illustrations of non-card games (art.js) ---------- */
+    .art { width: 100%; height: 100%; display: block; color: var(--text); overflow: visible; }
+    .fan.artfan { width: min(260px, 80vw); height: 120px; display: block; margin: 0 auto; animation: popin .7s cubic-bezier(.2,.9,.3,1.3) both; }

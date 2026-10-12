@@ -4,6 +4,7 @@
  *   kind      – "stapeljagd" | "tiefpunkt" (WebSocket path and storage keys)
  *   title     – shown in the lobby
  *   fan       – HTML of a few cards for the lobby logo
+ *   art       – optional, name of an illustration from art.js instead of cards (non-card games)
  *   settings  – [{ key, options: [[value, label], ...] }] chosen when creating a room
  *   render(fromServer) – draws #table from Shell.game
  *   finished() – { title, sub, icon? } for the end-of-game overlay
@@ -83,7 +84,7 @@
     <div class="conn glass hidden" id="conn">Verbindung wird hergestellt …</div>
     <section id="lobby" class="page hidden">
       <a class="home" href="../">← Alle Spiele</a>
-      <div class="logo"><div class="fan">${G.fan}</div><h1>${G.title}</h1></div>
+      <div class="logo">${G.art && window.ART ? `<div class="fan artfan">${window.ART[G.art]}</div>` : `<div class="fan">${G.fan}</div>`}<h1>${G.title}</h1></div>
       <div class="panel glass">
         <p class="label">Dein Name</p>
         <input id="name" maxlength="20" placeholder="z. B. Alex" autocomplete="nickname" style="width:100%">

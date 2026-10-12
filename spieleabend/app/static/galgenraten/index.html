@@ -6,6 +6,7 @@
   <title>Galgenraten</title>
   <link rel="stylesheet" href="../static/common.css">
   <script src="../static/common.js"></script>
+  <script src="../static/art.js"></script>
   <style>
     .card.ga { --c1: #a78bfa; --c2: #5b21b6; } .card.gb { --c1: #f472b6; --c2: #9d174d; }
     .card.gc { --c1: #60a5fa; --c2: #1e40af; } .card.gd { --c1: #34d399; --c2: #065f46; }
@@ -109,6 +110,7 @@
       kind: "galgenraten",
       title: "Galgenraten",
       minPlayers: 1,
+      art: "galgenraten",
       fan: [["ga", "G"], ["gb", "A"], ["gc", "L"], ["gd", "G"]].map(([c, l]) => Shell.card(c, `<span class="v">${l}</span>`)).join(""),
       settings: [
         { key: "source", label: "Wörter", options: [[1, "Spieler denken sich Wörter aus"], [0, "Zufallswörter mit Kategorie"]] },
