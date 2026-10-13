@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.1
+
+- Beispielname im Namensfeld und Namen in den README-Bildern neutralisiert.
+
 ## 3.0.0
 
 - **Vier neue Partyspiele:** Schätzmeister, Wer würde eher …?, Lügenbaron und Punchline – alle
