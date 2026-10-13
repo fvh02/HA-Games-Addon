@@ -135,14 +135,14 @@ function person(name) { return data.players.find(p => p.name.toLowerCase() === S
 
 function monat() {
   const r = data.ranking;
-  if (!r.length) return `<section class="card glass empty">Noch keine Partien ${data.current ? "in diesem Monat" : ""}.<br>Spielt eine Runde mit mindestens zwei Personen – dann geht's los!</section>`;
+  if (!r.length) return `<section class="card glass empty">Noch keine Partien ${data.current ? "in diesem Monat" : ""}.<br>Meldet euch im Spieleabend an und spielt eine Runde zu zweit oder mehr – dann geht's los!</section>`;
   const pod = [r[1], r[0], r[2]].map((x, i) => x ? `<div class="p p${[2, 1, 3][i]}" data-name="${esc(x.name)}">${av(x.name)}<span class="name">${esc(x.name)}</span><small>${x.points} Punkte · ${x.wins} Siege</small><div class="bar">${[2, 1, 3][i]}</div></div>` : "<div></div>").join("");
   return `<section class="card glass"><h2>${esc(data.label)}</h2><div class="podium">${pod}</div>
     <table><thead><tr><th>#</th><th>Name</th><th>Punkte</th><th>Siege</th><th class="hide-s">Partien</th><th class="hide-s">Quote</th><th class="hide-s">🍻</th></tr></thead><tbody>
     ${r.map(x => `<tr class="row" data-name="${esc(x.name)}"><td class="medal">${medal(x.place)}</td><td><span class="who">${av(x.name)}<span>${esc(x.name)}${x.favorite ? `<br><small class="muted">♥ ${esc(x.favorite)}</small>` : ""}</span></span></td>
       <td><b>${x.points}</b></td><td>${x.wins}</td><td class="hide-s">${x.games}</td><td class="hide-s">${x.winrate} %</td><td class="hide-s">${x.sips || ""}</td></tr>`).join("")}
     </tbody></table>
-    <p class="muted" style="font-size:.8rem;margin:12px 0 0">Punkte: 1 fürs Mitspielen und 1 für jeden, der hinter dir landet. Es zählen Partien mit mindestens zwei Menschen. Am 1. jedes Monats geht es von vorn los – die Sieger kommen in die Ruhmeshalle.</p></section>`;
+    <p class="muted" style="font-size:.8rem;margin:12px 0 0">Punkte: 1 fürs Mitspielen und 1 für jeden, der hinter dir landet. Punkte und Achievements sammelt, wer im Spieleabend angemeldet ist; es zählen Partien mit mindestens zwei Menschen. Am 1. jedes Monats geht es von vorn los – die Sieger kommen in die Ruhmeshalle.</p></section>`;
 }
 
 function spiele() {
@@ -172,12 +172,11 @@ function ruhm() {
 }
 
 function partien() {
-  const admin = data.admin ? `<div class="card glass"><h2>Korrekturen</h2><p class="muted" style="margin-top:0;font-size:.85rem">Nur hier in Home Assistant sichtbar. Zwei Schreibweisen zusammenlegen, z. B. „alex“ → „Alex“:</p>
-    <div class="admin"><input id="mFrom" placeholder="Name alt" maxlength="20"><span>→</span><input id="mTo" placeholder="Name richtig" maxlength="20"><button id="merge">Zusammenlegen</button></div></div>` : "";
-  if (!data.recent.length) return admin + `<section class="card glass empty">Keine Partien in diesem Monat.</section>`;
-  return admin + `<section class="card glass"><h2>Partien · ${esc(data.label)}</h2>${data.recent.map(m => `<div class="match"><div class="top"><b>${esc(m.title)}</b>
+  if (!data.recent.length) return `<section class="card glass empty">Keine Partien in diesem Monat.</section>`;
+  return `<section class="card glass"><h2>Partien · ${esc(data.label)}</h2>${data.recent.map(m => `<div class="match"><div class="top"><b>${esc(m.title)}</b>
     <span class="muted" style="font-size:.82rem">${when(m.ts)}${m.counts ? "" : " · zählt nicht"}${data.admin ? ` <button class="del" data-del="${m.id}">löschen</button>` : ""}</span></div>
-    <div class="pl">${m.players.map(p => `<span class="pill ${p.won ? "win" : ""} ${p.bot ? "bot" : ""}">${p.won ? "🏆 " : p.place ? p.place + ". " : ""}${esc(p.name)}${p.bot ? " 🤖" : ""}${p.sips ? ` · ${p.sips} 🍻` : ""}${!p.bot && m.counts ? ` · +${p.points}` : ""}</span>`).join("")}</div></div>`).join("")}</section>`;
+    <div class="pl">${m.players.map(p => `<span class="pill ${p.won ? "win" : ""} ${p.bot || p.guest ? "bot" : ""}">${p.won ? "🏆 " : p.place ? p.place + ". " : ""}${esc(p.name)}${p.bot ? " 🤖" : p.guest ? " · Gast" : ""}${p.sips ? ` · ${p.sips} 🍻` : ""}${p.points && m.counts ? ` · +${p.points}` : ""}</span>`).join("")}</div></div>`).join("")}
+    <p class="muted" style="font-size:.8rem;margin:12px 0 0">Gäste spielen mit, sammeln aber keine Punkte und Achievements – dafür im Spieleabend anmelden.</p></section>`;
 }
 
 function render() {
@@ -188,8 +187,6 @@ function render() {
     if (!confirm("Diese Partie aus der Bestenliste löschen?")) return;
     await post("api/admin/delete", { id: b.dataset.del }); load(data.month);
   };
-  const m = $("merge");
-  if (m) m.onclick = async () => { const r = await post("api/admin/merge", { from: $("mFrom").value, to: $("mTo").value }); if (r.error) alert(r.error); else load(data.month); };
 }
 
 async function post(path, body) {

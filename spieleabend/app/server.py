@@ -32,10 +32,11 @@ import tiefpunkt
 import trinklotto
 import wahrheit
 import werwuerde
+import accounts
 import stats
 from common import RuleError
 
-OPTIONS_FILE = Path("/data/options.json")
+OPTIONS_FILE = Path(os.environ.get("SPIELE_OPTIONS", "/data/options.json"))
 STATIC_DIR = Path(__file__).parent / "static"
 PORT = int(os.environ.get("SPIELE_PORT", "8098"))
 BOT_DELAY = float(os.environ.get("SPIELE_BOT_DELAY", "0.9"))
@@ -91,6 +92,7 @@ class Hub:
         self.timers: dict[str, float] = {}  # room code -> deadline a timer task waits for
         self.timer_tasks: set[asyncio.Task] = set()  # keep references so tasks aren't collected
         self.reported: set[str] = set()  # rooms whose finished game went to the Bestenliste
+        self.accounts: dict[web.WebSocketResponse, dict] = {}  # browser → logged-in account (id, name)
 
     # -- sending -------------------------------------------------------------
     @staticmethod
@@ -227,11 +229,15 @@ class Hub:
         seat = self.seats.get(token)
         game = self.games.get(seat[0]) if seat else None
         me = seat[1] if seat else None
-        name = str(msg.get("name", "")).strip()[:20]
+        account = self.accounts.get(ws)
+        # Logged in: play under the account name, so points and achievements go to the account.
+        name = account["name"] if account else str(msg.get("name", "")).strip()[:20]
 
         if kind in ("create", "join"):
             if not name:
                 raise RuleError("Bitte gib deinen Namen ein")
+            if not account and konten.name_taken(name):
+                raise RuleError(f"„{name}“ gehört zu einem Konto – melde dich an oder nimm einen anderen Namen")
             if seat:
                 self.leave(token)
             if kind == "create":
@@ -245,6 +251,7 @@ class Hub:
                 if not game:
                     raise RuleError("Dieses Spiel gibt es nicht")
             player = game.new_player(name)
+            player.account = account["id"] if account else None
             game.add_player(player)
             self.seats[token] = (game.code, player.id)
             await self.broadcast(game.code)
@@ -319,7 +326,18 @@ class Hub:
 
 hubs = {kind: Hub(module) for kind, module in GAMES.items()}
 reporter = stats.Reporter()
+konten = accounts.Accounts(OPTIONS, lambda request: client_ip(request), on_delete=stats.forget)
 routes = web.RouteTableDef()
+
+
+@routes.get("/konto")
+async def konto_slash(_: web.Request) -> web.Response:
+    raise web.HTTPFound("konto/")
+
+
+@routes.get("/konto/")
+async def konto_page(_: web.Request) -> web.Response:
+    return page(STATIC_DIR / "konto.html", "../")
 
 
 @routes.get("/bestenliste")
@@ -536,6 +554,7 @@ async def websocket(request: web.Request) -> web.WebSocketResponse:
     ip = client_ip(request)
     if sockets_per_ip.get(ip, 0) >= MAX_SOCKETS_PER_IP:
         raise web.HTTPTooManyRequests(text="Zu viele Verbindungen")
+    user = konten.user(request)
     ws = web.WebSocketResponse(heartbeat=25, max_msg_size=2 * 1024 * 1024)
     await ws.prepare(request)
     sockets_per_ip[ip] = sockets_per_ip.get(ip, 0) + 1
@@ -563,7 +582,9 @@ async def websocket(request: web.Request) -> web.WebSocketResponse:
                 if len(token) < 16:
                     token = secrets.token_urlsafe(16)
                 hub.sockets[ws] = token
-                await hub.send(ws, {"t": "hello", "token": token})
+                if user:
+                    hub.accounts[ws] = {"id": user["id"], "name": user["name"]}
+                await hub.send(ws, {"t": "hello", "token": token, "account": hub.accounts.get(ws)})
                 await hub.send_view(ws)
                 continue
             try:
@@ -574,6 +595,7 @@ async def websocket(request: web.Request) -> web.WebSocketResponse:
                 await hub.send(ws, {"t": "error", "msg": "Ungültige Eingabe"})
     finally:
         hub.sockets.pop(ws, None)
+        hub.accounts.pop(ws, None)
         sockets_per_ip[ip] -= 1
         if not sockets_per_ip[ip]:
             sockets_per_ip.pop(ip)
@@ -593,6 +615,8 @@ async def cleanup_loop() -> None:
 async def on_startup(app: web.Application) -> None:
     app["cleanup"] = asyncio.create_task(cleanup_loop())
     log.info("Spieleabend läuft auf Port %s%s", PORT, " (mit Zugangscode)" if ACCESS_CODE else "")
+    if not konten.mail.enabled:
+        log.warning("Keine E-Mail eingerichtet (smtp_host): Bestätigungscodes stehen nur hier im Protokoll")
     if not ACCESS_CODE:
         log.info("Kein Zugangscode gesetzt: Aufrufe über Cloudflare werden abgewiesen, das Heimnetz ist offen.")
 
@@ -600,6 +624,7 @@ async def on_startup(app: web.Application) -> None:
 def main() -> None:
     app = web.Application(middlewares=[access_middleware])
     app.router.add_static("/static/", STATIC_DIR / "shared")
+    app.add_routes(konten.routes())
     app.add_routes(routes)
     app.on_startup.append(on_startup)
     web.run_app(app, host=None, port=PORT, print=None, access_log=None)

@@ -87,6 +87,7 @@
     .toplink { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; padding: 8px 16px; border-radius: 999px;
                color: var(--text); text-decoration: none; font-weight: 700; font-size: .92rem; }
     .toplink:hover { background: var(--glass-strong); }
+    .toplinks { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
   </style>
 </head>
 <body>
@@ -95,7 +96,8 @@
     <header>
       <h1>Spieleabend</h1>
       <p>Wähle ein Spiel und lade deine Freunde ein.</p>
-      <a class="toplink glass" href="bestenliste/">🏆 Bestenliste</a>
+      <div class="toplinks"><a class="toplink glass" href="bestenliste/">🏆 Bestenliste</a>
+        <a class="toplink glass" href="konto/" id="acctLink">🔑 Anmelden</a></div>
     </header>
     <div class="install glass hidden" id="install">
       <b>Als App installieren:</b> <span id="installHow"></span>
@@ -343,6 +345,11 @@
     }
     refresh();
     setInterval(refresh, 5000);
+  </script>
+  <script>
+    fetch("api/konto", { cache: "no-store" }).then(r => r.json()).then(r => {
+      if (r.user) document.getElementById("acctLink").textContent = "👤 " + r.user.name;
+    }).catch(() => {});
   </script>
 </body>
 </html>

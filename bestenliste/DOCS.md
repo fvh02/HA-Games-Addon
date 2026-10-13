@@ -15,8 +15,10 @@ Rangliste und Achievements für den **Spieleabend**. Jede beendete Partie landet
   einem Abend. Ein Klick auf einen Namen zeigt alle Achievements mit Fortschritt.
 - Neue Achievements und ein neuer Spitzenreiter erscheinen am Ende der Partie direkt im Spiel.
 
-Es zählen nur Partien mit **mindestens zwei Menschen** (Computer-Spieler zählen nicht mit, wer
-mittendrin geht, auch nicht). Spieler werden am Namen erkannt; Groß- und Kleinschreibung ist egal.
+**Punkte und Achievements sammelt nur, wer im Spieleabend angemeldet ist** (Startseite →
+„🔑 Anmelden“). Gäste spielen mit, stehen in den Partien als „Gast“ und bekommen nichts. Es zählen
+nur Partien mit **mindestens zwei Menschen** (Computer-Spieler zählen nicht mit, wer mittendrin
+geht, auch nicht). Gezählt wird am Konto – ein Namenswechsel ändert nichts.
 
 ## Wo die Seite ist
 
@@ -28,13 +30,13 @@ mittendrin geht, auch nicht). Spieler werden am Namen erkannt; Groß- und Kleins
 
 ## Korrekturen
 
-Nur über Home Assistant (Seitenleiste) gibt es im Reiter **Partien** zusätzlich:
-- **löschen** – eine Partie aus der Wertung nehmen (z. B. eine Testrunde),
-- **Zusammenlegen** – zwei Schreibweisen als eine Person zählen (z. B. „Alexx“ → „Alex“).
+Nur über Home Assistant (Seitenleiste) gibt es im Reiter **Partien** zusätzlich **löschen** – eine
+Partie aus der Wertung nehmen (z. B. eine Testrunde). Löscht jemand sein Konto im Spieleabend,
+verschwindet es auch hier.
 
 ## Einrichtung
 
-Installieren und starten – fertig. Spieleabend (ab 3.2.0) und Bestenliste müssen aus demselben
+Installieren und starten – fertig. Spieleabend (ab 3.3.0) und Bestenliste müssen aus demselben
 Repository stammen; sie finden sich dann von selbst. Ist die Bestenliste mal nicht erreichbar,
 merkt sich der Spieleabend die Ergebnisse und schickt sie später nach.
 

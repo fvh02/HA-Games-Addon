@@ -10,6 +10,7 @@ import asyncio
 import json
 import logging
 import os
+import re
 import secrets
 import time
 from datetime import date
@@ -26,7 +27,6 @@ log = logging.getLogger("bestenliste")
 
 DATA = Path(os.environ.get("BESTENLISTE_DATA", "/data"))
 RESULTS = DATA / "results.jsonl"
-ALIASES = DATA / "aliases.json"
 STATIC = Path(__file__).parent / "static"
 PORT = int(os.environ.get("BESTENLISTE_PORT", "8091"))
 SUPERVISOR = os.environ.get("SUPERVISOR_URL", "http://supervisor").rstrip("/")
@@ -57,10 +57,6 @@ class Store:
         except (OSError, ValueError) as err:
             if RESULTS.exists():
                 log.warning("Ergebnisse teilweise unlesbar: %s", err)
-        try:
-            self.aliases: dict[str, str] = json.loads(ALIASES.read_text())
-        except (OSError, ValueError):
-            self.aliases = {}
         self.results.sort(key=lambda r: r["ts"])
 
     def add(self, result: dict) -> None:
@@ -74,7 +70,6 @@ class Store:
         tmp = RESULTS.with_suffix(".tmp")
         tmp.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in self.results))
         tmp.replace(RESULTS)
-        ALIASES.write_text(json.dumps(self.aliases, ensure_ascii=False))
 
 
 store: Store
@@ -128,11 +123,14 @@ def clean_result(data: dict) -> dict:
             continue          # people who left during the game don't count
         place = p.get("place")
         score = p.get("score")
+        account = str(p.get("account") or "")
         players.append({"name": name, "bot": bool(p.get("bot")),
+                        "account": account if re.fullmatch(r"[0-9a-f]{4,40}", account) and not p.get("bot") else None,
                         "place": int(place) if isinstance(place, int) and 0 < place <= 20 else None,
                         "score": score if isinstance(score, (int, float)) and abs(score) < 1e9 else None,
                         "won": bool(p.get("won")), "sips": max(0, min(500, int(p.get("sips") or 0)))})
-    highlights = [{"name": str(h.get("name") or "")[:20], "what": str(h.get("what") or "")[:20]}
+    highlights = [{"name": str(h.get("name") or "")[:20], "what": str(h.get("what") or "")[:20],
+                   "account": str(h.get("account") or "")[:40] or None}
                   for h in (data.get("highlights") or [])[:40]]
     return {"id": secrets.token_hex(5), "ts": time.time(), "kind": kind, "title": ranking.TITLES.get(kind, kind),
             "players": players, "highlights": highlights}
@@ -140,8 +138,9 @@ def clean_result(data: dict) -> dict:
 
 def recent_view(r: dict) -> dict:
     return {"id": r["id"], "ts": r["ts"], "title": r["title"], "kind": r["kind"], "counts": ranking.counts(r),
-            "players": sorted(({"name": p["name"], "bot": p["bot"], "place": p["place"], "won": p["won"], "score": p["score"],
-                                "sips": p["sips"], "points": ranking.points(r, p) if not p["bot"] else 0} for p in r["players"]),
+            "players": sorted(({"name": p["name"], "bot": p["bot"], "guest": not p["bot"] and not p.get("account"),
+                                "place": p["place"], "won": p["won"], "score": p["score"], "sips": p["sips"],
+                                "points": ranking.points(r, p) if p.get("account") else 0} for p in r["players"]),
                               key=lambda p: (p["place"] or 99, p["name"].casefold()))}
 
 
@@ -151,8 +150,8 @@ def overview(month: str | None, admin: bool) -> dict:
     month = month if month and len(month) == 7 else current
     results = [r for r in store.results if ranking.counts(r)]
     in_month = [r for r in results if ranking.month_of(r["ts"]) == month]
-    players, finished = ranking.replay(store.results, store.aliases, now)
-    rows = ranking.standings(in_month, store.aliases)
+    players, finished = ranking.replay(store.results, now)
+    rows = ranking.standings(in_month)
 
     games = []
     for kind, title in ranking.TITLES.items():
@@ -161,10 +160,9 @@ def overview(month: str | None, admin: bool) -> dict:
             continue
         wins: dict[str, list] = {}
         for r in rs:
-            for p in ranking.humans(r):
+            for p in ranking.members(r):
                 if p["won"]:
-                    k = store.aliases.get(ranking.key_of(p["name"]), ranking.key_of(p["name"]))
-                    wins.setdefault(k, [p["name"], 0])[1] += 1
+                    wins.setdefault(ranking.member_key(p), [p["name"], 0])[1] += 1
         leaders = sorted(({"name": n, "wins": w} for n, w in wins.values()), key=lambda x: -x["wins"])[:3]
         games.append({"kind": kind, "title": title, "played": len(rs), "leaders": leaders})
     games.sort(key=lambda g: -g["played"])
@@ -215,23 +213,23 @@ async def api_result(request: web.Request) -> web.Response:
     if result["kind"] not in ranking.TITLES or not result["players"]:
         return web.json_response({"error": "Unbekanntes Spiel"}, status=400)
     month = ranking.month_of(result["ts"])
-    before_players, _ = ranking.replay(store.results, store.aliases)
-    before_rows = ranking.standings([r for r in store.results if ranking.counts(r) and ranking.month_of(r["ts"]) == month],
-                                    store.aliases)
+    before_players, _ = ranking.replay(store.results)
+    before_rows = ranking.standings([r for r in store.results if ranking.counts(r) and ranking.month_of(r["ts"]) == month])
     store.add(result)
     notes = []
     if not ranking.counts(result):
         notes.append("🏆 Bestenliste: Partien mit weniger als zwei Menschen zählen nicht")
+    elif not ranking.members(result):
+        notes.append("🏆 Bestenliste: Niemand war angemeldet – melde dich an, um Punkte und Achievements zu sammeln")
     else:
-        after_players, _ = ranking.replay(store.results, store.aliases)
+        after_players, _ = ranking.replay(store.results)
         for k, state in after_players.items():
             old = before_players.get(k, {}).get("unlocked", {})
             for aid in state["unlocked"]:
                 if aid not in old:
                     icon, title = ranking.title_of(aid)
                     notes.append(f"{icon} {state['name']} schaltet „{title}“ frei")
-        rows = ranking.standings([r for r in store.results if ranking.counts(r) and ranking.month_of(r["ts"]) == month],
-                                 store.aliases)
+        rows = ranking.standings([r for r in store.results if ranking.counts(r) and ranking.month_of(r["ts"]) == month])
         old_leader = before_rows[0]["key"] if before_rows else None
         if rows and rows[0]["key"] != old_leader and rows[0]["place"] == 1 and (len(rows) == 1 or rows[1]["place"] != 1):
             notes.append(f"👑 {rows[0]['name']} führt jetzt die Bestenliste im {ranking.MONTHS[int(month[5:]) - 1]} an")
@@ -252,18 +250,24 @@ async def admin_delete(request: web.Request) -> web.Response:
     return web.json_response({"ok": True})
 
 
-@routes.post("/api/admin/merge")
-async def admin_merge(request: web.Request) -> web.Response:
-    """Counts two spellings as one person (e.g. "alex" and "Alex B")."""
-    if not is_admin(request):
-        return web.json_response({"error": "Nur über Home Assistant"}, status=403)
-    data = await request.json()
-    old, new = ranking.key_of(data.get("from") or ""), ranking.key_of(data.get("to") or "")
-    if not old or not new or old == new:
-        return web.json_response({"error": "Bitte zwei verschiedene Namen angeben"}, status=400)
-    store.aliases = {k: (new if v == old else v) for k, v in store.aliases.items()}
-    store.aliases[old] = store.aliases.get(new, new)
-    store.rewrite()
+@routes.post("/api/forget")
+async def api_forget(request: web.Request) -> web.Response:
+    """A deleted Spieleabend account: its results stay for the others, but without the account."""
+    if not await callers.is_spieleabend(request):
+        return web.json_response({"error": "Nur der Spieleabend"}, status=403)
+    account = str((await request.json()).get("account") or "")
+    changed = 0
+    for r in store.results:
+        for p in r["players"]:
+            if p.get("account") == account:
+                p.update(account=None, name="Gelöschtes Konto")
+                changed += 1
+        for h in r.get("highlights") or []:
+            if h.get("account") == account:
+                h.update(account=None, name="")
+    if changed:
+        store.rewrite()
+    log.info("Konto aus %d Ergebnissen entfernt", changed)
     return web.json_response({"ok": True})
 
 

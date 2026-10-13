@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.3.0
+
+- **Konten:** Neue Seite **Konto** (Startseite oben „🔑 Anmelden“) mit Registrieren,
+  Anmelden, Abmelden, Passwort ändern und Konto löschen. Bei der Registrierung kommt ein
+  6-stelliger Bestätigungscode per E-Mail; „Passwort vergessen“ setzt das Passwort ebenfalls per
+  Code aus der E-Mail zurück (30 Minuten gültig, höchstens 5 Versuche).
+- **Nur angemeldet zählt:** Punkte und Achievements in der Bestenliste sammeln nur angemeldete
+  Spieler; sie spielen automatisch unter ihrem Kontonamen. Gäste spielen weiter ohne Konto mit,
+  dürfen aber keinen Namen eines Kontos benutzen.
+- Der Zugangscode der Seite bleibt davor bestehen.
+- Neue Optionen für den E-Mail-Versand (SMTP). Ohne sie stehen die Codes im Protokoll.
+
 ## 3.2.0
 
 - **Bestenliste:** Beendete Partien gehen an das neue Add-on **Spieleabend-Bestenliste**

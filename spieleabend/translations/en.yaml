@@ -5,5 +5,23 @@ configuration:
   access_code:
     name: Access code
     description: Anyone who opens the games outside Home Assistant has to enter this code once. Set it whenever the games are reachable from the internet. Empty = no code.
+  smtp_host:
+    name: Mail server (SMTP)
+    description: For the confirmation codes at registration and password reset, e.g. smtp.gmail.com. Empty = codes only appear in this add-on's log.
+  smtp_port:
+    name: SMTP port
+    description: Usually 587 (STARTTLS) or 465 (SSL).
+  smtp_tls:
+    name: Encryption
+    description: starttls for port 587, ssl for port 465.
+  smtp_user:
+    name: SMTP user
+    description: Usually your e-mail address.
+  smtp_password:
+    name: SMTP password
+    description: For Gmail and iCloud an app password, not your normal password.
+  smtp_from:
+    name: Sender
+    description: Sender address of the e-mails. Empty = SMTP user.
 network:
   8098/tcp: Games for players without Home Assistant access (home network or tunnel)

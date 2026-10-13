@@ -21,9 +21,18 @@ Spiele für mehrere Spieler im Browser. Auf der Startseite wählst du das Spiel:
 - **Trinkspiele** (ab 18, alles geht auch mit Softdrinks): **Ich hab noch nie …**,
   **Wahrheit oder Trinken**, **Trinklotto**, **Pyramide**, **Pferderennen** und **Ring of Fire**.
 
-**🏆 Bestenliste:** Mit dem Add-on **Spieleabend-Bestenliste** aus diesem Repository zählt jede
-Partie für eine Rangliste pro Monat und für Achievements. Der Knopf oben auf der Startseite
-öffnet sie – auch für Freunde ohne Home Assistant.
+**🏆 Bestenliste und Konten:** Mit dem Add-on **Spieleabend-Bestenliste** aus diesem Repository
+zählt jede Partie für eine Rangliste pro Monat und für Achievements – aber nur für Spieler, die
+angemeldet sind. Oben auf der Startseite: **🔑 Anmelden** (Registrieren mit Bestätigungscode per
+E-Mail, Passwort vergessen per Code) und **🏆 Bestenliste**. Angemeldete spielen automatisch unter
+ihrem Kontonamen; Gäste spielen ohne Wertung mit. Der Zugangscode bleibt davor bestehen.
+
+**E-Mail für die Codes einrichten** (Konfiguration): `smtp_host` (z. B. `smtp.gmail.com`,
+`smtp.web.de`, `smtp.gmx.net`), `smtp_port` 587 mit `smtp_tls` = starttls (oder 465 mit ssl),
+`smtp_user` = deine Adresse, `smtp_password` (bei Gmail/iCloud ein **App-Passwort**), optional
+`smtp_from`. Ohne diese Angaben stehen die Codes im **Protokoll** des Add-ons – dann kannst du sie
+deinen Freunden weitergeben. Konten liegen nur auf deinem Home Assistant; Passwörter werden
+nicht im Klartext gespeichert.
 
 Auf der Startseite findest du Spiele über die **Suche** und die Filter **Spieler**, **Art**,
 **Dauer** und **Extras** (Fernseher-Modus, gerade offene Runden). Die Filter merkt sich der Browser.

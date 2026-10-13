@@ -17,7 +17,8 @@ Oder manuell: **Einstellungen → Add-ons → Add-on Store → ⋮ → Repositor
 
 ## 🏆 Bestenliste
 
-Das zweite Add-on im Repository, **Spieleabend-Bestenliste**, macht aus jeder Partie Punkte für
+Das zweite Add-on im Repository, **Spieleabend-Bestenliste**, macht aus jeder Partie angemeldeter Spieler
+(Konto mit E-Mail-Bestätigung direkt im Spieleabend) Punkte für
 die **Rangliste des Monats** (Neustart am 1.), vergibt **25 Achievements** und sammelt die
 Monatssieger in einer **Ruhmeshalle** – mit eigener Seite in Home Assistant und über den Knopf
 „🏆 Bestenliste“ direkt im Spieleabend. Details: [`bestenliste/DOCS.md`](bestenliste/DOCS.md).

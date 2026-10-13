@@ -58,7 +58,7 @@ def result(kind: str, game) -> dict:
     for p in people:
         left = p.is_bot and p.name.endswith(" (Bot)")      # a person who left during the game
         players.append({"name": p.name[:-6] if left else p.name, "bot": bool(p.is_bot), "left": left,
-                        "score": _score(p), "place": None, "won": False})
+                        "account": getattr(p, "account", None), "score": _score(p), "place": None, "won": False})
     winner = getattr(game, "winner", None)
     if kind in HIGHER_WINS or kind in LOWER_WINS:
         sign = -1 if kind in LOWER_WINS else 1
@@ -73,7 +73,8 @@ def result(kind: str, game) -> dict:
         x["won"] = x["place"] == 1 and len(players) > 1
         if kind in SIPS:
             x["sips"], x["score"] = int(x["score"] or 0), None
-    highlights = [{"name": n, "what": w} for n, w in getattr(game, "highlights", [])]
+    accounts = {x["name"]: x["account"] for x in players if x["account"]}
+    highlights = [{"name": n, "what": w, "account": accounts.get(n)} for n, w in getattr(game, "highlights", [])]
     game.highlights = []
     return {"kind": kind, "title": TITLES.get(kind, kind), "ts": time.time(), "players": players, "highlights": highlights}
 
@@ -112,6 +113,17 @@ class Reporter:
                 log.info("Bestenliste nicht erreichbar (%s) – %d Ergebnis(se) warten", err, len(self.pending))
             self._save()
             return notes
+
+
+async def forget(account_id: str) -> None:
+    """A deleted account: the Bestenliste removes it from all results."""
+    try:
+        async with aiohttp.ClientSession(trust_env=False, timeout=aiohttp.ClientTimeout(total=8)) as session:
+            async with session.post(url() + "/api/forget", json={"account": account_id}) as resp:
+                if resp.status >= 300:
+                    log.warning("Bestenliste hat das Löschen abgelehnt (%s)", resp.status)
+    except (aiohttp.ClientError, asyncio.TimeoutError, OSError) as err:
+        log.warning("Bestenliste nicht erreichbar – Konto dort nicht gelöscht: %s", err)
 
 
 async def proxy(request, path: str):

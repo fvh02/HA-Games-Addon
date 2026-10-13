@@ -1,8 +1,8 @@
 """Monthly rankings and achievements, computed from the stored game results.
 
-Everything is derived by replaying the results in order, so a deleted result or merged names
-change the numbers consistently. A result counts when at least two people (not computer players)
-played it to the end.
+Everything is derived by replaying the results in order, so a deleted result changes the numbers
+consistently. A result counts when at least two people (not computer players) played it to the end;
+points and achievements only go to players who were logged in with their Spieleabend account.
 """
 
 import time
@@ -19,10 +19,6 @@ CARD_GAMES = {"stapeljagd", "tiefpunkt", "farbrausch"}
 MONTHS = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]
 
 
-def key_of(name: str) -> str:
-    return " ".join(str(name).split()).casefold()
-
-
 def month_of(ts: float) -> str:
     return time.strftime("%Y-%m", time.localtime(ts))
 
@@ -34,6 +30,15 @@ def month_label(month: str) -> str:
 
 def humans(result: dict) -> list[dict]:
     return [p for p in result["players"] if not p.get("bot")]
+
+
+def members(result: dict) -> list[dict]:
+    """Logged-in players: only they collect points and achievements."""
+    return [p for p in humans(result) if p.get("account")]
+
+
+def member_key(player: dict) -> str:
+    return "acc:" + str(player["account"])
 
 
 def counts(result: dict) -> bool:
@@ -97,15 +102,14 @@ def check(state: dict, ts: float) -> list[str]:
     return new
 
 
-def standings(results: list[dict], aliases: dict) -> list[dict]:
+def standings(results: list[dict]) -> list[dict]:
     """Ranking of one month (only counting results)."""
     table: dict[str, dict] = {}
     for r in results:
-        for p in humans(r):
-            k = aliases.get(key_of(p["name"]), key_of(p["name"]))
+        for p in members(r):
+            k = member_key(p)
             row = table.setdefault(k, {"key": k, "name": p["name"], "points": 0, "wins": 0, "games": 0, "sips": 0, "kinds": {}})
-            if key_of(p["name"]) == k:      # merged spellings show the name they were merged into
-                row["name"] = p["name"]
+            row["name"] = p["name"]
             row["points"] += points(r, p)
             row["games"] += 1
             row["wins"] += 1 if p.get("won") else 0
@@ -123,7 +127,7 @@ def standings(results: list[dict], aliases: dict) -> list[dict]:
     return rows
 
 
-def replay(results: list[dict], aliases: dict, now: float | None = None) -> tuple[dict, dict]:
+def replay(results: list[dict], now: float | None = None) -> tuple[dict, dict]:
     """Player states (lifetime stats and achievements) and the finished months' standings."""
     now = now or time.time()
     current = month_of(now)
@@ -132,7 +136,7 @@ def replay(results: list[dict], aliases: dict, now: float | None = None) -> tupl
     finished: dict[str, list[dict]] = {}
 
     def close_month(month: str, ts: float) -> None:
-        rows = standings(months.get(month, []), aliases)
+        rows = standings(months.get(month, []))
         finished[month] = rows
         for row in rows:
             if row["place"] == 1:
@@ -151,12 +155,10 @@ def replay(results: list[dict], aliases: dict, now: float | None = None) -> tupl
         scores = [p.get("score") for p in ranked]
         local = datetime.fromtimestamp(r["ts"])
         evening = (local - timedelta(hours=6)).date().isoformat()
-        for p in humans(r):
-            k = aliases.get(key_of(p["name"]), key_of(p["name"]))
+        for p in members(r):
+            k = member_key(p)
             s = players.setdefault(k, new_state())
-            if not s["name"] or key_of(p["name"]) == k:
-                s["name"] = p["name"]
-            s["last"] = r["ts"]
+            s["name"], s["last"] = p["name"], r["ts"]
             s["games"] += 1
             s["kinds"].add(r["kind"])
             if p.get("place") is not None:     # games with a winner
@@ -182,7 +184,7 @@ def replay(results: list[dict], aliases: dict, now: float | None = None) -> tupl
             s["best_evening"] = max(s["best_evening"], s["evenings"][evening])
             s["sips"] += int(p.get("sips") or 0)
             for h in r.get("highlights") or []:
-                if key_of(h.get("name", "")) == key_of(p["name"]):
+                if h.get("account") == p["account"]:
                     if h.get("what") == "volltreffer":
                         s["bullseyes"] += 1
                     elif h.get("what") == "imposter_sieg":

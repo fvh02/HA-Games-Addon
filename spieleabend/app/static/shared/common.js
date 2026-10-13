@@ -88,6 +88,7 @@
       <div class="panel glass">
         <p class="label">Dein Name</p>
         <input id="name" maxlength="20" placeholder="z. B. Alex" autocomplete="nickname" style="width:100%">
+        <p class="acct" id="acct"><a href="../konto/?zurueck=${G.kind}">🔑 Anmelden</a> – nur dann sammelst du Punkte und Achievements</p>
       </div>
       <div class="panel glass">
         <h2>Neues Spiel</h2>
@@ -158,7 +159,7 @@
 
   let celebrated = null;
   function handle(msg) {
-    if (msg.t === "hello") { Shell.token = msg.token; store.set(G.kind + "-token", msg.token); }
+    if (msg.t === "hello") { Shell.token = msg.token; store.set(G.kind + "-token", msg.token); account(msg.account); }
     else if (msg.t === "error") { Shell.toast(msg.msg); if (G.onError) G.onError(); }
     else if (msg.t !== "game" && msg.t !== "lobby" && G.onMessage) G.onMessage(msg);
     else if (msg.t === "lobby") { Shell.game = Shell.prev = Shell.me = null; showLobby(msg.games); }
@@ -188,6 +189,20 @@
     $("finished").classList.toggle("hidden", !(Shell.game && Shell.game.state === "finished"));
   }
   Shell.show = show;
+
+  // Logged in: the account name is used and stats are collected; otherwise a hint to log in.
+  function account(acc) {
+    Shell.account = acc || null;
+    const el = $("acct");
+    if (!el) return;
+    if (acc) {
+      $("name").value = acc.name;
+      $("name").readOnly = true;
+      el.innerHTML = `✓ Angemeldet als <b>${Shell.esc(acc.name)}</b> – Punkte und Achievements werden gesammelt · <a href="../konto/?zurueck=${G.kind}">Konto</a>`;
+    } else {
+      $("name").readOnly = false;
+    }
+  }
 
   function myName() {
     const n = $("name").value.trim();
