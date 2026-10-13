@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.1.0
+
+- **Schätzmeister mit Kategorien:** Allgemeinwissen gemischt, Erde, Länder & Weltall,
+  Geschichte & Jahreszahlen, Mensch & Alltag und neu **Metallbau (Ausbildung)** mit 46 Fragen
+  zu Werkstoffen, Gewinden, Schweißen, Profilgewichten, Toleranzen sowie Treppen und Geländern.
+
 ## 3.0.1
 
 - Beispielname im Namensfeld und Namen in den README-Bildern neutralisiert.

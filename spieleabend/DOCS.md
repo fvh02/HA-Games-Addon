@@ -14,7 +14,7 @@ Spiele für mehrere Spieler im Browser. Auf der Startseite wählst du das Spiel:
 - **Wortgitter** (1 Spieler): Errate das Wort mit 5 Buchstaben in 6 Versuchen.
 - **Farbrausch** (2–10 Spieler): Passende Farbe oder Zahl ablegen, wer zuerst keine Karten mehr
   hat, gewinnt.
-- **Schätzmeister** (2–16): Schätzfragen – wer am nächsten dran ist, holt die Punkte.
+- **Schätzmeister** (2–16): Schätzfragen in Kategorien (auch Metallbau) – wer am nächsten dran ist, holt die Punkte.
 - **Wer würde eher …?** (3–16): Geheim abstimmen, wer aus der Runde am besten passt.
 - **Lügenbaron** (3–12): Glaubwürdige Lügen erfinden und die Wahrheit finden.
 - **Punchline** (3–12): Sätze lustig ergänzen, die beste Pointe gewinnt.
@@ -194,6 +194,10 @@ gegen Nachrichtenfluten und eine Sperre nach 8 falschen Code-Eingaben (15 Minute
 
 - Eine Schätzfrage (Höhen, Entfernungen, Jahreszahlen …), alle tippen geheim eine Zahl. Punkt
   oder Komma gehen beide („384.400“, „8,1“).
+- **Kategorie** beim Erstellen der Runde wählen (im Warteraum änderbar): Allgemeinwissen
+  gemischt, Erde, Länder & Weltall, Geschichte & Jahreszahlen, Mensch & Alltag oder
+  **🔩 Metallbau (Ausbildung)** – Werkstoffe, Gewinde, Schweißen, Profile, Toleranzen und
+  Treppen/Geländer. Fachkategorien kommen nur, wenn sie gewählt sind.
 - Die drei Nächsten bekommen 3, 2 und 1 Punkt, gleich weit weg zählt gleich. Liegt jemand
   höchstens 1 % daneben, gibt es 2 Bonuspunkte für den Volltreffer.
 - Einstellbar: 5–15 Fragen, 30–60 Sekunden oder ohne Zeitlimit.

@@ -79,7 +79,7 @@ Einer denkt sich ein Wort aus, alle anderen raten Buchstabe für Buchstabe, bevo
 #### Schätzmeister
 *2–16 Spieler · 10–20 Min. · 📺*
 
-Wie tief ist der Marianengraben? Alle tippen eine Zahl – wer am nächsten dran ist, holt die Punkte.
+Wie tief ist der Marianengraben? Alle tippen eine Zahl – wer am nächsten dran ist, holt die Punkte. Mit Kategorien, z. B. Geschichte oder 🔩 Metallbau (Ausbildung).
 
 <p><img src="bilder/schaetzmeister.jpg" width="220" alt="schaetzmeister"> <img src="bilder/schaetzmeister-tv.jpg" width="440" alt="schaetzmeister-tv"></p>
 

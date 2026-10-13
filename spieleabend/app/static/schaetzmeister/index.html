@@ -10,6 +10,7 @@
   <script src="../static/art.js"></script>
   <script src="../static/party.js"></script>
   <style>
+    .cat { font-size: .78rem; font-weight: 750; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
     .unit { font-size: .9rem; font-weight: 700; padding: 4px 12px; border-radius: 999px; background: var(--glass-strong); border: 1px solid var(--glass-border); }
     .line { position: relative; width: 100%; height: 118px; margin: 6px 0 2px; }
     .line .axis { position: absolute; left: 4%; right: 4%; top: 74px; height: 6px; border-radius: 3px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); opacity: .5; }
@@ -72,10 +73,12 @@
       settings: [
         { key: "rounds", label: "Runden", options: [[8, "8 Fragen"], [5, "5 Fragen"], [10, "10 Fragen"], [15, "15 Fragen"]] },
         { key: "seconds", label: "Zeit", options: [[45, "45 Sekunden"], [30, "30 Sekunden"], [60, "60 Sekunden"], [0, "Ohne Zeitlimit"]] },
+        { key: "category", label: "Kategorie", options: [[0, "Allgemeinwissen gemischt"], [1, "Erde, Länder & Weltall"],
+          [2, "Geschichte & Jahreszahlen"], [3, "Mensch & Alltag"], [4, "🔩 Metallbau (Ausbildung)"]] },
       ],
       build(g, ctx) {
         editing = false;
-        if (g.phase === "guess") return `<h2>${esc(g.question)}</h2>${g.unit ? `<span class="unit">Antwort in ${esc(g.unit)}</span>` : ""}
+        if (g.phase === "guess") return `<span class="cat">${esc(g.category || "")}</span><h2>${esc(g.question)}</h2>${g.unit ? `<span class="unit">Antwort in ${esc(g.unit)}</span>` : ""}
           <div id="mine" style="width:100%;display:flex;flex-direction:column;align-items:center;gap:10px"></div>
           <div data-status></div>${ctx.tv ? "<p>Schätzt auf euren Handys!</p>" : ""}`;
         const top = g.ranking[0];
