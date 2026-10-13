@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.5.2
+
+- Schwimmen: Auf schmalen Handys ragte die Spielerleiste oben links aus dem Bild (der erste Name
+  war abgeschnitten). Sie beginnt jetzt am linken Rand und lässt sich seitlich wischen.
+
 ## 3.5.1
 
 - Startseite: Beim Filtern verloren einige Spielbilder Schatten und Farbverläufe (z. B. bei

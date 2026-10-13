@@ -87,6 +87,9 @@
     body.tv .log { font-size: clamp(.9rem, 1.3vw, 1.4rem); max-width: none; }
     body.tv .midlabel { font-size: clamp(.9rem, 1.2vw, 1.4rem); }
     body:not(.tv) .topbar { order: -2; } body:not(.tv) .opponents { order: -1; }
+    /* never wider than the screen: with several players the strip scrolls from the left instead of
+       being centred and cut off on both sides */
+    body:not(.tv) .opponents { align-self: stretch; width: 100%; max-width: 100%; min-width: 0; box-sizing: border-box; }
     body.tv .roundpanel { max-width: 680px !important; font-size: 1.3rem; }
     body.tv .rtitle { font-size: 2.2rem; }
     .tvcode2 { display: none; }
