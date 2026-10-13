@@ -33,6 +33,15 @@ import tiefpunkt
 import trinklotto
 import wahrheit
 import werwuerde
+import blindmaler
+import buzzer
+import codewoerter
+import emojiraten
+import schwimmen
+import sortierfix
+import spion
+import stadtlandfluss
+import werwolf
 import accounts
 import stats
 from common import RuleError
@@ -60,7 +69,9 @@ GAME_TTL = 6 * 3600  # remove games nobody has touched for this long
 GAMES = {"stapeljagd": stapeljagd, "tiefpunkt": tiefpunkt, "kritzelpost": kritzelpost, "farbrausch": farbrausch, "schnellmaler": schnellmaler,
          "galgenraten": galgenraten, "imposter": imposter, "schaetzmeister": schaetzmeister, "werwuerde": werwuerde,
          "luegenbaron": luegenbaron, "punchline": punchline, "nochnie": nochnie, "wahrheit": wahrheit, "ringoffire": ringoffire,
-         "trinklotto": trinklotto, "pyramide": pyramide, "pferderennen": pferderennen}
+         "trinklotto": trinklotto, "pyramide": pyramide, "pferderennen": pferderennen,
+         "buzzer": buzzer, "sortierfix": sortierfix, "spion": spion, "codewoerter": codewoerter, "werwolf": werwolf,
+         "blindmaler": blindmaler, "emojiraten": emojiraten, "stadtlandfluss": stadtlandfluss, "schwimmen": schwimmen}
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger("spieleabend")

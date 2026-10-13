@@ -25,11 +25,14 @@ TITLES = {
     "schnellmaler": "Schnellmaler", "galgenraten": "Galgenraten", "imposter": "Imposter", "schaetzmeister": "Schätzmeister",
     "werwuerde": "Wer würde eher …?", "luegenbaron": "Lügenbaron", "punchline": "Punchline", "nochnie": "Ich hab noch nie …",
     "wahrheit": "Wahrheit oder Trinken", "ringoffire": "Ring of Fire", "trinklotto": "Trinklotto", "pyramide": "Pyramide",
-    "pferderennen": "Pferderennen",
+    "pferderennen": "Pferderennen", "buzzer": "Buzzer-Quiz", "sortierfix": "Sortierfix", "spion": "Spion",
+    "codewoerter": "Codewörter", "werwolf": "Werwolf", "blindmaler": "Blind gezeichnet", "emojiraten": "Emoji-Rätsel",
+    "stadtlandfluss": "Stadt-Land-Fluss", "schwimmen": "Schwimmen (31)",
 }
-HIGHER_WINS = {"schaetzmeister", "luegenbaron", "punchline", "schnellmaler", "galgenraten", "imposter"}
+HIGHER_WINS = {"schaetzmeister", "luegenbaron", "punchline", "schnellmaler", "galgenraten", "imposter",
+               "buzzer", "sortierfix", "blindmaler", "emojiraten", "stadtlandfluss"}
 LOWER_WINS = {"tiefpunkt"}
-WINNER_ONLY = {"stapeljagd", "farbrausch"}
+WINNER_ONLY = {"stapeljagd", "farbrausch", "schwimmen"}
 # Drinking games: the score counts sips, nobody "wins".
 SIPS = {"nochnie", "pferderennen", "pyramide", "trinklotto", "wahrheit"}
 
@@ -60,7 +63,11 @@ def result(kind: str, game) -> dict:
         players.append({"name": p.name[:-6] if left else p.name, "bot": bool(p.is_bot), "left": left,
                         "account": getattr(p, "account", None), "score": _score(p), "place": None, "won": False})
     winner = getattr(game, "winner", None)
-    if kind in HIGHER_WINS or kind in LOWER_WINS:
+    if hasattr(game, "place_of"):
+        # Team games (Codewörter, Werwolf, Spion): the game knows who was on the winning side.
+        for p, x in zip(people, players):
+            x["place"] = game.place_of(p)
+    elif kind in HIGHER_WINS or kind in LOWER_WINS:
         sign = -1 if kind in LOWER_WINS else 1
         ordered = sorted(players, key=lambda x: -sign * (x["score"] or 0))
         for i, x in enumerate(ordered):

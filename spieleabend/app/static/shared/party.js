@@ -18,7 +18,7 @@
     const list = g.players.filter(p => !p.screen).sort((a, b) => b.score - a.score);
     return `<div class="pscore">${list.map((p, i) => `
       <div class="ps ${p.id === Shell.me ? "me" : ""}" style="animation-delay:${i * 40}ms"><span class="pos">${i + 1}</span>${Shell.avatar(p)}
-        <span class="n">${esc(p.name)}</span>${opts.gained && p.gained ? `<span class="plus">+${p.gained}</span>` : ""}<span class="pts">${p.score}</span></div>`).join("")}</div>`;
+        <span class="n">${esc(p.name)}</span>${opts.gained && p.gained ? `<span class="plus">${p.gained > 0 ? "+" + p.gained : "−" + Math.abs(p.gained)}</span>` : ""}<span class="pts">${p.score}</span></div>`).join("")}</div>`;
   };
 
   Party.status = g => `<div class="pstatus">${g.players.filter(p => !p.screen).map(p =>

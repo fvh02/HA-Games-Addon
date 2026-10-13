@@ -1,6 +1,6 @@
 # HA-Games-Addon
 
-**Spieleabend** – 18 Spiele für Home Assistant: Karten-, Zeichen-, Wort-, Quiz-, Party- und Trinkspiele.
+**Spieleabend** – 27 Spiele für Home Assistant: Karten-, Zeichen-, Wort-, Quiz-, Party- und Trinkspiele.
 Alle laufen im Browser, jeder spielt am eigenen Handy. Viele Spiele haben einen **📺 Fernseher-Modus**: Ein Gerät
 (z. B. der Fernseher oder ein Tablet) wird zum großen Bildschirm für alle.
 

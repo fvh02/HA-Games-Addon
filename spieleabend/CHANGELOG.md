@@ -1,5 +1,20 @@
 # Changelog
 
+## 3.4.0
+
+- **9 neue Spiele** – jetzt 27:
+  - 🧠 **Buzzer-Quiz**: Wer zuerst buzzert, darf antworten (auch mit Metallbau-Fragen).
+  - 🧠 **Sortierfix**: Fünf Dinge in die richtige Reihenfolge bringen.
+  - 🧠 **Emoji-Rätsel**: Filme, Sprichwörter, Märchen und mehr in Emojis erraten.
+  - 🔤 **Codewörter**: Zwei Teams, ein Hinweisgeber pro Team, ein geheimer Schlüssel.
+  - 🔤 **Stadt-Land-Fluss**: Mit „Stopp!“-Knopf und Abstimmung über zweifelhafte Antworten.
+  - 🎉 **Spion**: Alle kennen den Ort – nur der Spion nicht.
+  - 🎉 **Werwolf**: Die Handys sind der Spielleiter (Seherin, Hexe, Jäger, Amor).
+  - ✏️ **Blind gezeichnet**: Zeichnen, ohne die eigenen Striche zu sehen.
+  - 🃏 **Schwimmen (31)**: Der Kartenklassiker, auch mit Computer-Spielern.
+- Alle neuen Spiele zählen für die Bestenliste (ab Bestenliste 1.2.0).
+- Punkteliste: Minuspunkte werden als „−2“ statt „+-2“ angezeigt.
+
 ## 3.3.4
 
 - **Nie mehr hängen nach einer Frage:** Nach der Auflösung bekommen jetzt **alle** den Knopf

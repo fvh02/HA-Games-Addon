@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.0
+
+- Die 9 neuen Spiele aus Spieleabend 3.4.0 zählen mit (Buzzer-Quiz, Sortierfix, Emoji-Rätsel,
+  Codewörter, Stadt-Land-Fluss, Spion, Werwolf, Blind gezeichnet, Schwimmen).
+- Neue Achievements: Schnellster Finger, Codeknacker, Geheimagent, Vollmondnacht,
+  Wandelndes Lexikon und Über Wasser. Schwimmen zählt als Kartenspiel.
+
 ## 1.1.0
 
 - Punkte und Achievements nur noch für Spieler, die im Spieleabend (ab 3.3.0) angemeldet sind;

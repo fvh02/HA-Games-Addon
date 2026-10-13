@@ -13,9 +13,11 @@ TITLES = {
     "schnellmaler": "Schnellmaler", "galgenraten": "Galgenraten", "imposter": "Imposter", "schaetzmeister": "Schätzmeister",
     "werwuerde": "Wer würde eher …?", "luegenbaron": "Lügenbaron", "punchline": "Punchline", "nochnie": "Ich hab noch nie …",
     "wahrheit": "Wahrheit oder Trinken", "ringoffire": "Ring of Fire", "trinklotto": "Trinklotto", "pyramide": "Pyramide",
-    "pferderennen": "Pferderennen",
+    "pferderennen": "Pferderennen", "buzzer": "Buzzer-Quiz", "sortierfix": "Sortierfix", "spion": "Spion",
+    "codewoerter": "Codewörter", "werwolf": "Werwolf", "blindmaler": "Blind gezeichnet", "emojiraten": "Emoji-Rätsel",
+    "stadtlandfluss": "Stadt-Land-Fluss", "schwimmen": "Schwimmen (31)",
 }
-CARD_GAMES = {"stapeljagd", "tiefpunkt", "farbrausch"}
+CARD_GAMES = {"stapeljagd", "tiefpunkt", "farbrausch", "schwimmen"}
 MONTHS = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]
 
 
@@ -77,6 +79,12 @@ ACHIEVEMENTS = [
     ("luegenbaron", "🎭", "Silberzunge", "3-mal Lügenbaron gewonnen", _kind_wins("luegenbaron"), 3),
     ("pointenkoenig", "😂", "Pointenkönig", "3-mal Punchline gewonnen", _kind_wins("punchline"), 3),
     ("imposter", "🕵️", "Unentdeckt", "3-mal als Imposter gewonnen", lambda s: s["imposter_wins"], 3),
+    ("buzzerkoenig", "🔔", "Schnellster Finger", "3-mal das Buzzer-Quiz gewonnen", _kind_wins("buzzer"), 3),
+    ("codeknacker", "🔐", "Codeknacker", "5-mal Codewörter gewonnen", _kind_wins("codewoerter"), 5),
+    ("geheimagent", "🕶️", "Geheimagent", "3-mal Spion gewonnen", _kind_wins("spion"), 3),
+    ("vollmond", "🌕", "Vollmondnacht", "3-mal Werwolf gewonnen", _kind_wins("werwolf"), 3),
+    ("stadtlandfluss", "🗺️", "Wandelndes Lexikon", "3-mal Stadt-Land-Fluss gewonnen", _kind_wins("stadtlandfluss"), 3),
+    ("einunddreissig", "🏊", "Über Wasser", "3-mal Schwimmen gewonnen", _kind_wins("schwimmen"), 3),
     ("underdog", "🐺", "Gegen alle", "Eine Partie mit 6 oder mehr Spielern gewonnen", lambda s: s["big_wins"], 1),
     ("knapp", "😅", "Haarscharf", "Mit nur einem Punkt Vorsprung gewonnen", lambda s: s["close_wins"], 1),
     ("grosserabend", "🎉", "Volle Hütte", "Eine Partie mit 8 oder mehr Spielern", lambda s: s["crowd"], 1),

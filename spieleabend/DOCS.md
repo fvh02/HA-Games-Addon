@@ -241,6 +241,60 @@ gegen Nachrichtenfluten und eine Sperre nach 8 falschen Code-Eingaben (15 Minute
 - Danach werden alle Antworten anonym gezeigt; jeder stimmt für die beste (nicht für die eigene).
 - 100 Punkte pro Stimme, +100 für die allein beste Pointe. Am Ende gibt es die Ruhmeshalle.
 
+## Buzzer-Quiz – Regeln
+
+Die Frage steht auf dem Fernseher bzw. allen Handys. Wer zuerst buzzert, sieht vier Antworten und hat
+12 Sekunden: richtig +3, falsch −2 und für diese Frage gesperrt – dann ist der Nächste dran.
+Kategorien wie Allgemeinwissen oder 🔩 Metallbau (Ausbildung).
+
+## Sortierfix – Regeln
+
+Fünf Dinge (Jahreszahlen, Höhen, Einwohner, Schmelzpunkte …) in die richtige Reihenfolge ziehen.
+1 Punkt pro richtiger Position, +3 wenn alle stimmen.
+
+## Emoji-Rätsel – Regeln
+
+Ein Film, Märchen, Sprichwort, Beruf oder eine Stadt in Emojis. Jeder hat drei Versuche; kleine
+Tippfehler werden verziehen. Wer schneller richtig liegt, bekommt mehr Punkte.
+
+## Codewörter – Regeln
+
+Zwei Teams (Rot und Blau) mit je einem Hinweisgeber, der als Einziger die Farben der 25 Karten sieht.
+Er gibt ein Wort und eine Zahl als Hinweis, sein Team deckt passende Karten auf (Zahl + 1 Versuche).
+Eine falsche Farbe beendet den Zug, der Attentäter verliert sofort. Wer zuerst alle eigenen Karten
+aufgedeckt hat, gewinnt. Mindestens 4 Spieler (2 pro Team).
+
+## Stadt-Land-Fluss – Regeln
+
+Ein Buchstabe, mehrere Kategorien. Wer fertig ist, ruft „Stopp!“ – dann bleiben den anderen noch
+ein paar Sekunden. Danach können Antworten angezweifelt werden (Mehrheit entscheidet).
+Eigene Antwort 10 Punkte (20, wenn sonst niemand in der Kategorie etwas hat), doppelte Antwort 5.
+
+## Spion – Regeln
+
+Alle kennen den geheimen Ort und ihre Rolle – nur der Spion nicht. Fragt euch reihum aus. Jeder kann
+eine Abstimmung starten; wird der Spion mit Mehrheit erwischt, darf er noch den Ort raten. Der Spion
+kann sich auch selbst enttarnen und den Ort nennen.
+
+## Werwolf – Regeln
+
+Die Handys sind der Spielleiter. Nachts wählen die Werwölfe ein Opfer, die Seherin prüft eine Person,
+die Hexe kann einmal heilen und einmal vergiften (optional: Jäger und Amor). Tagsüber diskutiert das
+Dorf und stimmt ab. Das Dorf gewinnt, wenn alle Werwölfe tot sind – die Werwölfe, sobald sie
+gleich viele sind wie die anderen. Ab 5 Spielern. Der Fernseher erzählt, verrät aber nie Rollen.
+
+## Blind gezeichnet – Regeln
+
+Jeder zeichnet seinen Begriff, ohne die eigenen Striche zu sehen. Danach werden die Bilder gezeigt
+und die anderen raten: 3 Punkte fürs Erraten, 2 für den Zeichner pro Person, die es erkannt hat.
+
+## Schwimmen (31) – Regeln
+
+Jeder hat 3 Karten, 3 liegen offen in der Mitte. Reihum eine Karte oder alle drei tauschen, schieben
+oder klopfen (dann ist jeder noch einmal dran). Gezählt wird die beste Farbe (Ass 11, Bilder 10),
+drei Gleiche zählen 30,5, drei Asse („Feuer“) 33 beenden die Runde sofort. Der Schlechteste verliert
+ein Leben; wer zuletzt noch im Spiel ist, gewinnt. Computer-Spieler sind möglich.
+
 ## Trinkspiele
 
 Alle Trinkspiele sind ab 18 gedacht und funktionieren genauso mit Wasser, Saft oder Limo.
