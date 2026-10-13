@@ -193,12 +193,13 @@ class PartyGame:
             return
         if self.state != "playing":
             raise RuleError("Gerade nicht möglich")
-        is_host = is_host or player.id in self.leaders()
+        # The TV screen is the shared device in the room: it may steer the game like the host.
+        is_host = is_host or player.id in self.leaders() or player.screen
         if kind == "next":
-            if not is_host:
-                raise RuleError("Nur der Gastgeber geht weiter")
+            # Everyone at the table (and the TV) may move on once the results are shown, so a game can
+            # never get stuck waiting for one device.
             if self.phase != "reveal":
-                raise RuleError("Die Runde läuft noch")
+                return        # someone else was quicker – nothing to do
             if self.round >= self.rounds:
                 self.finish()
             else:

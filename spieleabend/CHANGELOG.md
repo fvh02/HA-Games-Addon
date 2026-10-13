@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.3.4
+
+- **Nie mehr hängen nach einer Frage:** Nach der Auflösung bekommen jetzt **alle** den Knopf
+  „Nächste Runde“ – jedes Handy und auch das Fernseher-Gerät (z. B. ein Tablet). Wer zuerst
+  drückt, startet die nächste Runde.
+- Das Fernseher-Gerät kann außerdem „Nicht mehr warten“ und „Spiel beenden“ drücken.
+- Die Versionsnummer unten auf den Seiten ist wieder entfernt (sie steht weiter im Protokoll).
+
 ## 3.3.3
 
 - Ganz unten auf jeder Seite steht jetzt die laufende Version (z. B. „Spieleabend 3.3.3“).

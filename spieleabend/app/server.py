@@ -42,7 +42,7 @@ STATIC_DIR = Path(__file__).parent / "static"
 PORT = int(os.environ.get("SPIELE_PORT", "8098"))
 BOT_DELAY = float(os.environ.get("SPIELE_BOT_DELAY", "0.9"))
 def addon_version() -> str:
-    """Version from the add-on's config.yaml (copied into the image), shown at the bottom of the pages."""
+    """Version from the add-on's config.yaml (copied into the image), written to the log at start."""
     for path in (Path(__file__).parent / "addon-config.yaml", Path(__file__).parent.parent / "config.yaml"):
         try:
             found = re.search(r'^version:\s*"?([^"\n]+)"?', path.read_text(encoding="utf-8"), re.M)
@@ -391,7 +391,6 @@ def html_response(html: str, root: str = "") -> web.Response:
     html = html.replace("</head>", head, 1).replace(
         'content="width=device-width, initial-scale=1, maximum-scale=1"',
         'content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"', 1)
-    html = html.replace("</body>", f'<p class="appver">Spieleabend {escape(VERSION)}</p>\n</body>', 1)
     return web.Response(text=html, content_type="text/html", headers={"Cache-Control": "no-cache"})
 
 
