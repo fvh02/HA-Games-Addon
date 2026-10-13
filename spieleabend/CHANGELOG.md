@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.3.2
+
+- **Gastgeber am Fernseher:** Hat der Gastgeber sein eigenes Gerät auf „📺 Host“ gestellt, bekommt
+  dieser Bildschirm jetzt auch „Nächste Runde“, „Nicht mehr warten“ und „Spiel beenden“.
+  Bisher blieb das Spiel dort nach der ersten Frage stehen.
+
 ## 3.3.1
 
 - **Party- und Quizspiele bleiben nicht mehr nach einer Frage hängen:** War der Gastgeber zugleich

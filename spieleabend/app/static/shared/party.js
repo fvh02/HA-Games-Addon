@@ -69,7 +69,8 @@
             <button class="btn ghost small" data-pact="skip">${cfg.skipLabel || "⏭ Nicht mehr warten"}</button></div>` : "";
       const head = `<div class="phead"><span class="pround">${cfg.head ? cfg.head(g) : `Runde ${g.round} / ${g.rounds}`}</span><span class="ptimer hidden" id="ptimer"></span></div>`;
       if (ctx.tv) {
-        return `<div class="tvgrid"><div class="tvmain glass">${head}${inner}</div>
+        // The host may use the big screen itself (e.g. a laptop on the TV): it gets the buttons too.
+        return `<div class="tvgrid"><div class="tvmain glass">${head}${inner}${ctx.host ? controls : ""}</div>
           <aside class="tvside"><div class="glass"><h3 class="plabel">Punkte</h3><div id="tvRank"></div></div>
           <div class="glass tvcode"><span>Mitspielen:</span> <b>${esc(g.code)}</b></div></aside></div>`;
       }
