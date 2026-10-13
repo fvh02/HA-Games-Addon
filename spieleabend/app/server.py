@@ -8,6 +8,7 @@ import json
 import logging
 import os
 import random
+import re
 import secrets
 import string
 import time
@@ -40,6 +41,19 @@ OPTIONS_FILE = Path(os.environ.get("SPIELE_OPTIONS", "/data/options.json"))
 STATIC_DIR = Path(__file__).parent / "static"
 PORT = int(os.environ.get("SPIELE_PORT", "8098"))
 BOT_DELAY = float(os.environ.get("SPIELE_BOT_DELAY", "0.9"))
+def addon_version() -> str:
+    """Version from the add-on's config.yaml (copied into the image), shown at the bottom of the pages."""
+    for path in (Path(__file__).parent / "addon-config.yaml", Path(__file__).parent.parent / "config.yaml"):
+        try:
+            found = re.search(r'^version:\s*"?([^"\n]+)"?', path.read_text(encoding="utf-8"), re.M)
+        except OSError:
+            continue
+        if found:
+            return found.group(1).strip()
+    return "?"
+
+
+VERSION = addon_version()
 BOT_NAMES = ["Robo", "Karla", "Bitty", "Otto", "Zora", "Pixel", "Toni", "Mops"]
 GAME_TTL = 6 * 3600  # remove games nobody has touched for this long
 
@@ -377,6 +391,7 @@ def html_response(html: str, root: str = "") -> web.Response:
     html = html.replace("</head>", head, 1).replace(
         'content="width=device-width, initial-scale=1, maximum-scale=1"',
         'content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"', 1)
+    html = html.replace("</body>", f'<p class="appver">Spieleabend {escape(VERSION)}</p>\n</body>', 1)
     return web.Response(text=html, content_type="text/html", headers={"Cache-Control": "no-cache"})
 
 
@@ -616,15 +631,22 @@ async def cleanup_loop() -> None:
 
 async def on_startup(app: web.Application) -> None:
     app["cleanup"] = asyncio.create_task(cleanup_loop())
-    log.info("Spieleabend läuft auf Port %s%s", PORT, " (mit Zugangscode)" if ACCESS_CODE else "")
+    log.info("Spieleabend %s läuft auf Port %s%s", VERSION, PORT, " (mit Zugangscode)" if ACCESS_CODE else "")
     if not konten.mail.enabled:
         log.warning("Keine E-Mail eingerichtet (smtp_host): Bestätigungscodes stehen nur hier im Protokoll")
     if not ACCESS_CODE:
         log.info("Kein Zugangscode gesetzt: Aufrufe über Cloudflare werden abgewiesen, das Heimnetz ist offen.")
 
 
+async def revalidate_static(request: web.Request, response: web.StreamResponse) -> None:
+    # Scripts and styles are checked with the server on every load, so an update is used right away.
+    if request.path.startswith("/static/") and "Cache-Control" not in response.headers:
+        response.headers["Cache-Control"] = "no-cache"
+
+
 def main() -> None:
     app = web.Application(middlewares=[access_middleware])
+    app.on_response_prepare.append(revalidate_static)
     app.router.add_static("/static/", STATIC_DIR / "shared")
     app.add_routes(konten.routes())
     app.add_routes(routes)

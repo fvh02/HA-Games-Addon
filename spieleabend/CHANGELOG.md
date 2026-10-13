@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.3.3
+
+- Ganz unten auf jeder Seite steht jetzt die laufende Version (z. B. „Spieleabend 3.3.3“).
+  So lässt sich auf jedem Gerät prüfen, ob ein Update angekommen ist.
+- Skripte und Styles werden bei jedem Laden mit dem Server abgeglichen: Nach einem Update
+  nutzt der Browser sofort die neuen Dateien statt einer zwischengespeicherten alten Version.
+
 ## 3.3.2
 
 - **Gastgeber am Fernseher:** Hat der Gastgeber sein eigenes Gerät auf „📺 Host“ gestellt, bekommt
