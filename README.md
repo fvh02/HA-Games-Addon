@@ -15,6 +15,13 @@ Auf der Startseite gibt es eine Suche und Filter für Spieleranzahl, Art, Dauer 
 Oder manuell: **Einstellungen → Add-ons → Add-on Store → ⋮ → Repositories** und
 `https://github.com/fvh02/HA-Games-Addon` hinzufügen. Dann **Spieleabend** installieren.
 
+## 🏆 Bestenliste
+
+Das zweite Add-on im Repository, **Spieleabend-Bestenliste**, macht aus jeder Partie Punkte für
+die **Rangliste des Monats** (Neustart am 1.), vergibt **25 Achievements** und sammelt die
+Monatssieger in einer **Ruhmeshalle** – mit eigener Seite in Home Assistant und über den Knopf
+„🏆 Bestenliste“ direkt im Spieleabend. Details: [`bestenliste/DOCS.md`](bestenliste/DOCS.md).
+
 ## Die Spiele
 
 Die Bilder stammen aus simulierten Runden (Alex, Lena, Jonas und Mia, dazu ein Fernseher).

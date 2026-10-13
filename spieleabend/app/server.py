@@ -32,6 +32,7 @@ import tiefpunkt
 import trinklotto
 import wahrheit
 import werwuerde
+import stats
 from common import RuleError
 
 OPTIONS_FILE = Path("/data/options.json")
@@ -89,6 +90,7 @@ class Hub:
         self.bot_tasks: dict[str, asyncio.Task] = {}
         self.timers: dict[str, float] = {}  # room code -> deadline a timer task waits for
         self.timer_tasks: set[asyncio.Task] = set()  # keep references so tasks aren't collected
+        self.reported: set[str] = set()  # rooms whose finished game went to the Bestenliste
 
     # -- sending -------------------------------------------------------------
     @staticmethod
@@ -127,6 +129,27 @@ class Hub:
         if code:
             self.schedule_bots(code)
             self.schedule_timer(code)
+            self.schedule_report(code)
+
+    # -- Bestenliste ---------------------------------------------------------
+    def schedule_report(self, code: str) -> None:
+        game = self.games.get(code)
+        if not game or game.state != "finished":
+            self.reported.discard(code)      # a rematch is reported again when it ends
+            return
+        if code in self.reported:
+            return
+        self.reported.add(code)
+        task = asyncio.create_task(self.report(code, game))
+        self.timer_tasks.add(task)
+        task.add_done_callback(self.timer_tasks.discard)
+
+    async def report(self, code: str, game) -> None:
+        notes = await reporter.report(stats.result(self.module.__name__, game))
+        if notes and self.games.get(code) is game:
+            for note in notes:
+                game.note(note)
+            await self.broadcast(code)
 
     # -- bots ----------------------------------------------------------------
     def schedule_bots(self, code: str) -> None:
@@ -295,7 +318,18 @@ class Hub:
 
 
 hubs = {kind: Hub(module) for kind, module in GAMES.items()}
+reporter = stats.Reporter()
 routes = web.RouteTableDef()
+
+
+@routes.get("/bestenliste")
+async def bestenliste_slash(_: web.Request) -> web.Response:
+    raise web.HTTPFound("bestenliste/")
+
+
+@routes.get("/bestenliste/{path:.*}")
+async def bestenliste(request: web.Request) -> web.Response:
+    return await stats.proxy(request, request.match_info["path"])
 
 
 def page(path: Path, root: str = "") -> web.Response:

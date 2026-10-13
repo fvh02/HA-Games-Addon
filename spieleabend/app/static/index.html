@@ -82,6 +82,12 @@
     .noresult p { margin: 8px 0 14px; }
     @media (max-width: 760px) { .selects { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   </style>
+  <style>
+    .hub header { position: relative; }
+    .toplink { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; padding: 8px 16px; border-radius: 999px;
+               color: var(--text); text-decoration: none; font-weight: 700; font-size: .92rem; }
+    .toplink:hover { background: var(--glass-strong); }
+  </style>
 </head>
 <body>
   <div class="backdrop"><i></i><i></i><i></i><i></i></div>
@@ -89,6 +95,7 @@
     <header>
       <h1>Spieleabend</h1>
       <p>Wähle ein Spiel und lade deine Freunde ein.</p>
+      <a class="toplink glass" href="bestenliste/">🏆 Bestenliste</a>
     </header>
     <div class="install glass hidden" id="install">
       <b>Als App installieren:</b> <span id="installHow"></span>

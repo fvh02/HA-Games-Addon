@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.2.0
+
+- **Bestenliste:** Beendete Partien gehen an das neue Add-on **Spieleabend-Bestenliste**
+  (Rangliste pro Monat, Achievements, Ruhmeshalle). Neue Achievements und ein neuer
+  Spitzenreiter erscheinen am Ende der Partie im Spiel. Auf der Startseite gibt es den Knopf
+  **🏆 Bestenliste**. Ohne das Add-on ändert sich nichts.
+
 ## 3.1.0
 
 - **Schätzmeister mit Kategorien:** Allgemeinwissen gemischt, Erde, Länder & Weltall,

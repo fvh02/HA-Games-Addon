@@ -21,6 +21,10 @@ Spiele für mehrere Spieler im Browser. Auf der Startseite wählst du das Spiel:
 - **Trinkspiele** (ab 18, alles geht auch mit Softdrinks): **Ich hab noch nie …**,
   **Wahrheit oder Trinken**, **Trinklotto**, **Pyramide**, **Pferderennen** und **Ring of Fire**.
 
+**🏆 Bestenliste:** Mit dem Add-on **Spieleabend-Bestenliste** aus diesem Repository zählt jede
+Partie für eine Rangliste pro Monat und für Achievements. Der Knopf oben auf der Startseite
+öffnet sie – auch für Freunde ohne Home Assistant.
+
 Auf der Startseite findest du Spiele über die **Suche** und die Filter **Spieler**, **Art**,
 **Dauer** und **Extras** (Fernseher-Modus, gerade offene Runden). Die Filter merkt sich der Browser.
 

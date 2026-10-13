@@ -1,0 +1,26 @@
+name: Spieleabend-Bestenliste
+version: "1.0.0"
+slug: bestenliste
+description: Monatliche Rangliste und Achievements für den Spieleabend – mit eigener Seite und Ruhmeshalle
+url: https://github.com/fvh02/HA-Games-Addon
+image: ghcr.io/fvh02/{arch}-ha-bestenliste
+arch:
+  - aarch64
+  - amd64
+  - armv7
+init: false
+hassio_api: true
+ingress: true
+ingress_port: 8091
+panel_icon: mdi:trophy
+panel_title: Bestenliste
+ports:
+  8091/tcp: 8091
+ports_description:
+  8091/tcp: Bestenliste im Heimnetz (oder über einen Tunnel)
+options:
+  theme: dark
+  access_code: ""
+schema:
+  theme: list(dark|light)
+  access_code: password?

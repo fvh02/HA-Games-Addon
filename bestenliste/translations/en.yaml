@@ -1,0 +1,9 @@
+configuration:
+  theme:
+    name: Theme
+    description: Dark or light mode.
+  access_code:
+    name: Access code (internet)
+    description: Only asked when the page is opened from the internet (e.g. Cloudflare Tunnel). Not needed on the home network, in Home Assistant or inside the games at /bestenliste/. Without a code, internet access is blocked.
+network:
+  8091/tcp: Leaderboard on the home network (or through a tunnel)

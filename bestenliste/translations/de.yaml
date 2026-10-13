@@ -1,0 +1,9 @@
+configuration:
+  theme:
+    name: Farbschema
+    description: Dunkler (dark) oder heller (light) Modus.
+  access_code:
+    name: Zugangscode (Internet)
+    description: Wird nur gefragt, wenn die Seite über das Internet (z. B. Cloudflare Tunnel) geöffnet wird. Im Heimnetz, in Home Assistant und im Spieleabend unter /bestenliste/ ist kein Code nötig. Ohne Code ist der Zugriff aus dem Internet gesperrt.
+network:
+  8091/tcp: Bestenliste im Heimnetz (oder über einen Tunnel)

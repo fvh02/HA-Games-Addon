@@ -208,6 +208,8 @@ class Game(PartyGame):
             points = max(0, 3 - rank)
             exact = diff <= abs(answer) * 0.01
             p.gained = points + (2 if exact else 0)
+            if exact:
+                self.highlights = getattr(self, "highlights", []) + [(p.name, "volltreffer")]
             p.score += p.gained
             ranking.append({"id": p.id, "value": p.answer, "rank": rank + 1, "points": p.gained, "exact": exact})
         self.ranking = ranking
