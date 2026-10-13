@@ -14,7 +14,7 @@ TITLES = {
     "werwuerde": "Wer würde eher …?", "luegenbaron": "Lügenbaron", "punchline": "Punchline", "nochnie": "Ich hab noch nie …",
     "wahrheit": "Wahrheit oder Trinken", "ringoffire": "Ring of Fire", "trinklotto": "Trinklotto", "pyramide": "Pyramide",
     "pferderennen": "Pferderennen", "buzzer": "Buzzer-Quiz", "sortierfix": "Sortierfix", "spion": "Spion",
-    "codewoerter": "Codewörter", "werwolf": "Werwolf", "blindmaler": "Blind gezeichnet", "emojiraten": "Emoji-Rätsel",
+    "codewoerter": "Codewörter", "werwolf": "Werwolf", "blindmaler": "Blind gezeichnet",
     "stadtlandfluss": "Stadt-Land-Fluss", "schwimmen": "Schwimmen (31)",
 }
 CARD_GAMES = {"stapeljagd", "tiefpunkt", "farbrausch", "schwimmen"}

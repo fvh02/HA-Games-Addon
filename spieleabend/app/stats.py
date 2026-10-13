@@ -26,11 +26,11 @@ TITLES = {
     "werwuerde": "Wer würde eher …?", "luegenbaron": "Lügenbaron", "punchline": "Punchline", "nochnie": "Ich hab noch nie …",
     "wahrheit": "Wahrheit oder Trinken", "ringoffire": "Ring of Fire", "trinklotto": "Trinklotto", "pyramide": "Pyramide",
     "pferderennen": "Pferderennen", "buzzer": "Buzzer-Quiz", "sortierfix": "Sortierfix", "spion": "Spion",
-    "codewoerter": "Codewörter", "werwolf": "Werwolf", "blindmaler": "Blind gezeichnet", "emojiraten": "Emoji-Rätsel",
+    "codewoerter": "Codewörter", "werwolf": "Werwolf", "blindmaler": "Blind gezeichnet",
     "stadtlandfluss": "Stadt-Land-Fluss", "schwimmen": "Schwimmen (31)",
 }
 HIGHER_WINS = {"schaetzmeister", "luegenbaron", "punchline", "schnellmaler", "galgenraten", "imposter",
-               "buzzer", "sortierfix", "blindmaler", "emojiraten", "stadtlandfluss"}
+               "buzzer", "sortierfix", "blindmaler", "stadtlandfluss"}
 LOWER_WINS = {"tiefpunkt"}
 WINNER_ONLY = {"stapeljagd", "farbrausch", "schwimmen"}
 # Drinking games: the score counts sips, nobody "wins".

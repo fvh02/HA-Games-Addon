@@ -252,10 +252,13 @@ Kategorien wie Allgemeinwissen oder 🔩 Metallbau (Ausbildung).
 Fünf Dinge (Jahreszahlen, Höhen, Einwohner, Schmelzpunkte …) in die richtige Reihenfolge ziehen.
 1 Punkt pro richtiger Position, +3 wenn alle stimmen.
 
-## Emoji-Rätsel – Regeln
+## Filmoji – Regeln
 
-Ein Film, Märchen, Sprichwort, Beruf oder eine Stadt in Emojis. Jeder hat drei Versuche; kleine
-Tippfehler werden verziehen. Wer schneller richtig liegt, bekommt mehr Punkte.
+Für eine Person: Welcher Film steckt hinter den Emojis? Titel eintippen – deutsch oder im
+Original, kleine Tippfehler sind egal. 3 Versuche pro Film, richtig gibt 3 Punkte (ab einer Serie
+von 3 Filmen +1). Tipps zeigen das Jahr oder die Anfangsbuchstaben und kosten je einen Punkt.
+Aufgeben oder dreimal daneben kostet ein Herz – nach drei Herzen ist Schluss. Rekord und
+Statistik merkt sich das Gerät.
 
 ## Codewörter – Regeln
 

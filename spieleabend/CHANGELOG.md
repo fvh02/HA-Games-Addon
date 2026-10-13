@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.5.0
+
+- **Filmoji** ersetzt Emoji-Rätsel: nur Filme (165 Stück, von Disney bis Der Pate) und als Spiel
+  für eine Person wie Wortgitter. Drei Versuche pro Film, Tipps (Jahr, Anfangsbuchstaben),
+  drei Herzen, Serien-Bonus und Rekord. Die Lösungen bleiben auf dem Server.
+
 ## 3.4.0
 
 - **9 neue Spiele** – jetzt 27:

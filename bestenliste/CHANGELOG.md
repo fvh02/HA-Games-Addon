@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.1
+
+- Emoji-Rätsel ist aus dem Spieleabend entfernt (ersetzt durch Filmoji für eine Person, das nicht
+  in die Bestenliste zählt); bereits gespielte Partien bleiben erhalten.
+
 ## 1.2.0
 
 - Die 9 neuen Spiele aus Spieleabend 3.4.0 zählen mit (Buzzer-Quiz, Sortierfix, Emoji-Rätsel,

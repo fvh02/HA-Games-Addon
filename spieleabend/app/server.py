@@ -36,7 +36,7 @@ import werwuerde
 import blindmaler
 import buzzer
 import codewoerter
-import emojiraten
+import filmoji
 import schwimmen
 import sortierfix
 import spion
@@ -71,7 +71,7 @@ GAMES = {"stapeljagd": stapeljagd, "tiefpunkt": tiefpunkt, "kritzelpost": kritze
          "luegenbaron": luegenbaron, "punchline": punchline, "nochnie": nochnie, "wahrheit": wahrheit, "ringoffire": ringoffire,
          "trinklotto": trinklotto, "pyramide": pyramide, "pferderennen": pferderennen,
          "buzzer": buzzer, "sortierfix": sortierfix, "spion": spion, "codewoerter": codewoerter, "werwolf": werwolf,
-         "blindmaler": blindmaler, "emojiraten": emojiraten, "stadtlandfluss": stadtlandfluss, "schwimmen": schwimmen}
+         "blindmaler": blindmaler, "stadtlandfluss": stadtlandfluss, "schwimmen": schwimmen}
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger("spieleabend")
@@ -555,6 +555,40 @@ async def wortgitter_page(_: web.Request) -> web.Response:
 @routes.get("/wortgitter/woerter.json")
 async def wortgitter_words(_: web.Request) -> web.Response:
     return web.json_response(WORTGITTER, headers={"Cache-Control": "max-age=86400"})
+
+
+@routes.get("/filmoji")
+async def filmoji_redirect(_: web.Request) -> web.Response:
+    raise web.HTTPFound("filmoji/")
+
+
+@routes.get("/filmoji/")
+async def filmoji_page(_: web.Request) -> web.Response:
+    return page(STATIC_DIR / "filmoji" / "index.html", "../")
+
+
+@routes.get("/filmoji/filme.json")
+async def filmoji_films(_: web.Request) -> web.Response:
+    return web.json_response(filmoji.puzzles(), headers={"Cache-Control": "no-cache"})
+
+
+@routes.post("/filmoji/pruefen")
+async def filmoji_check(request: web.Request) -> web.Response:
+    """A guess for one film: right or wrong (the title is only sent back when it is right)."""
+    data = await request.json()
+    answer = filmoji.title(data.get("id"))
+    if answer is None:
+        raise web.HTTPBadRequest(text="Unbekannter Film")
+    ok = filmoji.check(data["id"], str(data.get("guess") or ""))
+    return web.json_response({"ok": ok, "title": answer if ok else None})
+
+
+@routes.post("/filmoji/loesung")
+async def filmoji_solution(request: web.Request) -> web.Response:
+    answer = filmoji.title((await request.json()).get("id"))
+    if answer is None:
+        raise web.HTTPBadRequest(text="Unbekannter Film")
+    return web.json_response({"title": answer})
 
 
 @routes.get("/{kind}")
