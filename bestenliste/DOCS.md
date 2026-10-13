@@ -10,7 +10,7 @@ Rangliste und Achievements für den **Spieleabend**. Jede beendete Partie landet
   kommen in die **Ruhmeshalle**, der Sieger bekommt das Achievement „Spieler des Monats“. Alte
   Monate kannst du oben im Auswahlfeld weiter ansehen.
 - **Beste pro Spiel:** Wer in welchem Spiel diesen Monat am häufigsten gewonnen hat.
-- **Achievements** (25 Stück) bleiben für immer, z. B. 🔥 3 Siege hintereinander, 🎯 Volltreffer
+- **Achievements** (31 Stück) bleiben für immer, z. B. 🔥 3 Siege hintereinander, 🎯 Volltreffer
   im Schätzmeister, 🕵️ 3-mal als Imposter gewonnen, 🦉 Partie nach Mitternacht, 🏃 5 Partien an
   einem Abend. Ein Klick auf einen Namen zeigt alle Achievements mit Fortschritt.
 - Neue Achievements und ein neuer Spitzenreiter erscheinen am Ende der Partie direkt im Spiel.

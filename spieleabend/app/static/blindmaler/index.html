@@ -209,7 +209,8 @@
 
     function revealHtml(g, ctx) {
       const d = g.drawing;
-      if (!d) return `<div class="blindtv">🙈</div><h2>Niemand hat etwas gezeichnet!</h2>`;
+      if (!d) return g.state === "finished" ? `<div class="blindtv">🖼️</div><h2>Das war's – ab in die Galerie!</h2>`
+        : `<div class="blindtv">🙈</div><h2>Niemand hat etwas gezeichnet!</h2>`;
       const artist = g.players.find(p => p.id === d.by) || { name: d.name };
       const others = g.results.length;
       const hits = d.hits;

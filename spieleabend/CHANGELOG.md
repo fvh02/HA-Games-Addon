@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.5.1
+
+- Startseite: Beim Filtern verloren einige Spielbilder Schatten und Farbverläufe (z. B. bei
+  „Ich hab noch nie …“). Jede Abbildung hat jetzt eigene Kennungen.
+- Blind gezeichnet: Nach Spielende stand hinter dem Ergebnis „Niemand hat etwas gezeichnet!“.
+- README: Bilder zu allen neuen Spielen und neue Startseiten-Bilder.
+
 ## 3.5.0
 
 - **Filmoji** ersetzt Emoji-Rätsel: nur Filme (165 Stück, von Disney bis Der Pate) und als Spiel

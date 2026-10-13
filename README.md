@@ -19,7 +19,7 @@ Oder manuell: **Einstellungen → Add-ons → Add-on Store → ⋮ → Repositor
 
 Das zweite Add-on im Repository, **Spieleabend-Bestenliste**, macht aus jeder Partie angemeldeter Spieler
 (Konto mit E-Mail-Bestätigung direkt im Spieleabend) Punkte für
-die **Rangliste des Monats** (Neustart am 1.), vergibt **25 Achievements** und sammelt die
+die **Rangliste des Monats** (Neustart am 1.), vergibt **31 Achievements** und sammelt die
 Monatssieger in einer **Ruhmeshalle** – mit eigener Seite in Home Assistant und über den Knopf
 „🏆 Bestenliste“ direkt im Spieleabend. Details: [`bestenliste/DOCS.md`](bestenliste/DOCS.md).
 
@@ -50,6 +50,13 @@ Passende Farbe oder Zahl ablegen, die anderen mit +2 und +4 ärgern – und „L
 
 <p><img src="bilder/farbrausch.jpg" width="220" alt="farbrausch"></p>
 
+#### Schwimmen (31)
+*2–8 Spieler · 15–30 Min. · 📺*
+
+Drei Karten auf der Hand, drei in der Mitte: tauschen, schieben oder klopfen. Wer am Ende einer Runde die schlechteste Hand hat, verliert ein Leben – auch mit Computer-Spielern.
+
+<p><img src="bilder/schwimmen-1.jpg" width="220" alt="schwimmen-1"> <img src="bilder/schwimmen-2.jpg" width="220" alt="schwimmen-2"> <img src="bilder/schwimmen-tv.jpg" width="440" alt="schwimmen-tv"></p>
+
 ### Zeichnen
 
 #### Kritzelpost
@@ -66,6 +73,13 @@ Einer zeichnet am Handy, alle anderen raten. Mit dem Fernseher als großem Bilds
 
 <p><img src="bilder/schnellmaler.jpg" width="220" alt="schnellmaler"> <img src="bilder/schnellmaler-tv.jpg" width="440" alt="schnellmaler-tv"></p>
 
+#### Blind gezeichnet
+*3–12 Spieler · 10–20 Min. · 📺*
+
+Jeder zeichnet seinen Begriff, ohne die eigenen Striche zu sehen – danach raten alle, was das sein soll. Am Ende gibt es eine Galerie.
+
+<p><img src="bilder/blindmaler-1.jpg" width="220" alt="blindmaler-1"> <img src="bilder/blindmaler-2.jpg" width="220" alt="blindmaler-2"> <img src="bilder/blindmaler-tv.jpg" width="440" alt="blindmaler-tv"></p>
+
 ### Wörter
 
 #### Wortgitter
@@ -81,6 +95,20 @@ Fünf Buchstaben, sechs Versuche – Wort des Tages oder endlos.
 Einer denkt sich ein Wort aus, alle anderen raten Buchstabe für Buchstabe, bevor der Galgen fertig ist.
 
 <p><img src="bilder/galgenraten.jpg" width="220" alt="galgenraten"></p>
+
+#### Codewörter
+*4–16 Spieler · 15–30 Min. · 📺*
+
+Team Rot gegen Team Blau. Nur der Hinweisgeber kennt die Farben der 25 Karten und gibt ein Wort mit einer Zahl – aber bloß nicht den Attentäter aufdecken!
+
+<p><img src="bilder/codewoerter-1.jpg" width="220" alt="codewoerter-1"> <img src="bilder/codewoerter-2.jpg" width="220" alt="codewoerter-2"> <img src="bilder/codewoerter-tv.jpg" width="440" alt="codewoerter-tv"></p>
+
+#### Stadt-Land-Fluss
+*2–16 Spieler · 10–25 Min. · 📺*
+
+Der Klassiker mit „Stopp!“-Knopf. Danach werden die Antworten verglichen, zweifelhafte können per Abstimmung gestrichen werden.
+
+<p><img src="bilder/stadtlandfluss-1.jpg" width="220" alt="stadtlandfluss-1"> <img src="bilder/stadtlandfluss-2.jpg" width="220" alt="stadtlandfluss-2"> <img src="bilder/stadtlandfluss-tv.jpg" width="440" alt="stadtlandfluss-tv"></p>
 
 ### Quiz & Party
 
@@ -118,6 +146,41 @@ Alle ergänzen denselben Satz so lustig wie möglich – danach wird anonym die 
 Alle kennen das geheime Wort – nur einer nicht. Reihum ein Hinweiswort, dann abstimmen.
 
 <p><img src="bilder/imposter.jpg" width="220" alt="imposter"></p>
+
+#### Buzzer-Quiz
+*2–16 Spieler · 10–20 Min. · 📺*
+
+Wer zuerst buzzert, darf antworten: richtig +3, falsch −2. Mit Kategorien, z. B. 🔩 Metallbau (Ausbildung).
+
+<p><img src="bilder/buzzer-1.jpg" width="220" alt="buzzer-1"> <img src="bilder/buzzer-2.jpg" width="220" alt="buzzer-2"> <img src="bilder/buzzer-tv.jpg" width="440" alt="buzzer-tv"></p>
+
+#### Sortierfix
+*2–16 Spieler · 10–20 Min. · 📺*
+
+Fünf Dinge in die richtige Reihenfolge bringen – Jahreszahlen, Höhen, Einwohner oder Schmelzpunkte.
+
+<p><img src="bilder/sortierfix-1.jpg" width="220" alt="sortierfix-1"> <img src="bilder/sortierfix-2.jpg" width="220" alt="sortierfix-2"> <img src="bilder/sortierfix-tv.jpg" width="440" alt="sortierfix-tv"></p>
+
+#### Filmoji
+*1 Spieler · 5–15 Min.*
+
+Welcher Film steckt hinter den Emojis? 165 Filme, Tipps kosten Punkte, nach drei Herzen ist Schluss.
+
+<p><img src="bilder/filmoji-1.jpg" width="220" alt="filmoji-1"> <img src="bilder/filmoji-2.jpg" width="220" alt="filmoji-2"></p>
+
+#### Spion
+*3–16 Spieler · 20–45 Min. · 📺*
+
+Alle kennen den geheimen Ort und ihre Rolle – nur der Spion nicht. Fragt euch aus und entlarvt ihn, bevor er den Ort errät.
+
+<p><img src="bilder/spion-1.jpg" width="220" alt="spion-1"> <img src="bilder/spion-2.jpg" width="220" alt="spion-2"> <img src="bilder/spion-tv.jpg" width="440" alt="spion-tv"></p>
+
+#### Werwolf
+*5–18 Spieler · 20–40 Min. · 📺*
+
+Die Handys sind der Spielleiter: Nachts jagen die Werwölfe, Seherin und Hexe helfen dem Dorf, tagsüber wird abgestimmt.
+
+<p><img src="bilder/werwolf-1.jpg" width="220" alt="werwolf-1"> <img src="bilder/werwolf-2.jpg" width="220" alt="werwolf-2"> <img src="bilder/werwolf-tv.jpg" width="440" alt="werwolf-tv"></p>
 
 ### Trinkspiele 🍻
 
