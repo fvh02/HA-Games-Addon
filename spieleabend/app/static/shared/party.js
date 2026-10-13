@@ -51,7 +51,9 @@
 
     function ctxFor(g) {
       const me = g.players.find(p => p.id === Shell.me);
-      return { tv: !!(me && me.screen), host: g.host === Shell.me, me, hasTv: !!g.screen };
+      // "leaders": who may move on – the host, or everyone at the table if the host is the TV screen.
+      const host = g.host === Shell.me || (!(me && me.screen) && (g.leaders || []).includes(Shell.me));
+      return { tv: !!(me && me.screen), host, me, hasTv: !!g.screen };
     }
 
     function frame(g, ctx, inner) {

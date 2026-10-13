@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.3.1
+
+- **Party- und Quizspiele bleiben nicht mehr nach einer Frage hängen:** War der Gastgeber zugleich
+  der Fernseher (📺 Host), gab es nirgends den Knopf „Nächste Runde“. Jetzt dürfen dann alle
+  Mitspieler weiterschalten. Dasselbe gilt, wenn der Gastgeber gegangen ist – und wenn er
+  20 Sekunden nach der Auflösung nicht weitermacht (z. B. Handy gesperrt).
+- Verlässt der Gastgeber die Runde, geht die Rolle an einen Mitspieler statt an den Fernseher.
+
 ## 3.3.0
 
 - **Konten:** Neue Seite **Konto** (Startseite oben „🔑 Anmelden“) mit Registrieren,

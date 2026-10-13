@@ -39,7 +39,9 @@ Auf der Startseite findest du Spiele über die **Suche** und die Filter **Spiele
 
 **📺 Fernseher-Modus** (Schnellmaler, die Quiz-, Party- und Trinkspiele): Im Warteraum tippt
 das Gerät, das alle sehen sollen, neben seinem Namen auf **📺 Host**. Es spielt dann nicht mit,
-sondern zeigt groß die Frage, wer schon geantwortet hat, die Auflösung und die Punkte.
+sondern zeigt groß die Frage, wer schon geantwortet hat, die Auflösung und die Punkte. Ist der
+Fernseher zugleich Gastgeber, schalten die Mitspieler mit „Nächste Runde“ weiter; macht der
+Gastgeber 20 Sekunden nach der Auflösung nicht weiter, dürfen das ebenfalls alle.
 
 ## Mitspielen
 

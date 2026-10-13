@@ -216,7 +216,9 @@ class Hub:
             player.name += " (Bot)"
             game.note(f"{player.name} spielt jetzt für den Spieler weiter")
             if game.host_id == player_id:
-                game.host_id = next((p.id for p in game.players if not p.is_bot), None)
+                # Hand over to a real player – the TV screen cannot press buttons.
+                game.host_id = next((p.id for p in game.players if not p.is_bot and not getattr(p, "screen", False)),
+                                    next((p.id for p in game.players if not p.is_bot), None))
         else:
             game.remove_player(player_id)
         if not any(not p.is_bot for p in game.players):
